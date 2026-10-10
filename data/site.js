@@ -354,6 +354,8 @@ export const site = {
     loading: "Loading…",
     errors: {
       badRequest: "Bad request.",
+      noFile: "No file received.",
+      uploadFailed: "Upload failed.",
       wrongCurrent: "Current password is wrong.",
       emailRequired: "Email is required.",
       emailTaken: "That email is already in use.",
