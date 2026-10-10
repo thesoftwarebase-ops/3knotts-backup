@@ -8,6 +8,9 @@ import Faq from "@/components/home/Faq";
 import CtaBand from "@/components/ui/CtaBand";
 import { getHeroSlides, getServices, getFeatured, getContent } from "@/lib/content";
 
+// Dashboard edits go live within a minute — no rebuild needed.
+export const revalidate = 60;
+
 export default async function HomePage() {
   const [slides, services, featured, brand, testimonials, faq, steps] = await Promise.all([
     getHeroSlides(),

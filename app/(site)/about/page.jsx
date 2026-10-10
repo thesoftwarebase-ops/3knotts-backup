@@ -13,6 +13,9 @@ export const metadata = {
   description: site.about.intro
 };
 
+// Dashboard edits go live within a minute — no rebuild needed.
+export const revalidate = 60;
+
 export default async function AboutPage() {
   const a = await getContent("about");
   const waHref = `https://wa.me/${getWaNumber()}?text=${encodeURIComponent(site.whatsappGreeting)}`;

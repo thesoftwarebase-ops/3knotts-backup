@@ -31,7 +31,7 @@ export default function Hero({ slides }) {
     if (reduced || paused || n < 2) return;
     const id = setInterval(() => {
       if (document.hidden) return;
-      if (Date.now() - idleSince.current < 4000) return;
+      if (Date.now() - idleSince.current < 3000) return;
       idleSince.current = Date.now();
       setActive((a) => (a + 1) % n);
     }, 1000);

@@ -212,7 +212,7 @@ export default function DashboardPanel() {
           {email ? <p className="mt-1 truncate text-xs font-medium text-ink/60">{email}</p> : null}
         </div>
       </div>
-      <nav aria-label={t.title} className="mt-8 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto pr-1">
+      <nav aria-label={t.title} className="nice-scroll mt-8 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto pr-1">
         {TABS.map((k) =>
           k === "home" ? (
             <div key="home">
@@ -287,6 +287,15 @@ export default function DashboardPanel() {
       >
         {t.logout}
       </button>
+      <a
+        href={site.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-teal-deep px-5 py-2.5 text-center text-sm font-bold text-ivory transition-all hover:-translate-y-0.5"
+      >
+        {t.viewLive}
+        <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+      </a>
     </>
   );
 

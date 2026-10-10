@@ -278,6 +278,7 @@ export const site = {
       remove: "Remove"
     },
     logout: "Log out",
+    viewLive: "View live site",
     sessionExpired: "Session expired. Please log in again.",
     empty: "No enquiries yet.",
     showing: "enquiries",

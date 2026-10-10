@@ -6,6 +6,8 @@ import SectionDivider from "@/components/ui/SectionDivider";
 import ServiceCard from "@/components/ui/ServiceCard";
 import CtaBand from "@/components/ui/CtaBand";
 
+export const revalidate = 60;
+
 export const metadata = {
   title: site.sections.services.heading,
   description: site.sections.services.intro

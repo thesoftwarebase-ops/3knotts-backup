@@ -16,6 +16,9 @@ export function generateStaticParams() {
 
 export const dynamicParams = true;
 
+// Dashboard edits go live within a minute — no rebuild needed.
+export const revalidate = 60;
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const services = await getServices();
