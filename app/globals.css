@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+@theme {
+  --color-teal-deep: #0B3B3C;
+  --color-teal-mid: #0F4F4D;
+  --color-teal-bright: #14706A;
+  --color-gold: #D4A73C;
+  --color-gold-soft: #F1D78A;
+  --color-ivory: #FBF7EC;
+  --color-plum: #5B2A4B;
+  --color-ink: #16302F;
+  --color-sand: #E6DCC0;
+  --color-whatsapp: #25D366;
+
+  --font-tagline: "Dancing Script", "Segoe Script", cursive;
+  --font-card: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Hind Madurai", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* Hero autoplay progress (transform-only) */
+.hero-progress {
+  transform-origin: left center;
+  animation: hero-progress 4s linear forwards;
+}
+
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-progress {
+    display: none;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 110px;
+}
+
+@media (min-width: 640px) {
+  section[id] {
+    scroll-margin-top: 152px;
+  }
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-gold-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Proper pointer cursors on every interactive element */
+button:not(:disabled),
+a,
+summary,
+[role="button"],
+[role="tab"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Hero entrance — the one bold motion moment */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-entrance {
+  animation: hero-rise 900ms ease-out both;
+}
+
+.hero-entrance-2 {
+  animation: hero-rise 900ms ease-out 150ms both;
+}
+
+/* Subtle scroll reveal (JS adds .reveal-shown) */
+.reveal {
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reveal-shown {
+  opacity: 1;
+  transform: none;
+}
+
+/* Brand loader — blooming flower (compositor-only: transform + opacity) */
+.loader-petal {
+  border-radius: 100% 4px 100% 4px;
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
+  transform-origin: center;
+  animation: petal-bloom 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes petal-bloom {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--r)) translateY(-38px) scale(1);
+  }
+}
+
+.loader-core {
+  animation: core-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes core-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+}
+
+.loader-dot {
+  animation: loader-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes loader-blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-petal,
+  .loader-core,
+  .loader-dot {
+    animation: none;
+  }
+  .loader-petal {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--r)) translateY(-38px) scale(1);
+  }
+}
+
+/* Showcase slider entrance + drift (transform/opacity only — no blur) */
+.showcase-rise {
+  opacity: 0;
+  animation: showcase-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes showcase-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.showcase-drift {
+  animation: showcase-kenburns 7s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes showcase-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.07);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-rise,
+  .showcase-drift {
+    animation: none;
+  }
+  .showcase-rise {
+    opacity: 1;
+  }
+}
+
+/* Honeypot: off-screen, never display:none so bots still fill it */
+.honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-entrance,
+  .hero-entrance-2 {
+    animation: none;
+  }
+  .hero-video {
+    display: none !important;
+  }
+  .reveal,
+  .reveal-hidden,
+  .reveal-shown {
+    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
