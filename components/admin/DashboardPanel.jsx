@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -287,15 +288,13 @@ export default function DashboardPanel() {
       >
         {t.logout}
       </button>
-      <a
-        href={site.url}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href={site.homeHref}
         className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-teal-deep px-5 py-2.5 text-center text-sm font-bold text-ivory transition-all hover:-translate-y-0.5"
       >
         {t.viewLive}
         <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
-      </a>
+      </Link>
     </>
   );
 
