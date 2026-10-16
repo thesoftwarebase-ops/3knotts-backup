@@ -321,7 +321,7 @@ export const site = {
       captionWords: "words",
       shotsMax: "Maximum 15 shots per service.",
       webpNote: "Any photo works — new uploads are converted to WebP.",
-      galleryRule: "Each service holds up to 4 photo shots. Star the ones to feature in Our Work.",
+      galleryRule: "Each service holds up to 15 photo shots. Star the ones to feature in Our Work.",
       featuredShot: "Featured in Our Work",
       featuredService: "Featured on home",
       addLine: "Add line",
