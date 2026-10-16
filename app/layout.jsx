@@ -63,11 +63,13 @@ const faqJsonLd = {
 };
 
 export default function RootLayout({ children }) {
+  // Escape < so admin-managed copy can never break out of the JSON-LD blocks.
+  const safe = (obj) => JSON.stringify(obj).replace(/</g, "\\u003c");
   return (
     <html lang={site.lang}>
       <body>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safe(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safe(faqJsonLd) }} />
         <a
           href={`#${site.anchors.main}`}
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-5 focus:py-2 focus:text-ink"

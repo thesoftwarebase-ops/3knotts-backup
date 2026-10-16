@@ -263,7 +263,7 @@ export const site = {
     },
     aboutMgr: {
       title: "About Us",
-      headingLabel: "Heading",
+      webpNote: "Any photo works — new uploads are converted to WebP.",      headingLabel: "Heading",
       introLabel: "Intro line",
       ledeLabel: "Opening quote",
       textLabel: "Story paragraphs — one per box",
@@ -292,6 +292,7 @@ export const site = {
     altLabel: "Photo description",
     heroMgr: {
       alt: "Photo description",
+      webpNote: "Any photo works — new uploads are converted to WebP.",
       replace: "Replace",
       uploading: "Uploading…",
       uploaded: "Photo uploaded.",
@@ -318,7 +319,8 @@ export const site = {
       galleryLabel: "Photo shots",
       captionLabel: "Caption",
       captionWords: "words",
-      shotsMax: "Maximum 4 shots per service.",
+      shotsMax: "Maximum 15 shots per service.",
+      webpNote: "Any photo works — new uploads are converted to WebP.",
       galleryRule: "Each service holds up to 4 photo shots. Star the ones to feature in Our Work.",
       featuredShot: "Featured in Our Work",
       featuredService: "Featured on home",
@@ -356,6 +358,8 @@ export const site = {
     errors: {
       badRequest: "Bad request.",
       noFile: "No file received.",
+      tooLarge: "That photo is too large. Please use one under 12 MB.",
+      notImage: "That file is not a readable image.",
       uploadFailed: "Upload failed.",
       wrongCurrent: "Current password is wrong.",
       emailRequired: "Email is required.",

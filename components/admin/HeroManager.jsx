@@ -78,6 +78,7 @@ export default function HeroManager() {
   return (
     <div className="mt-6">
       <p className="max-w-2xl text-sm leading-relaxed text-ink/70">{site.dashboard.heroHint}</p>
+      <p className="mt-1 text-[13px] text-ink/60">{m.webpNote}</p>
       <ul className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
         {slides.map((s, i) => (
           <li

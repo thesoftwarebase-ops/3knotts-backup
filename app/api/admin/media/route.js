@@ -29,11 +29,27 @@ export async function POST(request) {
   if (!file || typeof file.arrayBuffer !== "function") {
     return NextResponse.json({ ok: false, error: ERR.noFile }, { status: 400 });
   }
+  if (typeof file.size === "number" && file.size > 12 * 1024 * 1024) {
+    return NextResponse.json({ ok: false, error: ERR.tooLarge }, { status: 413 });
+  }
+  // Every new upload is normalized to WebP here. Already-hosted files
+  // are never touched — only what comes through this endpoint.
+  let payload;
+  try {
+    const sharp = (await import("sharp")).default;
+    const webp = await sharp(Buffer.from(await file.arrayBuffer()))
+      .rotate()
+      .webp({ quality: 82 })
+      .toBuffer();
+    payload = new Blob([webp], { type: "image/webp" });
+  } catch {
+    return NextResponse.json({ ok: false, error: ERR.notImage }, { status: 400 });
+  }
   try {
     const { cloudName, apiKey } = getCloudinaryConfig();
     const signed = signUpload({ folder, resourceType: "image" });
     const out = new FormData();
-    out.append("file", file);
+    out.append("file", payload, "photo.webp");
     out.append("api_key", apiKey);
     out.append("timestamp", String(signed.timestamp));
     out.append("folder", signed.folder);

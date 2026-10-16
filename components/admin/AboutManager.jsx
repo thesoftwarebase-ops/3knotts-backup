@@ -93,6 +93,7 @@ export default function AboutManager() {
         ) : null}
         <div>
           <p className="mb-1.5 text-sm font-bold text-ink">{m.ownerImageLabel}</p>
+          <p className="mb-2 text-[13px] text-ink/60">{m.webpNote}</p>
           <button type="button" disabled={busy} onClick={() => fileRef.current?.click()} className={miniBtn}>
             {busy ? m.uploading : m.replaceImage}
           </button>

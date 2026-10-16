@@ -356,6 +356,7 @@ export default function ServicesManager() {
             </Row>
 
             <Row label={t.galleryLabel}>
+              <p className="-mt-1 mb-2 text-[13px] text-ink/60">{t.webpNote}</p>
               <span className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {(s.gallery || []).map((g, j) => (
                   <span key={j} className="relative overflow-hidden rounded-xl border border-gold/40 bg-sand/40">
@@ -423,11 +424,10 @@ export default function ServicesManager() {
                       }}
                     />
                     <span className={`px-2 pb-1 text-xs font-semibold ${(g.caption || "").trim().split(/\s+/).filter(Boolean).length > 4 ? "text-plum" : "text-ink/50"}`}>
-                      {(g.caption || "").trim().split(/\s+/).filter(Boolean).length}/4 {t.captionWords}
-                    </span>
+                      {(g.caption || "").trim().split(/\s+/).filter(Boolean).length}/4 {t.captionWords}                    </span>
                   </span>
                 ))}
-                {(s.gallery || []).length >= 4 ? (
+                {(s.gallery || []).length >= 15 ? (
                   <p className="text-sm font-semibold text-plum">{t.shotsMax}</p>
                 ) : (
                 <button
