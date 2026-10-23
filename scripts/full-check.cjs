@@ -65,6 +65,7 @@ const CLIENT_ALLOW = new Set([
   "components\\home\\Testimonials.jsx",
   "components\\admin\\LoginForm.jsx",
   "components\\admin\\DashboardPanel.jsx",
+  "components\\admin\\EmailManager.jsx",
   "components\\admin\\AboutManager.jsx",
   "components\\admin\\HeroManager.jsx",
   "components\\admin\\HomeManagers.jsx",

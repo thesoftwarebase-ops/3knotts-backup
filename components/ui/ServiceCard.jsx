@@ -5,11 +5,14 @@ import { mediaImage } from "@/lib/media";
 import ServiceIcon from "./ServiceIcon";
 
 // Shared service card. The whole card is one link to the detail page.
-// Used by the home featured grid and the /services page.
-export default function ServiceCard({ service: s, index = 0 }) {
+// Used by the home featured grid and the /services page. `href`
+// optionally overrides the target (the /clients page sends its cards
+// to /clients/[slug] instead).
+export default function ServiceCard({ service: s, index = 0, href }) {
+  const cardHref = href || serviceHref(s.slug);
   return (
     <Link
-      href={serviceHref(s.slug)}
+      href={cardHref}
       aria-label={`${s.title} — ${site.servicesPage.exploreLabel}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-white/70 transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(11,59,60,0.45)]"
     >

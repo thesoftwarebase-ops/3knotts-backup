@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { site, getWaNumber } from "@/data/site";
 import { InstagramIcon, WhatsAppIcon } from "../ui/SocialIcons";
 
-export default function Navbar() {
+// navLinks arrives filtered from the server layout so CMS-hidden
+// sections (e.g. Clients) never flash in the menu on either platform.
+export default function Navbar({ navLinks = site.nav } = {}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -89,7 +91,7 @@ export default function Navbar() {
           </button>
 
           <ul className="hidden items-center gap-10 md:flex">
-            {site.nav.map((l) => {
+            {navLinks.map((l) => {
               const isActive = pathname === l.href;
               return (
                 <li key={l.href}>
@@ -155,7 +157,7 @@ export default function Navbar() {
         <nav aria-label={site.a11y.mobileNav} className="flex flex-1 flex-col justify-center px-8">
           <p className="font-tagline text-2xl text-gold-soft">{site.tagline}</p>
           <ul className="mt-6 flex flex-col">
-            {site.nav.map((l, i) => {
+            {navLinks.map((l, i) => {
               const isActive = pathname === l.href;
               return (
                 <li key={l.href} className="border-b border-ivory/10 last:border-0">

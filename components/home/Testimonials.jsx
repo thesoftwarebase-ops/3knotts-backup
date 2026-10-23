@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { site } from "@/data/site";
 import Reveal from "../ui/Reveal";
 import SectionHeading from "../ui/SectionHeading";
+import { InstagramIcon } from "../ui/SocialIcons";
 
 export default function Testimonials({ items }) {
   const t = site.testimonials;
@@ -92,6 +93,18 @@ export default function Testimonials({ items }) {
                         <span aria-hidden="true" className="mx-auto block h-px w-16 bg-gold/70" />
                         <p className="mt-3 text-base font-bold text-plum">{item.name}</p>
                         {item.detail ? <p className="mt-0.5 text-sm text-ink/60">{item.detail}</p> : null}
+                        {item.insta ? (
+                          <a
+                            href={`${site.instaUrl}${item.insta}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`@${item.insta} — ${site.a11y.instaProfile}`}
+                            className="group/ig mt-2 inline-flex items-center gap-1.5 rounded-full border border-transparent px-3 py-1 text-sm font-bold text-plum transition-all duration-300 hover:border-gold/60 hover:text-teal"
+                          >
+                            <InstagramIcon className="h-4 w-4 transition-transform duration-300 group-hover/ig:scale-110" />
+                            <span>@{item.insta}</span>
+                          </a>
+                        ) : null}
                       </figcaption>
                     </figure>
                   );

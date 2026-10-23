@@ -1,4 +1,5 @@
 import { saveEnquiry } from "@/lib/db";
+import { getEmailSettings } from "@/lib/email";
 import { enquiryWhatsAppUrl } from "@/lib/whatsapp";
 import { site, WA_NUMBER } from "@/data/site";
 
@@ -41,7 +42,12 @@ export async function POST(request) {
   const data = { name, phone, date, location, functionType, requirement, budget };
   try {
     await saveEnquiry(data);
-    return Response.json({ ok: true });
+    // The actual submission to Web3Forms is relayed by the visitor's own
+    // browser (their edge only accepts browser traffic on the free plan).
+    // Hand back the public-grade key(s); email failures never touch this
+    // response — the enquiry is already safe in the dashboard.
+    const email = await getEmailSettings();
+    return Response.json({ ok: true, notifyKeys: email.keys });
   } catch (e) {
     console.error("enquiry db error:", e);
     return Response.json(

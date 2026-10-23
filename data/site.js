@@ -191,6 +191,8 @@ export const site = {
   mapsLabel: "Open in Google Maps",
 
   instagram: "https://www.instagram.com/all_in_one_dream_place/",
+  // Base used to build per-reviewer profile links from saved handles.
+  instaUrl: "https://www.instagram.com/",
   instagramLabel: "Instagram",
   instagramHandle: "@all_in_one_dream_place",
 
@@ -211,8 +213,8 @@ export const site = {
     title: "Dashboard",
     uploading: "Uploading…",
     working: "Working…",
-    tabs: { enquiries: "Enquiries", hero: "Hero Slides", services: "Services", account: "Account", about: "About Us" },
-    tabOrder: ["enquiries", "home", "services", "about", "account"],
+    tabs: { enquiries: "Enquiries", email: "Email", hero: "Hero Slides", services: "Services", clients: "Clients", account: "Account", about: "About Us" },
+    tabOrder: ["enquiries", "email", "home", "services", "clients", "about", "account"],
     homeLabel: "Home",
     homeTabs: {
       hero: "Hero Slides",
@@ -251,6 +253,8 @@ export const site = {
       quoteLabel: "Quote",
       nameLabel: "Name",
       detailLabel: "Detail",
+      instaLabel: "Reviewer's Instagram (optional)",
+      instaPlaceholder: "e.g. @priya_creates — leave empty to skip",
       addQuote: "Add testimonial",
       faqTitle: "FAQs",
       qLabel: "Question",
@@ -301,6 +305,43 @@ export const site = {
       saved: "Hero slides saved.",
       remove: "Remove slide"
     },
+    emailMgr: {
+      title: "Enquiry Email",
+      intro: "Send every website enquiry straight to your email inbox through Web3Forms. Create the free access key at web3forms.com with your email, then paste it here. While a key is on file, every enquiry is emailed automatically — remove the key to stop. Below it, set the business Gmail address shown in the Enquiry page's contact panel.",
+      keyLabel: "Web3Forms access key",
+      keyPlaceholder: "e.g. 9b06c1af-2c31-42a7-9e12-1c8d5e7f9a02",
+      keyKeep: "Leave empty to keep the key on file — paste to replace",
+      onFile: "Key on file",
+      save: "Save changes",
+      saved: "Email settings saved.",
+      test: "Send test email",
+      testing: "Sending test email…",
+      testSent: "Test email sent — check the inbox.",
+      noKey: "Paste an access key first.",
+      remove: "Remove key",
+      removeConfirm: "Remove the access key and the Gmail address? Enquiry emails stop until a new key is saved.",
+      removed: "Email settings cleared.",
+      gmailLabel: "Business Gmail address",
+      gmailNote: "Shown as a Gmail row in the Enquiry page contact panel. Empty hides the row.",
+      gmailPlaceholder: "e.g. dreamplacechennai@gmail.com",
+      errors: {
+        badRequest: "Bad request.",
+        noKey: "Add an access key first.",
+        wrongFormat: "That does not look like a Web3Forms access key.",
+        badGmail: "That does not look like a valid email address.",
+        failed: "Could not save email settings.",
+        testFailed: "Test email failed — Web3Forms said:",
+        deleteFailed: "Could not remove the key."
+      }
+    },
+    clientsMgr: {
+      title: "Clients",
+      intro: "A Clients section is being built for the site. Switch it on to show the Clients link in the menu and open the page. Switch it off while the content comes together — both the link and the page stay hidden.",
+      visibleLabel: "Show Clients to visitors",
+      note: "Off hides both the menu link and the /clients page.",
+      save: "Save changes",
+      saved: "Clients settings saved."
+    },
     addSlide: "Add slide",
     saveSlides: "Save slides",
     slidesSaved: "Hero slides saved.",
@@ -319,13 +360,16 @@ export const site = {
       galleryLabel: "Photo shots",
       captionLabel: "Caption",
       captionWords: "words",
-      shotsMax: "Maximum 15 shots per service.",
+      shotsMax: "Maximum 15 photos per list.",
       webpNote: "Any photo works — new uploads are converted to WebP.",
-      galleryRule: "Each service holds up to 15 photo shots. Star the ones to feature in Our Work.",
+      galleryRule: "Each service holds up to 15 photo shots (star the ones to feature in Our Work) plus up to 15 Client photos for the Clients page — 30 photos in total.",
       featuredShot: "Featured in Our Work",
       featuredService: "Featured on home",
       addLine: "Add line",
       addShot: "Add shot",
+      clientLabel: "Client photos (Clients page)",
+      clientNote: "A separate photo set shown inside the card on the Clients page. Caption = slide title (max 4 words); the sentence becomes the slide description, and slides without one fall back to the service blurb. The shots above stay on the service page and in Our Work.",
+      clientDescLabel: "Slide sentence (optional)",
       remove: "Remove",
       replaceImage: "Replace photo",
       uploading: "Uploading…",
@@ -392,7 +436,8 @@ export const site = {
     breadcrumb: "Breadcrumb",
     moreServices: "More services",
     sliderPrev: "Previous slide",
-    sliderNext: "Next slide"
+    sliderNext: "Next slide",
+    instaProfile: "Open Instagram profile in a new tab"
   },
   whatsappGreeting: "Hello All in One Dream Place! I'd like to plan a celebration.",
 
@@ -418,6 +463,7 @@ export const site = {
 
   nav: [
     { label: "Services", href: "/services" },
+    { label: "Clients", href: "/clients" },
     { label: "About Us", href: "/about" }
   ],
   navCta: { label: "Enquire", href: "/enquire" },
@@ -534,6 +580,7 @@ export const site = {
     errorGeneric: "Something went wrong. Please try again.",
     sideHeading: "Prefer to talk?",
     chatInstead: "Chat instead",
+    emailInstead: "Email instead",
     errors: {
       resend: "Please send the form again.",
       name: "Please enter your name.",
@@ -553,11 +600,25 @@ export const site = {
     emptyText: "Celebration stories from our families are on their way — check back soon, or start yours today.",
     // PLACEHOLDER QUOTES — replace with real client words before launch.
     items: [
-      { quote: "The aarathi plates looked straight out of a film set. Our guests kept asking where we got them.", name: "Priya & Karthik", detail: "Wedding · Chennai" },
-      { quote: "They packed forty hampers and every single one looked identical. Impeccable finishing.", name: "Deepa S.", detail: "Diwali Gifting" },
-      { quote: "The mehendi and bangle stalls kept our guests busy for hours. Best decision of the wedding.", name: "Anitha R.", detail: "Wedding · Washermanpet" },
-      { quote: "Our home looked magical for the festival, and they cleared everything the same night.", name: "Revathi M.", detail: "Housewarming · Chennai" }
+      { quote: "The aarathi plates looked straight out of a film set. Our guests kept asking where we got them.", name: "Priya & Karthik", detail: "Wedding · Chennai", insta: "" },
+      { quote: "They packed forty hampers and every single one looked identical. Impeccable finishing.", name: "Deepa S.", detail: "Diwali Gifting", insta: "" },
+      { quote: "The mehendi and bangle stalls kept our guests busy for hours. Best decision of the wedding.", name: "Anitha R.", detail: "Wedding · Washermanpet", insta: "" },
+      { quote: "Our home looked magical for the festival, and they cleared everything the same night.", name: "Revathi M.", detail: "Housewarming · Chennai", insta: "" }
     ]
+  },
+
+  clients: {
+    // Visibility toggle for the Clients section: the dashboard Clients
+    // tab switches it; the nav link and the page follow. Hide state is
+    // enforced server-side — the page itself becomes unreachable too.
+    heading: "Our Clients",
+    intro: "The families and companies who celebrate with us.",
+    label: "Clients",
+    backLabel: "All clients",
+    // Individual /clients/[slug] pages follow the /services/[slug]
+    // detail-page format, with the client gallery in the showcase.
+    showcaseHeading: "Client moments",
+    showcaseIntro: "Real captures from the celebrations we styled for our clients."
   },
 
   faq: {    heading: "Questions, answered",
@@ -641,7 +702,6 @@ export const site = {
     exploreLabel: "Explore",
     whyHeading: "Why book this with us",
     showcaseHeading: "Keep exploring",
-    showcaseIntro: "More crafts from the studio — open any one to see it up close.",
     showcaseIntro: "More crafts from the studio — open any one to see it up close."
   }
 };

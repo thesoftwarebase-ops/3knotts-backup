@@ -469,6 +469,9 @@ export function TestimonialsManager() {
             <Field label={m.detailLabel}>
               <input value={t.detail || ""} onChange={(e) => setValue(value.map((x, k) => (k === i ? { ...x, detail: e.target.value } : x)))} suppressHydrationWarning className={inputCls} />
             </Field>
+            <Field label={m.instaLabel}>
+              <input value={t.insta || ""} onChange={(e) => setValue(value.map((x, k) => (k === i ? { ...x, insta: e.target.value } : x)))} suppressHydrationWarning className={inputCls} placeholder={m.instaPlaceholder} />
+            </Field>
           </div>
           <button type="button" onClick={() => setValue(value.filter((_, k) => k !== i))} className={`${dangerBtn} mt-3`}>
             {m.remove}
@@ -476,7 +479,7 @@ export function TestimonialsManager() {
         </div>
       ))}
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => setValue([...(value || []), { quote: "", name: "", detail: "" }])} className={miniBtn}>
+        <button type="button" onClick={() => setValue([...(value || []), { quote: "", name: "", detail: "", insta: "" }])} className={miniBtn}>
           {m.addQuote}
         </button>
         <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
@@ -514,6 +517,42 @@ export function FaqManager() {
           {m.addQa}
         </button>
         <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+          {m.save}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Dashboard -> Clients. Currently one switch: whether the Clients
+// section is public. The nav link and the /clients page both follow
+// (the page is also server-checked, so a direct URL stays dead too).
+export function ClientsManager() {
+  const m = site.dashboard.clientsMgr;
+  const { value, setValue, loading, saving, save } = useContent("clients");
+  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (!value) return null;
+  return (
+    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
+      <div>
+        <p className="font-tagline text-3xl font-bold text-plum">{m.title}</p>
+        <p className="mt-1 text-sm leading-relaxed text-ink/70">{m.intro}</p>
+      </div>
+      <label className="flex items-center justify-between gap-4 rounded-xl border border-teal-mid/30 bg-white px-4 py-3">
+        <span>
+          <span className="block text-sm font-bold text-ink">{m.visibleLabel}</span>
+          <span className="block text-[13px] text-ink/60">{m.note}</span>
+        </span>
+        <input
+          type="checkbox"
+          checked={Boolean(value.visible)}
+          onChange={(e) => setValue({ ...value, visible: e.target.checked })}
+          suppressHydrationWarning
+          className="h-5 w-5 shrink-0 accent-[#D4A73C]"
+        />
+      </label>
+      <div>
+        <button type="button" onClick={() => save()} disabled={saving} className={saveBtn}>
           {m.save}
         </button>
       </div>

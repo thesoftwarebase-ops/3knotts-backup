@@ -10,13 +10,15 @@ import { site } from "@/data/site";
 import HeroManager from "./HeroManager";
 import ServicesManager from "./ServicesManager";
 import AboutManager from "./AboutManager";
+import EmailManager from "./EmailManager";
 import {
   BrandManager,
   FeaturedManager,
   StepsManager,
   WorkNote,
   TestimonialsManager,
-  FaqManager
+  FaqManager,
+  ClientsManager
 } from "./HomeManagers";
 
 const TABS = site.dashboard.tabOrder;
@@ -406,6 +408,8 @@ export default function DashboardPanel() {
               </ul>
             )}
           </div>
+        ) : tab === "email" ? (
+          <EmailManager />
         ) : tab === "home-hero" ? (
           <HeroManager />
         ) : tab === "home-brand" ? (
@@ -420,6 +424,8 @@ export default function DashboardPanel() {
           <TestimonialsManager />
         ) : tab === "home-faq" ? (
           <FaqManager />
+        ) : tab === "clients" ? (
+          <ClientsManager />
         ) : tab === "services" ? (
           <ServicesManager />
         ) : tab === "about" ? (

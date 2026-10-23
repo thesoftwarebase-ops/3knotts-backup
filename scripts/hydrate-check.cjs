@@ -12,6 +12,8 @@ const ALLOW = [
   ["components\\home\\Hero.jsx", "window.matchMedia", "inside useEffect only (verified by read)"],
   ["components\\home\\Hero.jsx", "Date.now()", "ref/effect/handler timing only; never rendered"],
   ["components\\home\\Hero.jsx", "document.hidden", "inside interval callback only"],
+  ["components\\home\\EnquiryForm.jsx", "toLocaleString", "inside submit handler only; never rendered"],
+  ["components\\home\\Hero.jsx", "document.hidden", "inside interval callback only"],
   ["components\\home\\HowItWorks.jsx", "window.matchMedia", "inside useEffect only"],
   ["components\\home\\HowItWorks.jsx", "window.innerWidth", "inside rAF effect only"],
   ["components\\home\\HowItWorks.jsx", "window.innerHeight", "inside rAF effect only"],
@@ -42,6 +44,7 @@ const ALLOW = [
   ["components\\admin\\LoginForm.jsx", "sessionStorage.getItem", "inside session-check effect only"],
   ["components\\admin\\upload.js", "sessionStorage", "token helper called from handlers/effects only"],
   ["components\\admin\\DashboardPanel.jsx", "window.confirm", "inside delete handler only"],
+  ["components\\admin\\EmailManager.jsx", "window.confirm", "inside remove handler only"],
   ["components\\ui\\SmoothScroll.jsx", "window.scrollTo", "inside route-change effect only"],
   ["components\\ui\\SmoothScroll.jsx", "window.matchMedia", "inside init effect only (verified by read)"]
 ];

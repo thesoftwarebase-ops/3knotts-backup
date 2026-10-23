@@ -99,6 +99,13 @@ export default function ServicesManager() {
       )
     );
 
+  const patchClient = (i, j, value) =>
+    setServices((ss) =>
+      ss.map((s, k) =>
+        k === i ? { ...s, clients: (s.clients || []).map((g, jj) => (jj === j ? { ...g, ...value } : g)) } : s
+      )
+    );
+
   async function uploadFor(i, slot, file, shotIdx = -1) {
     if (!file) return;
     const key = `${i}-${slot}-${shotIdx}`;
@@ -107,6 +114,7 @@ export default function ServicesManager() {
     try {
       const path = await uploadImage(file, "all-in-one-dream-place/services", adminToken());
       if (slot === "image") patch(i, "image", path);
+      else if (slot === "clientshot") patchClient(i, shotIdx, { src: path });
       else patchShot(i, shotIdx, { src: path });
       toast.success(t.uploaded);
     } catch (err) {
@@ -133,24 +141,32 @@ export default function ServicesManager() {
         image: "/random.jpg",
         details: [],
         whyUs: [],
-        gallery: []
+        gallery: [],
+        clients: []
       }
     ]);
     setSelected(i);
   }
 
-  // Captions stay tiny: trim to 4 words on every save.
+  // Captions stay tiny: trim to 4 words on every save (both shot lists).
   function trimmed(list) {
+    const trim4 = (cap) =>
+      String(cap || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 4)
+        .join(" ");
     return (list || []).map((s) => ({
       ...s,
       gallery: (s.gallery || []).map((g) => ({
         ...g,
-        caption: String(g.caption || "")
-          .trim()
-          .split(/\s+/)
-          .filter(Boolean)
-          .slice(0, 4)
-          .join(" ")
+        caption: trim4(g.caption)
+      })),
+      clients: (s.clients || []).map((g) => ({
+        src: String(g.src || ""),
+        caption: trim4(g.caption),
+        text: String(g.text || "").trim().slice(0, 220)
       }))
     }));
   }
@@ -187,7 +203,7 @@ export default function ServicesManager() {
     showBusy(t.deleting);
     try {
       // 1. Delete every Cloudinary asset of this service first.
-      const assets = [s.image, ...(s.gallery || []).map((g) => g.src)]
+      const assets = [s.image, ...(s.gallery || []).map((g) => g.src), ...(s.clients || []).map((c) => c.src)]
         .map(cloudId)
         .filter(Boolean);
       for (const publicId of assets) {
@@ -442,6 +458,90 @@ export default function ServicesManager() {
               </span>
             </Row>
 
+            <Row label={t.clientLabel}>
+              <p className="-mt-1 mb-2 text-[13px] text-ink/60">{t.clientNote}</p>
+              <span className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {(s.clients || []).map((g, j) => (
+                  <span key={`c${j}`} className="relative overflow-hidden rounded-xl border border-gold/40 bg-sand/40">
+                    {g.src ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={mediaImage(g.src)} alt="" aria-hidden="true" className="aspect-square h-auto w-full object-cover" />
+                    ) : (
+                      <span aria-hidden="true" className="block aspect-square w-full bg-sand/40" />
+                    )}
+                    <span className="flex items-center gap-1 p-2">
+                      <input
+                        value={g.caption || ""}
+                        placeholder={t.captionLabel}
+                        onChange={(e) => patchClient(i, j, { caption: e.target.value })}
+                        suppressHydrationWarning
+                        aria-label={t.captionLabel}
+                        className="min-w-0 flex-1 rounded-lg border border-teal-deep/15 bg-white px-2 py-1.5 text-[13px] text-ink focus:border-gold focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => pick(i, "clientshot", j)}
+                        disabled={busy === `${i}-clientshot-${j}`}
+                        aria-label={t.replaceImage}
+                        title={t.replaceImage}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-teal-deep/20 text-base text-teal-bright transition-colors hover:border-gold disabled:opacity-60"
+                      >
+                        <span aria-hidden="true">⤒</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeFromList(i, "clients", j)}
+                        aria-label={t.remove}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-plum/30 text-lg text-plum transition-colors hover:border-plum"
+                      >
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </span>
+                    <input
+                      ref={(el) => {
+                        fileRefs.current[`${i}-clientshot-${j}`] = el;
+                      }}
+                      type="file"
+                      accept="image/*"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      suppressHydrationWarning
+                      className="hidden"
+                      onChange={(e) => {
+                        uploadFor(i, "clientshot", e.target.files?.[0], j);
+                        e.target.value = "";
+                      }}
+                    />
+                    <span className={`px-2 pb-1 text-xs font-semibold ${(g.caption || "").trim().split(/\s+/).filter(Boolean).length > 4 ? "text-plum" : "text-ink/50"}`}>
+                      {(g.caption || "").trim().split(/\s+/).filter(Boolean).length}/4 {t.captionWords}
+                    </span>
+                    <textarea
+                      value={g.text || ""}
+                      placeholder={t.clientDescLabel}
+                      onChange={(e) => patchClient(i, j, { text: e.target.value })}
+                      rows={2}
+                      suppressHydrationWarning
+                      aria-label={t.clientDescLabel}
+                      spellCheck="false"
+                      className="mt-0.5 block w-full resize-none rounded-lg border border-teal-deep/15 bg-white px-2 py-1.5 text-[13px] leading-snug text-ink focus:border-gold focus:outline-none"
+                    />
+                  </span>
+                ))}
+                {(s.clients || []).length >= 15 ? (
+                  <p className="text-sm font-semibold text-plum">{t.shotsMax}</p>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => addToList(i, "clients", { src: "/random.jpg", caption: "" })}
+                    className="flex min-h-[120px] items-center justify-center rounded-xl border border-dashed border-gold/60 text-3xl text-gold transition-colors hover:border-gold hover:bg-gold/5"
+                    aria-label={t.addShot}
+                  >
+                    <span aria-hidden="true">+</span>
+                  </button>
+                )}
+              </span>
+            </Row>
+
             <div className="flex flex-wrap gap-2 pt-2">
               <button
                 type="button"
@@ -590,7 +690,8 @@ export default function ServicesManager() {
         image: "/random.jpg",
         details: [],
         whyUs: [],
-        gallery: []
+        gallery: [],
+        clients: []
       }
     ]);
     setSelected(services.length);

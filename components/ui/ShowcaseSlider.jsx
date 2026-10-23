@@ -9,7 +9,12 @@ import { mediaImage } from "@/lib/media";
 // Expanding-cards showcase. All motion is transform + opacity only
 // (GPU-composited), so it stays smooth on phones: the deck never
 // animates layout properties. Slides: { image, title, text, href?, cta? }.
-export default function ShowcaseSlider({ items }) {
+// variant="card" shrinks the frame for inside ServiceCard cells: no own
+// border/shadow, smaller overlay text, no big blurb paragraph.
+// isolate={true} stops click events from bubbling further up (used when
+// the slider sits inside a clickable card).
+export default function ShowcaseSlider({ items, variant = "page", isolate = false }) {
+  const isCard = variant === "card";
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const idleSince = useRef(Date.now());
@@ -37,9 +42,13 @@ export default function ShowcaseSlider({ items }) {
   const current = items[active];
 
   return (
-    <div>
+    <div onClick={isolate ? (e) => e.stopPropagation() : undefined}>
       <div
-        className="relative h-[480px] overflow-hidden rounded-3xl border border-gold/50 bg-ink shadow-[0_30px_70px_-30px_rgba(11,59,60,0.6)] sm:h-[560px]"
+        className={
+          isCard
+            ? "relative h-[400px] overflow-hidden bg-ink sm:h-[460px]"
+            : "relative h-[480px] overflow-hidden rounded-3xl border border-gold/50 bg-ink shadow-[0_30px_70px_-30px_rgba(11,59,60,0.6)] sm:h-[560px]"
+        }
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => {
           idleSince.current = Date.now();
@@ -119,12 +128,19 @@ export default function ShowcaseSlider({ items }) {
 
         {/* Active content */}
         <div key={`${current.image}-${active}`} className="absolute inset-x-0 bottom-0 z-30 p-6 sm:p-10">
-          <p className="showcase-rise font-tagline text-4xl font-bold leading-tight text-ivory sm:text-6xl" style={{ animationDelay: "0ms" }}>
+          <p
+            className={`showcase-rise font-tagline font-bold leading-tight text-ivory ${
+              isCard ? "text-2xl sm:text-3xl" : "text-4xl sm:text-6xl"
+            }`}
+            style={{ animationDelay: "0ms" }}
+          >
             {current.title}
           </p>
-          <p className="showcase-rise mt-2 max-w-md text-[15px] leading-relaxed text-ivory/85 sm:text-base" style={{ animationDelay: "80ms" }}>
-            {current.text}
-          </p>
+          {!isCard && current.text ? (
+            <p className="showcase-rise mt-2 max-w-md text-[15px] leading-relaxed text-ivory/85 sm:text-base" style={{ animationDelay: "80ms" }}>
+              {current.text}
+            </p>
+          ) : null}
           {current.href ? (
             <Link
               href={current.href}
@@ -136,8 +152,9 @@ export default function ShowcaseSlider({ items }) {
           ) : null}
         </div>
 
-        {/* Controls */}
-        <div className="absolute bottom-5 right-5 z-40 flex gap-2 sm:bottom-8 sm:right-8">
+        {/* Controls — pointless on a one-slide deck */}
+        {n > 1 ? (
+          <div className="absolute bottom-5 right-5 z-40 flex gap-2 sm:bottom-8 sm:right-8">
           <button
             type="button"
             onClick={() => go(-1)}
@@ -154,7 +171,8 @@ export default function ShowcaseSlider({ items }) {
           >
             <span aria-hidden="true">›</span>
           </button>
-        </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

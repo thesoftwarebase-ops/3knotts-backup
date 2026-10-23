@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { site, getWaNumber } from "@/data/site";
+import { buildEnquiryMessage } from "@/lib/whatsapp";
 import Reveal from "../ui/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import { InstagramIcon, WhatsAppIcon } from "../ui/SocialIcons";
@@ -53,7 +54,7 @@ function AlertIcon() {
   );
 }
 
-export default function EnquiryForm() {
+export default function EnquiryForm({ contactEmail = "" } = {}) {
   const [values, setValues] = useState(initial);
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
@@ -89,6 +90,25 @@ export default function EnquiryForm() {
       }
       setStatus("success");
       setMessage(f.success);
+      // Best-effort email: the submission to Web3Forms goes from this
+      // browser (their edge only accepts browser traffic). Failures are
+      // swallowed — the enquiry is already saved on the server.
+      const notifyKeys = Array.isArray(data.notifyKeys) ? data.notifyKeys : [];
+      if (notifyKeys.length) {
+        const received = new Date().toLocaleString("en-IN", { dateStyle: "long", timeStyle: "short" });
+        const body = {
+          subject: `New enquiry — ${values.name || "Website form"}`,
+          from_name: site.name,
+          message: [buildEnquiryMessage(values), `Received: ${received}`, "Source: website enquiry form"].join("\n")
+        };
+        notifyKeys.forEach((accessKey) => {
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ ...body, access_key: accessKey })
+          }).catch(() => {});
+        });
+      }
       setValues(initial);
     } catch (err) {
       setStatus("error");
@@ -143,6 +163,24 @@ export default function EnquiryForm() {
                   <span className="block text-lg font-bold text-ivory">{site.footer.whatsappLabel}</span>
                 </span>
               </a>
+              {contactEmail ? (
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="group flex items-center gap-4 rounded-2xl border border-ivory/15 bg-ivory/5 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/60"
+                  aria-label={`${f.emailInstead} — ${contactEmail}`}
+                >
+                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:scale-110">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-6 w-6">
+                      <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z" fill="#ffffff" stroke="#EA4335" strokeWidth="1.6" />
+                      <path d="m5.5 8.5 6.5 5.5 6.5-5.5" stroke="#EA4335" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm font-medium text-ivory/70">{f.emailInstead}</span>
+                    <span className="block break-all text-lg font-bold text-ivory">{contactEmail}</span>
+                  </span>
+                </a>
+              ) : null}
               <a
                 href={site.instagram}
                 target="_blank"
