@@ -171,6 +171,10 @@ export function serviceHref(slug) {
   return `${site.servicesPage.href}/${slug}`;
 }
 
+export function clientHref(slug) {
+  return `${site.clients.href}/${slug}`;
+}
+
 export const site = {
   name: "All in One Dream Place",
   tagline: "Your Celebration, Our Creation.",
@@ -368,7 +372,7 @@ export const site = {
       addLine: "Add line",
       addShot: "Add shot",
       clientLabel: "Client photos (Clients page)",
-      clientNote: "A separate photo set shown inside the card on the Clients page. Caption = slide title (max 4 words); the sentence becomes the slide description, and slides without one fall back to the service blurb. The shots above stay on the service page and in Our Work.",
+      clientNote: "A separate photo set shown on the service's own page in the Clients section. Caption = slide title (max 4 words); the sentence becomes the slide description, and slides without one fall back to the service blurb. The shots above stay on the service page and in Our Work.",
       clientDescLabel: "Slide sentence (optional)",
       remove: "Remove",
       replaceImage: "Replace photo",
@@ -612,13 +616,14 @@ export const site = {
     // tab switches it; the nav link and the page follow. Hide state is
     // enforced server-side — the page itself becomes unreachable too.
     heading: "Our Clients",
+    href: "/clients",
     intro: "The families and companies who celebrate with us.",
     label: "Clients",
     backLabel: "All clients",
     // Individual /clients/[slug] pages follow the /services/[slug]
     // detail-page format, with the client gallery in the showcase.
     showcaseHeading: "Client moments",
-    showcaseIntro: "Real captures from the celebrations we styled for our clients."
+    showcaseIntro: "Real captures from the celebrations we styled for our clients.",
   },
 
   faq: {    heading: "Questions, answered",
