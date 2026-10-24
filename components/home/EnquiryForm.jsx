@@ -5,6 +5,7 @@ import { site, getWaNumber } from "@/data/site";
 import { buildEnquiryMessage } from "@/lib/whatsapp";
 import Reveal from "../ui/Reveal";
 import SectionHeading from "../ui/SectionHeading";
+import Corners from "../ui/Corners";
 import { InstagramIcon, WhatsAppIcon } from "../ui/SocialIcons";
 
 const initial = {
@@ -19,7 +20,7 @@ const initial = {
 
 function FieldIcon({ d }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" className="h-4 w-4 shrink-0 text-teal-bright">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-brand">
       <path d={d} strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -37,7 +38,7 @@ const ICONS = {
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="h-5 w-5 shrink-0 text-teal-bright">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" className="h-4 w-4 shrink-0 text-brand">
       <circle cx="12" cy="12" r="9" />
       <path d="m8.5 12.5 2.5 2.5 4.5-5.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -46,7 +47,7 @@ function CheckIcon() {
 
 function AlertIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className="h-5 w-5 shrink-0 text-plum">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" className="h-4 w-4 shrink-0 text-golden">
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7.5V13" strokeLinecap="round" />
       <circle cx="12" cy="16.2" r="0.6" fill="currentColor" />
@@ -117,97 +118,108 @@ export default function EnquiryForm({ contactEmail = "" } = {}) {
   }
 
   const inputCls =
-    "w-full rounded-xl border border-teal-mid/30 bg-ivory/60 px-4 py-3 text-base text-ink shadow-[inset_0_2px_6px_rgba(11,59,60,0.06)] placeholder:text-ink/40 transition-all focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
+    "w-full rounded-sm border border-frame/25 bg-noir px-4 py-3 text-[13px] text-paper placeholder:text-paper/25 transition-[border-color,box-shadow,background-color] duration-300 hover:border-frame/40 focus:border-brand focus:bg-charcoal/[0.08] focus:outline-none focus:ring-1 focus:ring-brand/30";
 
-  const labelCls = "mb-1.5 flex items-center gap-2 text-sm font-bold text-ink";
+  const labelCls = "mb-2 flex items-center gap-2 text-[9px] font-semibold uppercase leading-none tracking-[0.24em] text-frame/75";
 
   const field = (id, icon, label, control, optional) => (
     <div>
       <label htmlFor={id} className={labelCls}>
         <FieldIcon d={ICONS[icon]} />
         {label}
-        {optional ? <span className="font-medium text-ink/50">{optional}</span> : null}
+        {optional ? <span className="font-medium tracking-[0.14em] text-paper/30">{optional}</span> : null}
       </label>
       {control}
     </div>
   );
 
   return (
-    <section id="enquire" aria-labelledby="enquire-heading" className="relative overflow-clip bg-sand/40 py-16 sm:py-24">
-      <div aria-hidden="true" className="pointer-events-none absolute -left-24 top-10 hidden w-[340px] opacity-20 lg:block [mask-image:radial-gradient(closest-side,black_70%,transparent)]">
-        <img src={site.flower} alt="" draggable={false} loading="lazy" className="h-auto w-full -scale-x-100 select-none" />
-      </div>
-      <div aria-hidden="true" className="pointer-events-none absolute -right-24 bottom-10 hidden w-[340px] opacity-20 lg:block [mask-image:radial-gradient(closest-side,black_70%,transparent)]">
-        <img src={site.flower} alt="" draggable={false} loading="lazy" className="h-auto w-full select-none" />
-      </div>
+    <section id="enquire" aria-labelledby="enquire-heading" className="relative overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_30%_-20%,rgba(232,80,64,0.05),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-20 bottom-10 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(252,204,48,0.03),transparent_65%)] blur-[80px]" />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading id="enquire-heading" heading={t.heading} intro={t.intro} tone="dark" />
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
+        <SectionHeading as="h1" id="enquire-heading" heading={t.heading} intro={t.intro} divider={false} />
 
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-5 lg:gap-8">
+        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
           {/* Direct-contact panel */}
-          <Reveal className="lg:col-span-2">
-            <aside className="flex h-full flex-col gap-4 rounded-3xl border border-gold/50 bg-teal-deep p-6 text-ivory sm:p-7">
-              <p className="font-tagline text-3xl font-bold text-gold-soft">{f.sideHeading}</p>
+          <Reveal className="lg:col-span-5">
+            <aside className="relative flex h-full flex-col gap-3 overflow-hidden rounded-sm border border-frame/20 bg-charcoal/[0.08] p-6 sm:p-7">
+              <Corners className="hidden sm:block" tone="border-frame/20" />
+              <p className="mb-2 font-heading text-[15px] tracking-[0.12em] text-paper">{f.sideHeading}</p>
+
               <a
                 href={waHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-2xl border border-ivory/15 bg-ivory/5 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/60"
+                className="group flex items-center gap-4 border-b border-frame/15 py-4 transition-colors duration-300 hover:border-brand/40"
               >
-                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-whatsapp text-white transition-transform duration-300 group-hover:scale-110">
-                  <WhatsAppIcon className="h-6 w-6" />
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-whatsapp/40 text-whatsapp transition-colors duration-300 group-hover:bg-whatsapp group-hover:text-noir">
+                  <WhatsAppIcon className="h-5 w-5" />
                 </span>
-                <span>
-                  <span className="block text-sm font-medium text-ivory/70">{f.chatInstead}</span>
-                  <span className="block text-lg font-bold text-ivory">{site.footer.whatsappLabel}</span>
+                <span className="min-w-0">
+                  <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/55">{f.chatInstead}</span>
+                  <span className="mt-1.5 block text-[13px] font-medium text-paper">{site.footer.whatsappLabel}</span>
                 </span>
+                <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-brand">→</span>
               </a>
+
               {contactEmail ? (
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="group flex items-center gap-4 rounded-2xl border border-ivory/15 bg-ivory/5 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/60"
+                  className="group flex items-center gap-4 border-b border-frame/15 py-4 transition-colors duration-300 hover:border-brand/40"
                   aria-label={`${f.emailInstead} — ${contactEmail}`}
                 >
-                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:scale-110">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-6 w-6">
-                      <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z" fill="#ffffff" stroke="#EA4335" strokeWidth="1.6" />
-                      <path d="m5.5 8.5 6.5 5.5 6.5-5.5" stroke="#EA4335" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-frame/30 bg-noir">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-5 w-5">
+                      <rect x="3" y="5.5" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" className="text-frame" />
+                      <path d="m4.5 8 7.5 6 7.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand" />
                     </svg>
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm font-medium text-ivory/70">{f.emailInstead}</span>
-                    <span className="block break-all text-lg font-bold text-ivory">{contactEmail}</span>
+                    <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/55">{f.emailInstead}</span>
+                    <span className="mt-1.5 block break-all text-[13px] font-medium text-paper">{contactEmail}</span>
                   </span>
                 </a>
               ) : null}
+
               <a
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-2xl border border-ivory/15 bg-ivory/5 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/60"
+                className="group flex items-center gap-4 border-b border-frame/15 py-4 transition-colors duration-300 hover:border-brand/40"
               >
-                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:scale-110">
-                  <InstagramIcon className="h-6 w-6" />
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-frame/30 bg-noir">
+                  <InstagramIcon className="h-5 w-5" />
                 </span>
-                <span>
-                  <span className="block text-sm font-medium text-ivory/70">{site.instagramLabel}</span>
-                  <span className="block text-lg font-bold text-ivory">{site.instagramHandle}</span>
+                <span className="min-w-0">
+                  <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/55">{site.instagramLabel}</span>
+                  <span className="mt-1.5 block text-[13px] font-medium text-paper">{site.instagramHandle}</span>
                 </span>
+                <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-brand">→</span>
               </a>
-              <div className="rounded-2xl border border-dashed border-gold/50 p-4">
-                <p className="text-sm font-bold text-gold-soft">{site.footer.hoursTitle}</p>
-                <p className="mt-1 text-sm text-ivory/80">{site.footer.hoursDays}</p>
-                <p className="font-tagline text-2xl font-bold text-ivory">{site.footer.hoursTime}</p>
+
+              <div className="mt-3 border border-frame/20 p-4">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/60">{site.footer.hoursTitle}</p>
+                <p className="mt-2 text-[11px] text-paper/50">{site.footer.hoursDays}</p>
+                <p className="mt-1 font-heading text-[14px] tracking-[0.06em] text-paper">{site.footer.hoursTime}</p>
               </div>
+
+              <p className="mt-auto pt-4 text-[9px] font-semibold uppercase leading-[2] tracking-[0.26em] text-frame/35">
+                {site.address}
+              </p>
             </aside>
           </Reveal>
 
           {/* Form card */}
-          <Reveal delay={120} className="lg:col-span-3">
-            <form onSubmit={onSubmit} className="relative h-full overflow-hidden rounded-3xl border border-gold/50 bg-white p-5 shadow-[0_28px_70px_-28px_rgba(11,59,60,0.45)] sm:p-8">
-              <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-2xl border border-gold/30" />
-              <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Reveal delay={120} className="lg:col-span-7">
+            <form
+              onSubmit={onSubmit}
+              className="relative h-full overflow-hidden rounded-sm border border-frame/20 bg-charcoal/[0.05] p-5 sm:p-8"
+            >
+              <Corners className="hidden sm:block" tone="border-frame/20" />
+
+              <div className="relative grid grid-cols-1 gap-5 sm:grid-cols-2">
                 {field("enq-name", "name", f.nameLabel,
                   <input id="enq-name" name="name" autoComplete="name" required value={values.name} onChange={onChange} suppressHydrationWarning className={inputCls} placeholder={f.namePlaceholder} />)}
                 {field("enq-phone", "phone", f.phoneLabel,
@@ -229,7 +241,7 @@ export default function EnquiryForm({ contactEmail = "" } = {}) {
                   <input id="enq-budget" name="budget" value={values.budget} onChange={onChange} suppressHydrationWarning className={inputCls} placeholder={f.budgetPlaceholder} />, f.budgetOptional)}
               </div>
 
-              <div className="relative mt-4">
+              <div className="relative mt-5">
                 {field("enq-requirement", "requirement", f.requirementLabel,
                   <textarea
                     id="enq-requirement"
@@ -237,67 +249,67 @@ export default function EnquiryForm({ contactEmail = "" } = {}) {
                     required
                     rows={4}
                     value={values.requirement}
-                onChange={onChange}
-                suppressHydrationWarning
-                className={`${inputCls} resize-y max-h-44 overflow-y-auto`}
+                    onChange={onChange}
+                    suppressHydrationWarning
+                    className={`${inputCls} max-h-44 resize-y overflow-y-auto`}
                     placeholder={f.requirementPlaceholder}
                   />)}
               </div>
 
-            <div className="honeypot" aria-hidden="true">
-              <label>
-                Company website
-                <input
-                  type="text"
-                  name="company_website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  readOnly
-                  onFocus={(e) => e.currentTarget.removeAttribute("readOnly")}
-                  suppressHydrationWarning
-                />
-              </label>
-            </div>
+              <div className="honeypot" aria-hidden="true">
+                <label>
+                  Company website
+                  <input
+                    type="text"
+                    name="company_website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    readOnly
+                    onFocus={(e) => e.currentTarget.removeAttribute("readOnly")}
+                    suppressHydrationWarning
+                  />
+                </label>
+              </div>
 
-              <div className="relative mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <button
-              type="submit"
-              disabled={status === "sending"}
-              suppressHydrationWarning
-                  className="group inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gold px-8 py-4 text-center text-base font-bold text-ink shadow-[0_12px_32px_-10px_rgba(212,167,60,0.9)] transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-10px_rgba(212,167,60,1)] disabled:opacity-60"
+              <div className="relative mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  suppressHydrationWarning
+                  className="btn btn-brand group w-full disabled:opacity-60"
                 >
                   {status === "sending" ? f.sending : f.submit}
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
+                  <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1.5">→</span>
                 </button>
               </div>
 
               {status === "success" && (
-                <p role="status" className="relative mt-4 flex items-start gap-2.5 rounded-2xl border border-teal-bright/50 bg-ivory/70 px-4 py-3 text-[15px] text-ink">
+                <p role="status" className="relative mt-5 flex items-start gap-2.5 border border-brand/40 bg-brand/[0.06] px-4 py-3 text-[12px] leading-relaxed text-paper">
                   <CheckIcon />
                   {message}
                 </p>
               )}
-            {status === "error" && (
-              <p role="alert" className="relative mt-4 flex items-start gap-2.5 rounded-2xl border border-plum/40 bg-ivory/70 px-4 py-3 text-[15px] text-plum">
-                <AlertIcon />
-                <span>
-                  {message}
-                  {fallbackUrl ? (
-                    <>
-                      {" "}
-                      <a
-                        href={fallbackUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-semibold text-teal-bright underline decoration-gold decoration-2 underline-offset-4"
-                      >
-                        {f.sendViaWhatsApp}
-                      </a>
-                    </>
-                  ) : null}
-                </span>
-              </p>
-            )}
+              {status === "error" && (
+                <p role="alert" className="relative mt-5 flex items-start gap-2.5 border border-golden/40 bg-golden/[0.05] px-4 py-3 text-[12px] leading-relaxed text-paper">
+                  <AlertIcon />
+                  <span>
+                    {message}
+                    {fallbackUrl ? (
+                      <>
+                        {" "}
+                        <a
+                          href={fallbackUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-brand underline decoration-brand/50 decoration-1 underline-offset-4"
+                        >
+                          {f.sendViaWhatsApp}
+                        </a>
+                      </>
+                    ) : null}
+                  </span>
+                </p>
+              )}
             </form>
           </Reveal>
         </div>

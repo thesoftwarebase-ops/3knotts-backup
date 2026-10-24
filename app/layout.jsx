@@ -1,9 +1,7 @@
-import "@fontsource/dancing-script/latin-700.css";
-import "@fontsource/cormorant-garamond/latin-600.css";
-import "@fontsource/cormorant-garamond/latin-700.css";
-import "@fontsource/hind-madurai/latin-400.css";
-import "@fontsource/hind-madurai/latin-500.css";
-import "@fontsource/hind-madurai/latin-600.css";
+import "@fontsource/cinzel/latin-600.css";
+import "@fontsource/montserrat/latin-400.css";
+import "@fontsource/montserrat/latin-500.css";
+import "@fontsource/montserrat/latin-600.css";
 import "./globals.css";
 
 import SiteLoader from "@/components/ui/SiteLoader";
@@ -72,7 +70,7 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safe(faqJsonLd) }} />
         <a
           href={`#${site.anchors.main}`}
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-5 focus:py-2 focus:text-ink"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-brand focus:px-5 focus:py-2 focus:text-noir"
         >
           {site.a11y.skip}
         </a>
@@ -84,10 +82,10 @@ export default function RootLayout({ children }) {
           position="bottom-center"
           toastOptions={{
             style: {
-              background: "#FBF7EC",
-              color: "#16302F",
-              border: "1px solid #D4A73C",
-              borderRadius: "14px"
+              background: "#0A0A0A",
+              color: "#F8F8F8",
+              border: "1px solid rgba(210,174,144,0.35)",
+              borderRadius: "4px"
             }
           }}
         />

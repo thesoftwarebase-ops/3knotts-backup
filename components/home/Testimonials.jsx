@@ -1,61 +1,64 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { site } from "@/data/site";
 import Reveal from "../ui/Reveal";
 import SectionHeading from "../ui/SectionHeading";
+import Corners from "../ui/Corners";
 import { InstagramIcon } from "../ui/SocialIcons";
+
+const SLIDE_MS = 7000;
 
 export default function Testimonials({ items }) {
   const t = site.testimonials;
   const list = items ?? t.items;
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const idleSince = useRef(Date.now());
   const n = list.length;
 
-  const go = (dir) => {
-    idleSince.current = Date.now();
-    setActive((a) => (a + dir + n) % n);
-  };
+  const go = useCallback(
+    (dir) => {
+      setActive((a) => (a + dir + n) % n);
+    },
+    [n]
+  );
 
   useEffect(() => {
-    if (!n || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (paused) return;
-    const id = setInterval(() => {
-      if (document.hidden) return;
-      if (Date.now() - idleSince.current < 6000) return;
-      idleSince.current = Date.now();
-      setActive((a) => (a + 1 + n) % n);
-    }, 1000);
-    return () => clearInterval(id);
-  }, [paused, n]);
+    if (!n || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setTimeout(() => setActive((a) => (a + 1) % n), SLIDE_MS);
+    return () => clearTimeout(id);
+  }, [paused, n, active]);
 
   return (
-    <section aria-labelledby="testimonials-heading" className="bg-ivory pb-16 pt-3 sm:pb-24 sm:pt-8">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <SectionHeading id="testimonials-heading" heading={t.heading} intro={t.intro} tone="dark" />
+    <section aria-labelledby="testimonials-heading" className="relative border-b border-frame/10 py-24 sm:py-32">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_30%_-20%,rgba(232,80,64,0.03),transparent_65%)]" />
+
+      <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
+        <SectionHeading id="testimonials-heading" heading={t.heading} intro={t.intro} />
 
         {n ? (
-          <Reveal className="mt-10">
+          <Reveal className="mt-16">
             <div
-              className="relative overflow-hidden rounded-3xl border border-gold/50 bg-white/70 shadow-[0_24px_60px_-28px_rgba(11,59,60,0.4)]"
+              className="relative overflow-hidden rounded-sm border border-frame/20 bg-charcoal/[0.06]"
               onMouseEnter={() => setPaused(true)}
-              onMouseLeave={() => {
-                idleSince.current = Date.now();
-                setPaused(false);
-              }}
+              onMouseLeave={() => setPaused(false)}
               onTouchStart={() => setPaused(true)}
-              onTouchEnd={() => {
-                idleSince.current = Date.now();
-                setPaused(false);
-              }}
+              onTouchEnd={() => setPaused(false)}
             >
-              <div
-                className="flex transition-transform duration-500 ease-out"
-                style={{ transform: `translateX(-${active * 100}%)` }}
+              <Corners className="hidden sm:block" tone="border-frame/20" />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-5 top-4 select-none font-heading text-[5rem] leading-none text-frame/[0.08] sm:left-8 sm:text-[6rem]"
               >
+                &ldquo;
+              </span>
+
+              {/* Fixed-height stage — every slide crossfades in place, so
+                  the card never jumps between quotes. */}
+              <div className="relative min-h-[23rem] sm:min-h-[21rem]">
                 {list.map((item, i) => {
+                  const isActive = active === i;
                   const initials = item.name
                     .split(/[^A-Za-z]+/)
                     .filter(Boolean)
@@ -65,43 +68,41 @@ export default function Testimonials({ items }) {
                   return (
                     <figure
                       key={`${item.name}-${i}`}
-                      aria-hidden={active === i ? undefined : true}
-                      className="relative w-full shrink-0 overflow-hidden px-7 pb-10 pt-12 text-center sm:px-14"
+                      aria-hidden={isActive ? undefined : true}
+                      className={`absolute inset-0 flex flex-col items-center justify-center px-6 py-14 text-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:px-16 ${
+                        isActive
+                          ? "translate-y-0 opacity-100"
+                          : "pointer-events-none translate-y-3 opacity-0"
+                      }`}
                     >
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 select-none font-tagline text-[10rem] font-bold leading-none text-gold/15"
+                        className="inline-flex h-12 w-12 items-center justify-center border border-frame/35 bg-noir font-heading text-[12px] tracking-[0.14em] text-transparent"
                       >
-                        &ldquo;
+                        <span className="wordmark">{initials}</span>
                       </span>
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-3 rounded-2xl border border-gold/30"
-                      />
-                      <span aria-hidden="true" className="absolute left-6 top-6 h-2 w-2 rotate-45 bg-gold/70" />
-                      <span aria-hidden="true" className="absolute bottom-6 right-6 h-2 w-2 rotate-45 bg-gold/70" />
-                      <span
-                        aria-hidden="true"
-                        className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-deep font-tagline text-2xl font-bold text-gold-soft ring-2 ring-gold"
-                      >
-                        {initials}
-                      </span>
-                      <blockquote className="relative mx-auto mt-5 max-w-2xl font-tagline text-3xl font-bold leading-snug text-ink sm:text-4xl">
+
+                      <blockquote className="mt-7 max-w-2xl text-[15px] font-normal leading-[2] text-paper/80 sm:text-[17px]">
                         {item.quote}
                       </blockquote>
-                      <figcaption className="relative mt-6">
-                        <span aria-hidden="true" className="mx-auto block h-px w-16 bg-gold/70" />
-                        <p className="mt-3 text-base font-bold text-plum">{item.name}</p>
-                        {item.detail ? <p className="mt-0.5 text-sm text-ink/60">{item.detail}</p> : null}
+
+                      <figcaption className="mt-8 flex flex-col items-center">
+                        <span aria-hidden="true" className="h-px w-10 bg-brand" />
+                        <p className="mt-4 font-heading text-[11px] tracking-[0.26em] text-paper">{item.name}</p>
+                        {item.detail ? (
+                          <p className="mt-2 text-[8.5px] font-medium uppercase tracking-[0.3em] text-frame/60">
+                            {item.detail}
+                          </p>
+                        ) : null}
                         {item.insta ? (
                           <a
                             href={`${site.instaUrl}${item.insta}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`@${item.insta} — ${site.a11y.instaProfile}`}
-                            className="group/ig mt-2 inline-flex items-center gap-1.5 rounded-full border border-transparent px-3 py-1 text-sm font-bold text-plum transition-all duration-300 hover:border-gold/60 hover:text-teal"
+                            className="group/ig mt-4 inline-flex items-center gap-1.5 text-[10px] font-medium text-paper/50 transition-colors duration-300 hover:text-brand"
                           >
-                            <InstagramIcon className="h-4 w-4 transition-transform duration-300 group-hover/ig:scale-110" />
+                            <InstagramIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover/ig:scale-110" />
                             <span>@{item.insta}</span>
                           </a>
                         ) : null}
@@ -111,59 +112,54 @@ export default function Testimonials({ items }) {
                 })}
               </div>
 
-              <div className="flex items-center justify-center gap-4 px-6 pb-7">
+              {/* Controls */}
+              <div className="relative flex items-center justify-center gap-5 border-t border-frame/15 px-5 py-5">
                 <button
                   type="button"
                   onClick={() => go(-1)}
                   aria-label={site.a11y.sliderPrev}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/60 text-xl text-plum transition-all hover:scale-105 hover:bg-gold hover:text-ink active:scale-95"
+                  className="inline-flex h-9 w-9 items-center justify-center border border-frame/25 text-base text-paper/70 transition-colors duration-300 hover:border-brand hover:text-brand active:scale-95"
                 >
                   <span aria-hidden="true">‹</span>
                 </button>
+
                 <div className="flex items-center gap-2" role="tablist" aria-label={t.heading}>
                   {list.map((item, i) => (
                     <button
-                      key={item.name}
+                      key={`${item.name}-dot-${i}`}
                       type="button"
                       role="tab"
                       aria-selected={active === i}
-                      aria-label={`${item.name} — ${i + 1}`}
-                      onClick={() => {
-                        idleSince.current = Date.now();
-                        setActive(i);
-                      }}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        active === i ? "w-8 bg-gold" : "w-2 bg-gold/40 hover:bg-gold/70"
+                      aria-label={`${i + 1} / ${n}`}
+                      onClick={() => setActive(i)}
+                      className={`h-px transition-all duration-500 ${
+                        active === i ? "w-8 bg-brand" : "w-3 bg-frame/30 hover:bg-frame/60"
                       }`}
                     />
                   ))}
                 </div>
+
                 <button
                   type="button"
                   onClick={() => go(1)}
                   aria-label={site.a11y.sliderNext}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/60 text-xl text-plum transition-all hover:scale-105 hover:bg-gold hover:text-ink active:scale-95"
+                  className="inline-flex h-9 w-9 items-center justify-center border border-frame/25 text-base text-paper/70 transition-colors duration-300 hover:border-brand hover:text-brand active:scale-95"
                 >
                   <span aria-hidden="true">›</span>
                 </button>
-                <p aria-hidden="true" className="ml-1 font-tagline text-xl font-bold text-plum/70">
+
+                <p aria-hidden="true" className="ml-1 font-heading text-[10px] tracking-[0.24em] text-frame/45">
                   {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
                 </p>
               </div>
             </div>
           </Reveal>
         ) : (
-          <Reveal className="mt-10">
-            <div className="mx-auto max-w-2xl rounded-3xl border border-dashed border-gold bg-white/60 p-8 text-center sm:p-12">
-              <span aria-hidden="true" className="font-tagline text-6xl font-bold leading-none text-gold/60">
-                &ldquo;
-              </span>
-              <p className="mt-2 font-tagline text-3xl font-bold text-plum sm:text-4xl">
-                {t.emptyHeading}
-              </p>
-              <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-ink/75">
-                {t.emptyText}
-              </p>
+          <Reveal className="mt-16">
+            <div className="mx-auto max-w-2xl rounded-sm border border-dashed border-frame/30 px-6 py-14 text-center">
+              <span aria-hidden="true" className="font-heading text-4xl leading-none text-frame/30">&ldquo;</span>
+              <p className="mt-4 font-heading text-xl text-paper">{t.emptyHeading}</p>
+              <p className="mx-auto mt-4 max-w-md text-[13px] leading-[1.9] text-paper/55">{t.emptyText}</p>
             </div>
           </Reveal>
         )}

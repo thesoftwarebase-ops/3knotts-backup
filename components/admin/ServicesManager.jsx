@@ -623,7 +623,7 @@ export default function ServicesManager() {
                 type="button"
                 onClick={() => setSelected(i)}
                 aria-label={`${s.title}`}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(11,59,60,0.45)]"
+                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(0,0,0,0.45)]"
               >
                 <span className="relative block aspect-[16/10] overflow-hidden bg-sand/50">
                   {s.image ? (
@@ -634,7 +634,7 @@ export default function ServicesManager() {
                   {home ? (
                     <span
                       aria-hidden="true"
-                      className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold text-lg leading-none text-ink shadow-[0_6px_16px_-4px_rgba(212,167,60,0.9)]"
+                      className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold text-lg leading-none text-ink shadow-[0_6px_16px_-4px_rgba(232,80,64,0.9)]"
                     >
                       ★
                     </span>

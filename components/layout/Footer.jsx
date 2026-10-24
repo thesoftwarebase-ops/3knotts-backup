@@ -4,7 +4,7 @@ import { InstagramIcon, WhatsAppIcon } from "../ui/SocialIcons";
 
 function ClockIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" className="h-5 w-5 shrink-0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true" className="h-3.5 w-3.5 shrink-0">
       <circle cx="12" cy="12" r="8.5" />
       <path d="M12 7.5V12l3 2" strokeLinecap="round" />
     </svg>
@@ -15,77 +15,89 @@ function Arrow() {
   return (
     <span
       aria-hidden="true"
-      className="-translate-x-2 text-lg leading-none text-teal-bright opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+      className="-translate-x-1.5 text-brand opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100"
     >
       →
     </span>
   );
 }
 
+const linkCls =
+  "group flex items-center justify-between gap-3 py-2 text-[12px] font-medium leading-snug text-paper/50 transition-colors duration-300 hover:text-paper";
+
 export default function Footer({ services = seedServices }) {
-  const waNumber = getWaNumber();
   const ft = site.footer;
-  const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(site.whatsappGreeting)}`;
+  const waHref = `https://wa.me/${getWaNumber()}?text=${encodeURIComponent(site.whatsappGreeting)}`;
   const exploreLinks = [
     { label: site.servicesPage.breadcrumbHome, href: site.homeHref },
     ...site.nav,
     site.navCta
   ];
+
   return (
-    <footer className="border-t-2 border-gold/60 bg-ivory text-ink">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+    <footer className="relative overflow-hidden border-t border-frame/20 bg-noir">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand/60 to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-20%,rgba(232,80,64,0.04),transparent_60%)]" />
+
+      <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12">
           {/* Brand */}
-          <div>
-            <Link href={site.homeHref} className="group inline-flex rounded-full ring-2 ring-gold ring-offset-2 ring-offset-ivory transition-shadow hover:shadow-[0_0_24px_rgba(212,167,60,0.5)]" aria-label={`${site.name} — home`}>
-              <img
-                src={site.logoSm}
-                alt={site.logoAlt}
-                width={64}
-                height={64}
-                loading="lazy"
-                className="h-16 w-16 rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+          <div className="lg:col-span-4">
+            <Link href={site.homeHref} className="group inline-flex items-center gap-3.5" aria-label={`${site.name} — home`}>
+              <span className="inline-flex rounded-full border border-frame/30 p-[3px] transition-colors duration-500 group-hover:border-brand/60">
+                <img
+                  src={site.logoSm}
+                  alt={site.logoAlt}
+                  width={56}
+                  height={56}
+                  loading="lazy"
+                  className="h-12 w-12 rounded-full object-cover"
+                />
+              </span>
+              <span className="font-heading text-[19px] leading-none text-transparent">
+                <span className="wordmark">{site.name}</span>
+              </span>
             </Link>
-            <p className="mt-4 font-tagline text-3xl font-bold leading-tight text-plum">{site.tagline}</p>
-            <p className="mt-2 text-[15px] leading-relaxed text-ink/70">
+
+            <p className="mt-6 text-[9px] font-semibold uppercase leading-none tracking-[0.32em] text-frame/70">
+              {site.tagline}
+            </p>
+            <p className="mt-5 max-w-xs text-[12.5px] leading-[1.9] text-paper/50">
               {site.name} — {ft.about}
             </p>
-            <div className="mt-4 flex items-center gap-3">
+
+            <div className="mt-7 flex items-center gap-2.5">
               <a
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${site.instagramLabel} — ${site.instagramHandle}`}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/60 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_10px_20px_-8px_rgba(212,167,60,0.8)]"
+                className="inline-flex h-10 w-10 items-center justify-center border border-frame/25 text-paper/70 transition-colors duration-300 hover:border-brand hover:text-brand"
               >
-                <InstagramIcon className="h-5 w-5" />
+                <InstagramIcon className="h-4 w-4" />
               </a>
               <a
                 href={waHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={ft.whatsappLabel}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-whatsapp text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_20px_-6px_rgba(37,211,102,0.7)]"
+                className="inline-flex h-10 w-10 items-center justify-center border border-frame/25 text-whatsapp transition-colors duration-300 hover:border-whatsapp hover:bg-whatsapp/10"
               >
-                <WhatsAppIcon className="h-5 w-5" />
+                <WhatsAppIcon className="h-4 w-4" />
               </a>
             </div>
           </div>
 
           {/* Explore */}
-          <nav aria-label={site.a11y.footerNav}>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-ink">{ft.exploreTitle}</p>
-            <ul className="mt-3 flex flex-col gap-0.5">
+          <nav aria-label={site.a11y.footerNav} className="lg:col-span-2">
+            <p className="text-[9px] font-semibold uppercase leading-none tracking-[0.3em] text-frame/80">
+              {ft.exploreTitle}
+            </p>
+            <ul className="mt-5 flex flex-col border-t border-frame/10">
               {exploreLinks.map((l) => (
-                <li key={l.href + l.label}>
-                  <Link
-                    href={l.href}
-                    className="group flex items-center gap-2 rounded-xl px-3 py-2 transition-all duration-300 hover:translate-x-1.5 hover:bg-gold/15"
-                  >
-                    <span className="flex-1 text-[15px] font-medium text-ink/75 transition-colors group-hover:text-ink">
-                      {l.label}
-                    </span>
+                <li key={l.href + l.label} className="border-b border-frame/10">
+                  <Link href={l.href} className={linkCls}>
+                    <span>{l.label}</span>
                     <Arrow />
                   </Link>
                 </li>
@@ -94,25 +106,17 @@ export default function Footer({ services = seedServices }) {
           </nav>
 
           {/* Services */}
-          <nav aria-label={ft.servicesTitle} className="sm:col-span-2 lg:col-span-2">
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-ink">
-              <Link
-                href={site.servicesPage.href}
-                className="rounded transition-colors hover:text-teal-bright"
-              >
+          <nav aria-label={ft.servicesTitle} className="sm:col-span-2 lg:col-span-3">
+            <p className="text-[9px] font-semibold uppercase leading-none tracking-[0.3em] text-frame/80">
+              <Link href={site.servicesPage.href} className="transition-colors duration-300 hover:text-paper">
                 {ft.servicesTitle}
               </Link>
             </p>
-            <ul className="mt-3 grid grid-cols-1 gap-0.5 lg:grid-cols-2">
+            <ul className="mt-5 grid grid-cols-1 gap-x-8 border-t border-frame/10 sm:grid-cols-2 lg:grid-cols-1">
               {services.map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    href={serviceHref(s.slug)}
-                    className="group flex items-center gap-2 rounded-xl px-3 py-2 transition-all duration-300 hover:translate-x-1.5 hover:bg-gold/15"
-                  >
-                    <span className="flex-1 text-[15px] font-medium leading-snug text-ink/75 transition-colors group-hover:text-ink">
-                      {s.title}
-                    </span>
+                <li key={s.slug} className="border-b border-frame/10">
+                  <Link href={serviceHref(s.slug)} className={linkCls}>
+                    <span>{s.title}</span>
                     <Arrow />
                   </Link>
                 </li>
@@ -121,39 +125,61 @@ export default function Footer({ services = seedServices }) {
           </nav>
 
           {/* Contact + hours */}
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-ink">{ft.contactTitle}</p>
-            <address className="mt-3 text-[15px] not-italic leading-relaxed text-ink/75">
+          <div className="lg:col-span-3">
+            <p className="text-[9px] font-semibold uppercase leading-none tracking-[0.3em] text-frame/80">
+              {ft.contactTitle}
+            </p>
+            <address className="mt-5 border-t border-frame/10 pt-4 text-[12.5px] not-italic leading-[1.85] text-paper/50">
               <p>{site.address}</p>
-              <p className="mt-2">
-                <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 rounded font-medium text-teal-bright">
-                  <span className="underline decoration-gold underline-offset-4">{site.mapsLabel}</span>
-                  <span aria-hidden="true" className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">→</span>
+              <p className="mt-3">
+                <a
+                  href={site.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 font-medium text-paper/75 transition-colors duration-300 hover:text-brand"
+                >
+                  <span className="border-b border-frame/30 pb-0.5">{site.mapsLabel}</span>
+                  <span aria-hidden="true" className="-translate-x-1 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
+                    →
+                  </span>
                 </a>
               </p>
             </address>
-            <div className="group mt-4 rounded-2xl border border-gold/60 bg-white/70 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:shadow-[0_16px_36px_-20px_rgba(11,59,60,0.5)]">
-              <p className="flex items-center gap-2 text-sm font-bold text-plum">
+
+            <div className="mt-7 border border-frame/20 p-4">
+              <p className="flex items-center gap-2 text-[9px] font-semibold uppercase leading-none tracking-[0.26em] text-frame/80">
                 <ClockIcon />
                 {ft.hoursTitle}
               </p>
-              <p className="mt-2 text-sm text-ink/75">{ft.hoursDays}</p>
-              <p className="font-tagline text-2xl font-bold text-ink">{ft.hoursTime}</p>
+              <p className="mt-3 text-[11px] font-medium text-paper/45">{ft.hoursDays}</p>
+              <p className="mt-1.5 font-heading text-[15px] tracking-[0.06em] text-paper">{ft.hoursTime}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-gold/40">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
-          <p className="text-sm text-ink/60" suppressHydrationWarning>
-            © {new Date().getFullYear()} {site.name}. {site.tagline}
+      {/* Oversized wordmark lockup — the sign-off of every page */}
+      <div className="relative border-t border-frame/10">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 pb-8 pt-12 sm:flex-row sm:items-end sm:justify-between sm:px-8">
+          <p className="font-heading text-[clamp(1.9rem,8vw,4.6rem)] leading-[0.9] text-transparent">
+            <span className="wordmark">{site.name}</span>
+          </p>
+          <p className="max-w-[15rem] text-[9px] font-medium uppercase leading-[2] tracking-[0.28em] text-frame/45 sm:text-right">
+            {site.tagline}
+          </p>
+        </div>
+      </div>
+
+      <div className="relative border-t border-frame/10">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-5 py-6 sm:flex-row sm:items-center sm:px-8">
+          <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-paper/30" suppressHydrationWarning>
+            © {new Date().getFullYear()} {site.name}
           </p>
           <a
             href={`#${site.anchors.top}`}
-            className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-gold/60 px-4 py-2 text-sm font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:bg-gold/10"
+            className="group inline-flex shrink-0 items-center gap-2.5 border border-frame/20 px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.24em] text-paper/60 transition-colors duration-300 hover:border-brand hover:text-brand"
           >
-            <span aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-y-0.5">↑</span>
+            <span aria-hidden="true" className="transition-transform duration-500 group-hover:-translate-y-0.5">↑</span>
             {ft.backToTop}
           </a>
         </div>

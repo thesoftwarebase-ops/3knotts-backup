@@ -66,7 +66,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-gold/50 bg-white p-6 shadow-[0_28px_70px_-28px_rgba(11,59,60,0.45)] sm:p-8"
+      className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-gold/50 bg-white p-6 shadow-[0_28px_70px_-28px_rgba(0,0,0,0.45)] sm:p-8"
     >
       <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-2xl border border-gold/30" />
       <div aria-hidden="true" className="relative mx-auto h-2 w-2 rotate-45 bg-gold" />

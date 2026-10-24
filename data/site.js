@@ -176,7 +176,7 @@ export function clientHref(slug) {
 }
 
 export const site = {
-  name: "All in One Dream Place",
+  name: "3Knotts",
   tagline: "Your Celebration, Our Creation.",
   url: "https://allinonedreamplace.in",
   homeHref: "/",
@@ -194,17 +194,17 @@ export const site = {
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=No.+10%2F14+Near+BCS+Jain+School+Washermanpet+Chennai+600021",
   mapsLabel: "Open in Google Maps",
 
-  instagram: "https://www.instagram.com/all_in_one_dream_place/",
+  instagram: "https://www.instagram.com/3knotts/",
   // Base used to build per-reviewer profile links from saved handles.
   instaUrl: "https://www.instagram.com/",
   instagramLabel: "Instagram",
-  instagramHandle: "@all_in_one_dream_place",
+  instagramHandle: "@3knotts",
 
   logo: "/logo.jpg",
   logoSm: "/logo-sm.jpg",
-  logoAlt: "All in One Dream Place logo",
-  divider: "/partition.png",
-  flower: "/flower.png",
+  logoAlt: "3Knotts logo",
+  divider: "/partition.svg",
+  flower: "/random.jpg",
 
   loader: {
     note: "Preparing something beautiful…"
@@ -443,11 +443,11 @@ export const site = {
     sliderNext: "Next slide",
     instaProfile: "Open Instagram profile in a new tab"
   },
-  whatsappGreeting: "Hello All in One Dream Place! I'd like to plan a celebration.",
+  whatsappGreeting: "Hello 3Knotts! I'd like to plan a celebration.",
 
   // WhatsApp enquiry message template (field labels + empty marker).
   waMsg: {
-    intro: "Hello All in One Dream Place!",
+    intro: "Hello 3Knotts!",
     name: "Name",
     phone: "Phone",
     date: "Date",
@@ -459,9 +459,9 @@ export const site = {
   },
 
   meta: {
-    title: "All in One Dream Place — Event Decoration & Gifting in Chennai",
+    title: "3Knotts — Event Decoration & Gifting in Chennai",
     description: "Your Celebration, Our Creation. Plates, hampers, stalls, garlands, ring platters, stage and home decoration in Chennai.",
-    ogTitle: "All in One Dream Place — Your Celebration, Our Creation",
+    ogTitle: "3Knotts — Your Celebration, Our Creation",
     ogDescription: "Event decoration and gifting in Chennai — plates, hampers, stalls, garlands, stages and home styling."
   },
 
@@ -672,14 +672,14 @@ export const site = {
     ownerRole: "Founder",
     lede: "Every celebration begins long before the guests arrive — in quiet mornings stringing jasmine, in the patience of a perfectly folded tray, in the belief that no family function is ever small.",
     paragraphs: [
-      "All in One Dream Place is an event decoration and gifting studio in Washermanpet, Chennai. Your Celebration, Our Creation — we dress aarathi plates and stages, pack hampers and trousseaus, run festive stalls, and style homes for weddings, festivals and family functions.",
+      "3Knotts is an event decoration and gifting studio in Washermanpet, Chennai. Your Celebration, Our Creation — we dress aarathi plates and stages, pack hampers and trousseaus, run festive stalls, and style homes for weddings, festivals and family functions.",
       "This is personal work. When you hand us your function, you hand us your family's happiest day — and we carry it like our own. Most of our planning happens on WhatsApp: share your date, venue and function, and we call back with ideas and a clear quotation."
     ]
   },
 
   brand: {
     heading: "Made for your moments",
-    text: "All in One Dream Place is a decoration and gifting studio in Washermanpet, Chennai — plates, hampers, stalls, garlands, stages and warm home styling, all made by hand for your function.",
+    text: "3Knotts is a decoration and gifting studio in Washermanpet, Chennai — plates, hampers, stalls, garlands, stages and warm home styling, all made by hand for your function.",
     cta: { label: "More about us", href: "/about" }
   },
 

@@ -83,7 +83,7 @@ export default function HeroManager() {
         {slides.map((s, i) => (
           <li
             key={`${s.src}-${i}`}
-            className="group overflow-hidden rounded-2xl border border-gold/50 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(11,59,60,0.45)]"
+            className="group overflow-hidden rounded-2xl border border-gold/50 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(0,0,0,0.45)]"
           >
             <span className="relative block aspect-[16/10] overflow-hidden bg-sand/50">
               {s.src ? (
@@ -157,7 +157,7 @@ export default function HeroManager() {
         type="button"
         onClick={save}
         disabled={saving}
-        className="mt-4 rounded-full bg-gold px-8 py-3 text-base font-bold text-ink shadow-[0_10px_30px_-10px_rgba(212,167,60,0.9)] transition-all hover:-translate-y-0.5 disabled:opacity-60"
+        className="mt-4 rounded-full bg-gold px-8 py-3 text-base font-bold text-ink shadow-[0_10px_30px_-10px_rgba(232,80,64,0.9)] transition-all hover:-translate-y-0.5 disabled:opacity-60"
       >
         {m.save}
       </button>

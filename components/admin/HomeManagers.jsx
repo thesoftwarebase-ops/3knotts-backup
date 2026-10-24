@@ -200,7 +200,7 @@ export function StepsManager() {
   return (
     <div className="mt-6 flex flex-col gap-5">
       {(value || []).map((s, i) => (
-        <div key={s.n + i} className="relative overflow-hidden rounded-3xl border border-gold/50 bg-white shadow-[0_18px_44px_-24px_rgba(11,59,60,0.4)]">
+        <div key={s.n + i} className="relative overflow-hidden rounded-3xl border border-gold/50 bg-white shadow-[0_18px_44px_-24px_rgba(0,0,0,0.4)]">
           <button
             type="button"
             onClick={() => setValue(value.filter((_, k) => k !== i))}
@@ -335,7 +335,7 @@ export function StepsManager() {
         onClick={() => setValue([...(value || []), { n: "", title: "", text: "", art: "", rich: null, points: [] }])}
         className="flex items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-gold/60 bg-gold/5 px-6 py-8 transition-all hover:-translate-y-0.5 hover:border-gold hover:bg-gold/10"
       >
-        <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold font-tagline text-3xl font-bold leading-none text-ink shadow-[0_10px_24px_-8px_rgba(212,167,60,0.9)]">
+        <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold font-tagline text-3xl font-bold leading-none text-ink shadow-[0_10px_24px_-8px_rgba(232,80,64,0.9)]">
           +
         </span>
         <span className="font-tagline text-3xl font-bold text-plum">{m.addStep}</span>

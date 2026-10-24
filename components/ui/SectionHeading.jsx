@@ -1,17 +1,41 @@
 import Reveal from "./Reveal";
 import SectionDivider from "./SectionDivider";
 
-// Shared section heading: floral partition, Dancing Script title, intro — centered.
-export default function SectionHeading({ id, heading, intro, tone = "dark", center = true, divider = true }) {
-  const headingCls = tone === "light" ? "text-gold-soft" : "text-plum";
-  const introCls = tone === "light" ? "text-ivory/85" : "text-ink/80";
+// Shared section heading: floral motif, Cinzel caps title, Montserrat intro.
+// `as` lets a page use it for its single h1. `tone` is accepted for
+// backwards compatibility — every public section now sits on black.
+export default function SectionHeading({
+  id,
+  heading,
+  intro,
+  center = true,
+  divider = true,
+  as: Tag = "h2"
+}) {
   return (
-    <Reveal>
-      {divider ? <SectionDivider align={center ? "center" : "left"} /> : null}
-      <h2 id={id} className={`mt-4 font-tagline text-4xl font-bold sm:text-5xl ${headingCls} ${center ? "text-center" : ""}`}>
+    <Reveal className={center ? "text-center" : ""}>
+      {divider ? (
+        <div className={`flex ${center ? "justify-center" : "justify-start"}`}>
+          <SectionDivider align={center ? "center" : "left"} />
+        </div>
+      ) : null}
+
+      <Tag
+        id={id}
+        className={`${divider ? "mt-7" : ""} font-heading text-[clamp(1.75rem,4.2vw,2.75rem)] leading-[1.14] text-paper`}
+      >
         {heading}
-      </h2>
-      {intro ? <p className={`mt-3 max-w-2xl text-base leading-relaxed ${introCls} ${center ? "mx-auto text-center" : ""}`}>{intro}</p> : null}
+      </Tag>
+
+      {intro ? (
+        <p
+          className={`mt-5 max-w-xl text-[14px] font-normal leading-[1.9] text-paper/60 sm:text-[15px] ${
+            center ? "mx-auto" : ""
+          }`}
+        >
+          {intro}
+        </p>
+      ) : null}
     </Reveal>
   );
 }

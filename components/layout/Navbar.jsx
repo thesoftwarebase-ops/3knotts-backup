@@ -11,13 +11,23 @@ import { InstagramIcon, WhatsAppIcon } from "../ui/SocialIcons";
 export default function Navbar({ navLinks = site.nav } = {}) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      setScrolled(window.scrollY > 14);
+      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -29,68 +39,87 @@ export default function Navbar({ navLinks = site.nav } = {}) {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open ]);
+  }, [open]);
 
   const waHref = `https://wa.me/${getWaNumber()}`;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Utility strip */}
-      <div className="hidden bg-teal-deep text-ivory sm:block">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2 text-[13px] font-medium leading-none tracking-wide">
-          <a href={waHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded text-ivory/90 transition-colors hover:text-gold-soft">
-            <WhatsAppIcon />
-            {site.footer.whatsappLabel} · {site.addressParts.locality}
+      <div className="hidden border-b border-frame/10 bg-noir/85 backdrop-blur-md sm:block">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 text-[9px] font-medium uppercase leading-none tracking-[0.3em] text-paper/40">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 transition-colors duration-300 hover:text-golden"
+          >
+            <WhatsAppIcon className="h-3 w-3" />
+            {site.footer.whatsappLabel}
+            <span aria-hidden="true" className="h-2.5 w-px bg-frame/20" />
+            {site.addressParts.locality}
           </a>
           <a
             href={site.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded text-ivory/90 transition-colors hover:text-gold-soft"
+            className="flex items-center gap-2.5 transition-colors duration-300 hover:text-golden"
           >
-            <InstagramIcon className="h-5 w-5" />
+            <InstagramIcon className="h-3 w-3" />
             {site.instagramHandle}
           </a>
         </div>
       </div>
 
-      {/* Main bar — ivory, gold rules */}
+      {/* Main bar */}
       <div
-        className={`bg-ivory/95 backdrop-blur transition-shadow duration-300 ${
-          scrolled ? "shadow-[0_10px_36px_-14px_rgba(11,59,60,0.5)]" : ""
+        className={`relative border-b bg-noir/90 backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-500 ${
+          scrolled
+            ? "border-frame/20 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.95)]"
+            : "border-frame/10"
         }`}
       >
-        <div aria-hidden="true" className="h-[3px] bg-gradient-to-r from-gold/20 via-gold to-gold/20" />
-        <nav aria-label={site.a11y.primaryNav} className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
-          <Link href={site.homeHref} className="group flex shrink-0 items-center" aria-label={`${site.name} — home`}>
-            <span className="inline-flex rounded-full shadow-[0_6px_20px_-6px_rgba(11,59,60,0.55)] ring-[3px] ring-gold ring-offset-2 ring-offset-ivory transition-transform duration-300 group-hover:scale-[1.04]">
+        <nav
+          aria-label={site.a11y.primaryNav}
+          className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-3.5 sm:px-6 sm:py-4"
+        >
+          <Link href={site.homeHref} className="group flex shrink-0 items-center gap-3.5" aria-label={`${site.name} — home`}>
+            <span className="relative inline-flex rounded-full border border-frame/30 p-[3px] transition-colors duration-500 group-hover:border-brand/60">
               <img
                 src={site.logoSm}
                 alt={site.logoAlt}
-                width={96}
-                height={96}
+                width={88}
+                height={88}
                 loading="eager"
-                className="h-20 w-20 rounded-full object-cover sm:h-24 sm:w-24"
+                className="h-11 w-11 rounded-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-12 sm:w-12"
               />
+            </span>
+            <span className="hidden flex-col gap-1.5 leading-none sm:flex">
+              <span className="font-heading text-[13px] tracking-[0.14em] text-paper transition-colors duration-300 group-hover:text-brand">
+                {site.name}
+              </span>
+              <span className="text-[8px] font-medium uppercase tracking-[0.3em] text-frame/65">
+                {site.tagline}
+              </span>
             </span>
           </Link>
 
           <button
             type="button"
-            className="inline-flex items-center gap-2.5 rounded-full bg-teal-deep px-5 py-2.5 text-sm font-semibold text-ivory ring-1 ring-gold/60 transition-transform hover:-translate-y-0.5 md:hidden"
+            className="inline-flex items-center gap-2.5 border border-frame/30 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-paper transition-colors duration-300 hover:border-brand hover:text-brand md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen(true)}
           >
-            <span aria-hidden="true" className="flex flex-col gap-1">
-              <span className="h-0.5 w-5 bg-gold-soft" />
-              <span className="h-0.5 w-5 bg-gold-soft" />
-              <span className="h-0.5 w-3.5 bg-gold-soft" />
+            <span aria-hidden="true" className="flex flex-col gap-[3px]">
+              <span className="h-px w-4 bg-paper/70" />
+              <span className="h-px w-4 bg-paper/70" />
+              <span className="h-px w-2.5 bg-brand" />
             </span>
             {site.menuClosedLabel}
           </button>
 
-          <ul className="hidden items-center gap-10 md:flex">
+          <ul className="hidden items-center gap-8 md:flex lg:gap-10">
             {navLinks.map((l) => {
               const isActive = pathname === l.href;
               return (
@@ -98,82 +127,103 @@ export default function Navbar({ navLinks = site.nav } = {}) {
                   <Link
                     href={l.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`group relative rounded py-1 font-tagline text-2xl font-bold transition-colors ${
-                      isActive ? "text-teal-bright" : "text-ink hover:text-teal-bright"
+                    className={`group relative block py-2 text-[10px] font-medium uppercase tracking-[0.26em] transition-colors duration-300 ${
+                      isActive ? "text-brand" : "text-paper/65 hover:text-paper"
                     }`}
                   >
                     {l.label}
                     <span
                       aria-hidden="true"
-                      className={`absolute -bottom-1 left-0 h-[2px] w-full origin-left rounded bg-gold transition-transform duration-300 ${
+                      className={`absolute -bottom-px left-0 h-px w-full origin-left bg-gradient-to-r from-brand to-ember transition-transform duration-500 ${
                         isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="absolute -bottom-[7px] left-1/2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-gold transition-opacity duration-300"
-                      style={{ opacity: isActive ? 1 : 0 }}
                     />
                   </Link>
                 </li>
               );
             })}
-            <li className="ml-1">
+            <li>
               <Link
                 href={site.navCta.href}
-                className="rounded-full bg-gold px-7 py-2.5 text-[13px] font-bold uppercase tracking-[0.14em] text-ink shadow-[0_6px_18px_-6px_rgba(212,167,60,0.9)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-6px_rgba(212,167,60,1)]"
+                className="btn btn-brand px-6 py-3 text-[10px] tracking-[0.24em]"
               >
                 {site.navCta.label}
               </Link>
             </li>
           </ul>
         </nav>
-        <div aria-hidden="true" className="h-px bg-gold/50" />
+
+        {/* Reading progress — brand into gold */}
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-frame/10">
+          <div
+            className="h-px origin-left bg-gradient-to-r from-brand-dark via-brand to-golden shadow-[0_0_14px_rgba(232,80,64,0.7)] transition-transform duration-150 ease-out"
+            style={{ transform: `scaleX(${progress})` }}
+          />
+        </div>
       </div>
 
       {/* Fullscreen mobile menu */}
       <div
         id="mobile-menu"
         aria-hidden={!open}
-        className={`fixed inset-0 z-[60] flex flex-col bg-teal-deep transition-all duration-300 md:hidden ${
-          open ? "visible opacity-100" : "invisible opacity-0"
+        className={`fixed inset-0 z-[60] flex flex-col overflow-hidden bg-noir transition-all duration-500 md:hidden ${
+          open ? "visible opacity-100" : "pointer-events-none invisible opacity-0"
         }`}
       >
-        <div aria-hidden="true" className="h-[3px] shrink-0 bg-gradient-to-r from-gold/20 via-gold to-gold/20" />
-        <div className="flex items-center justify-between px-5 py-3">
-          <span className="inline-flex rounded-full ring-2 ring-gold">
-            <img src={site.logoSm} alt="" width={52} height={52} loading="eager" className="h-13 w-13 rounded-full object-cover" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_0%,rgba(232,80,64,0.06),transparent_55%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-brand/[0.06] to-transparent" />
+
+        <div className="relative flex items-center justify-between border-b border-frame/15 px-5 py-4">
+          <span className="inline-flex items-center gap-3">
+            <img
+              src={site.logoSm}
+              alt=""
+              width={48}
+              height={48}
+              loading="eager"
+              className="h-10 w-10 rounded-full border border-frame/30 object-cover"
+            />
+            <span className="font-heading text-[11px] tracking-[0.14em] text-paper">{site.name}</span>
           </span>
           <button
             type="button"
             onClick={() => setOpen(false)}
             aria-label={site.menuOpenLabel}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/60 text-2xl leading-none text-gold-soft"
+            className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-xl leading-none text-paper transition-colors hover:border-brand hover:text-brand"
           >
             <span aria-hidden="true">×</span>
           </button>
         </div>
 
-        <nav aria-label={site.a11y.mobileNav} className="flex flex-1 flex-col justify-center px-8">
-          <p className="font-tagline text-2xl text-gold-soft">{site.tagline}</p>
-          <ul className="mt-6 flex flex-col">
+        <nav aria-label={site.a11y.mobileNav} className="relative flex flex-1 flex-col justify-center px-6">
+          <p className="text-[9px] font-semibold uppercase leading-none tracking-[0.34em] text-frame/60">
+            {site.tagline}
+          </p>
+          <ul className="mt-8 flex flex-col border-t border-frame/15">
             {navLinks.map((l, i) => {
               const isActive = pathname === l.href;
               return (
-                <li key={l.href} className="border-b border-ivory/10 last:border-0">
+                <li key={l.href} className="border-b border-frame/15">
                   <Link
                     href={l.href}
                     tabIndex={open ? 0 : -1}
                     aria-current={isActive ? "page" : undefined}
                     onClick={() => setOpen(false)}
-                    className={`flex items-baseline gap-4 rounded py-4 ${
-                      isActive ? "text-gold-soft" : "text-ivory"
-                    }`}
+                    className="group flex items-center gap-5 py-5"
                   >
-                    <span aria-hidden="true" className="text-sm font-semibold text-gold/80">
+                    <span aria-hidden="true" className="text-[9px] font-semibold tracking-[0.24em] text-brand/80">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="font-tagline text-5xl font-bold">{l.label}</span>
+                    <span
+                      className={`font-heading text-[clamp(1.5rem,7vw,2rem)] leading-none transition-colors duration-300 ${
+                        isActive ? "text-transparent" : "text-paper group-hover:text-brand"
+                      }`}
+                    >
+                      <span className={isActive ? "wordmark" : undefined}>{l.label}</span>
+                    </span>
+                    <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1.5 group-hover:text-brand">
+                      →
+                    </span>
                   </Link>
                 </li>
               );
@@ -181,37 +231,38 @@ export default function Navbar({ navLinks = site.nav } = {}) {
           </ul>
         </nav>
 
-        <div className="shrink-0 px-8 pb-10">
+        <div className="relative shrink-0 border-t border-frame/15 px-6 py-7">
           <Link
             href={site.navCta.href}
             tabIndex={open ? 0 : -1}
             onClick={() => setOpen(false)}
-            className="mb-4 block rounded-full bg-gold px-4 py-3.5 text-center text-sm font-bold uppercase tracking-[0.14em] text-ink"
+            className="btn btn-brand w-full"
           >
             {site.navCta.label}
+            <span aria-hidden="true">→</span>
           </Link>
-          <div className="flex gap-3">
+          <div className="mt-3 flex gap-3">
             <a
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
               tabIndex={open ? 0 : -1}
-              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-whatsapp px-4 py-3.5 text-sm font-bold text-white"
+              className="btn btn-ghost flex-1 px-4 text-[10px]"
             >
-              <WhatsAppIcon className="h-5 w-5" />
+              <WhatsAppIcon className="h-4 w-4" />
               {site.footer.whatsappLabel}
             </a>
+            <a
+              href={site.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              tabIndex={open ? 0 : -1}
+              aria-label={site.instagramLabel}
+              className="inline-flex h-[46px] w-[46px] items-center justify-center border border-frame/30 transition-colors hover:border-brand"
+            >
+              <InstagramIcon className="h-4 w-4" />
+            </a>
           </div>
-          <a
-            href={site.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            tabIndex={open ? 0 : -1}
-            className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-ivory/80"
-          >
-            <InstagramIcon className="h-5 w-5" />
-            {site.instagramHandle}
-          </a>
         </div>
       </div>
     </header>

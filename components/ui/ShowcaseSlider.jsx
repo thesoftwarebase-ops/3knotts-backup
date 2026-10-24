@@ -7,12 +7,10 @@ import { site } from "@/data/site";
 import { mediaImage } from "@/lib/media";
 
 // Expanding-cards showcase. All motion is transform + opacity only
-// (GPU-composited), so it stays smooth on phones: the deck never
-// animates layout properties. Slides: { image, title, text, href?, cta? }.
-// variant="card" shrinks the frame for inside ServiceCard cells: no own
-// border/shadow, smaller overlay text, no big blurb paragraph.
-// isolate={true} stops click events from bubbling further up (used when
-// the slider sits inside a clickable card).
+// (GPU-composited), so it stays smooth on phones. Slides:
+// { image, title, text, href?, cta? }.
+// variant="card" shrinks the frame for inside ServiceCard cells.
+// isolate={true} stops click events from bubbling further up.
 export default function ShowcaseSlider({ items, variant = "page", isolate = false }) {
   const isCard = variant === "card";
   const [active, setActive] = useState(0);
@@ -26,19 +24,20 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
     setActive((a) => (a + dir + n) % n);
   };
 
-  // Autoplay: advance every 5s of idleness. Skipped for reduced motion,
+  // Autoplay: advance after 6s of idleness. Skipped for reduced motion,
   // hidden tabs, hover and touch holds. Any interaction restarts the clock.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (paused) return;
     const id = setInterval(() => {
       if (document.hidden) return;
-      if (Date.now() - idleSince.current < 5000) return;
+      if (Date.now() - idleSince.current < 6000) return;
       idleSince.current = Date.now();
       setActive((a) => (a + 1 + n) % n);
     }, 1000);
     return () => clearInterval(id);
   }, [paused, n]);
+
   const current = items[active];
 
   return (
@@ -46,8 +45,8 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
       <div
         className={
           isCard
-            ? "relative h-[400px] overflow-hidden bg-ink sm:h-[460px]"
-            : "relative h-[480px] overflow-hidden rounded-3xl border border-gold/50 bg-ink shadow-[0_30px_70px_-30px_rgba(11,59,60,0.6)] sm:h-[560px]"
+            ? "relative h-[400px] overflow-hidden bg-noir sm:h-[460px]"
+            : "relative h-[460px] overflow-hidden rounded-sm border border-frame/25 bg-noir sm:h-[580px]"
         }
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => {
@@ -82,7 +81,7 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
                     ? { opacity: 0 }
                     : { transform: `translateX(${tx}%) scale(0.35)`, zIndex: 30 - offset }
               }
-              className={`absolute inset-0 origin-right transition-[transform,opacity] duration-500 ease-out ${
+              className={`absolute inset-0 origin-right transition-[transform,opacity] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isActive
                   ? "cursor-default opacity-100"
                   : parked
@@ -93,8 +92,8 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
               <div
                 className={`relative h-full w-full overflow-hidden ${
                   isActive
-                    ? "rounded-3xl"
-                    : "rounded-2xl border border-ivory/30 shadow-[0_18px_40px_rgba(0,0,0,0.5)]"
+                    ? "rounded-sm"
+                    : "rounded-sm border border-frame/30 shadow-[0_24px_60px_rgba(0,0,0,0.7)]"
                 }`}
               >
                 <Image
@@ -104,19 +103,19 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
                   fill
                   loading={isActive ? "eager" : "lazy"}
                   sizes="(max-width: 640px) 100vw, 60vw"
-                  className={`object-cover ${isActive ? "showcase-drift" : ""}`}
+                  className={`object-cover opacity-90 ${isActive ? "image-drift" : ""}`}
                 />
                 <span
                   aria-hidden="true"
                   className={`absolute inset-0 ${
                     isActive
-                      ? "bg-gradient-to-t from-black/80 via-black/25 to-black/10"
-                      : "bg-black/20"
+                      ? "bg-gradient-to-t from-noir via-noir/35 to-noir/25"
+                      : "bg-black/45"
                   }`}
                 />
                 {!isActive && !parked ? (
-                  <span className="absolute inset-x-0 bottom-0 p-3">
-                    <span className="block truncate font-tagline text-xl font-bold leading-tight text-ivory">
+                  <span className="absolute inset-x-0 bottom-0 p-4">
+                    <span className="block truncate font-heading text-[13px] leading-tight text-paper/90">
                       {s.title}
                     </span>
                   </span>
@@ -128,49 +127,63 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
 
         {/* Active content */}
         <div key={`${current.image}-${active}`} className="absolute inset-x-0 bottom-0 z-30 p-6 sm:p-10">
+          <div aria-hidden="true" className="mb-5 h-px w-14 bg-brand" />
           <p
-            className={`showcase-rise font-tagline font-bold leading-tight text-ivory ${
-              isCard ? "text-2xl sm:text-3xl" : "text-4xl sm:text-6xl"
+            className={`showcase-rise font-heading font-semibold leading-[1.2] text-paper ${
+              isCard ? "text-xl sm:text-2xl" : "text-[clamp(1.6rem,4vw,2.9rem)]"
             }`}
-            style={{ animationDelay: "0ms" }}
           >
             {current.title}
           </p>
           {!isCard && current.text ? (
-            <p className="showcase-rise mt-2 max-w-md text-[15px] leading-relaxed text-ivory/85 sm:text-base" style={{ animationDelay: "80ms" }}>
+            <p
+              className="showcase-rise mt-4 max-w-lg text-[13px] leading-[1.85] text-paper/60 sm:text-[14px]"
+              style={{ animationDelay: "80ms" }}
+            >
               {current.text}
             </p>
           ) : null}
           {current.href ? (
             <Link
               href={current.href}
-              className="showcase-rise mt-5 inline-block rounded-full bg-gold px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-ink transition-transform hover:-translate-y-0.5"
+              className="showcase-rise btn btn-brand mt-7 px-6 py-3 text-[10px]"
               style={{ animationDelay: "160ms" }}
             >
               {current.cta || site.servicesPage.exploreLabel}
+              <span aria-hidden="true">→</span>
             </Link>
           ) : null}
         </div>
 
+        {/* Counter */}
+        {n > 1 ? (
+          <p
+            aria-hidden="true"
+            className="absolute left-6 top-6 z-40 text-[10px] font-semibold uppercase tracking-[0.3em] text-frame/80 sm:left-10 sm:top-10"
+          >
+            {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
+          </p>
+        ) : null}
+
         {/* Controls — pointless on a one-slide deck */}
         {n > 1 ? (
           <div className="absolute bottom-5 right-5 z-40 flex gap-2 sm:bottom-8 sm:right-8">
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            aria-label={site.a11y.sliderPrev}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/70 bg-black/40 text-xl text-gold-soft backdrop-blur-sm transition-all hover:scale-105 hover:bg-gold hover:text-ink active:scale-95"
-          >
-            <span aria-hidden="true">‹</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => go(1)}
-            aria-label={site.a11y.sliderNext}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/70 bg-black/40 text-xl text-gold-soft backdrop-blur-sm transition-all hover:scale-105 hover:bg-gold hover:text-ink active:scale-95"
-          >
-            <span aria-hidden="true">›</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label={site.a11y.sliderPrev}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-frame/35 bg-noir/60 text-xl text-paper backdrop-blur-sm transition-all duration-300 hover:border-brand hover:bg-brand hover:text-noir active:scale-95"
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label={site.a11y.sliderNext}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-frame/35 bg-noir/60 text-xl text-paper backdrop-blur-sm transition-all duration-300 hover:border-brand hover:bg-brand hover:text-noir active:scale-95"
+            >
+              <span aria-hidden="true">›</span>
+            </button>
           </div>
         ) : null}
       </div>

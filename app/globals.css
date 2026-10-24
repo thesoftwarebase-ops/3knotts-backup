@@ -1,24 +1,71 @@
 @import "tailwindcss";
 
+/* ──────────────────────────────────────────────────────────────
+   3Knotts — art direction 2026
+   noir      #000000  page field
+   brand     #E85040  primary red (buttons, accents)
+   brand-dark#B82820  hover / shadow
+   ember     #CC6C42  gradient start
+   golden    #FCCC30  gradient end
+   frame     #D2AE90  hairlines, borders, small caps
+   charcoal  #404040  quiet surfaces
+   paper     #F8F8F8  text on black
+   ────────────────────────────────────────────────────────────── */
 @theme {
-  --color-teal-deep: #0B3B3C;
-  --color-teal-mid: #0F4F4D;
-  --color-teal-bright: #14706A;
-  --color-gold: #D4A73C;
-  --color-gold-soft: #F1D78A;
-  --color-ivory: #FBF7EC;
-  --color-plum: #5B2A4B;
-  --color-ink: #16302F;
-  --color-sand: #E6DCC0;
-  --color-whatsapp: #25D366;
+  --color-noir: #000000;
+  --color-brand: #e85040;
+  --color-brand-dark: #b82820;
+  --color-ember: #cc6c42;
+  --color-golden: #fccc30;
+  --color-frame: #d2ae90;
+  --color-charcoal: #404040;
+  --color-paper: #f8f8f8;
+  --color-whatsapp: #25d366;
 
-  --font-tagline: "Dancing Script", "Segoe Script", cursive;
-  --font-card: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Hind Madurai", system-ui, -apple-system, sans-serif;
+  --font-heading: "Cinzel", Georgia, "Times New Roman", serif;
+  --font-body: "Montserrat", system-ui, -apple-system, sans-serif;
+
+  --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* ── Dashboard palette ───────────────────────────────────────
+     The admin area keys off its own token names. Rather than touch
+     its layout or components, these are mapped onto the 3Knotts
+     palette: paper surfaces, noir text, red and gold accents. */
+  --color-teal-deep: #000000;
+  --color-teal-mid: #404040;
+  --color-teal-bright: #b82820;
+  --color-gold: #e85040;
+  --color-gold-soft: #fccc30;
+  --color-ivory: #f8f8f8;
+  --color-plum: #b82820;
+  --color-ink: #000000;
+  --color-sand: #efe3d5;
+  --font-tagline: "Cinzel", Georgia, serif;
+}
+
+/* Cinzel is always caps, semibold, generously tracked. Declared
+   unlayered so it beats the weight/tracking utilities. */
+.font-heading {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* The “3 KNOTTS” wordmark — burnt orange into golden yellow. */
+.wordmark {
+  background-image: linear-gradient(100deg, var(--color-ember) 0%, var(--color-golden) 72%, #ffe89a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 80, 64, 0.55) #000000;
 }
 
 html.lenis,
@@ -30,10 +77,190 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-/* Hero autoplay progress (transform-only) */
+body {
+  background-color: var(--color-noir);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-noir);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(232, 80, 64, 0.85), rgba(184, 40, 32, 0.85));
+  border: 2px solid #000000;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand);
+}
+
+section[id],
+div[id="intro"] {
+  scroll-margin-top: 104px;
+}
+
+@media (min-width: 640px) {
+  section[id],
+  div[id="intro"] {
+    scroll-margin-top: 132px;
+  }
+}
+
+/* ── Film grain over the whole canvas. Never intercepts clicks. ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ── Shared primitives ───────────────────────────────────────── */
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply text-[10px] font-semibold uppercase leading-none tracking-[0.36em] text-frame/75;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-sm px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition-all duration-300;
+  }
+
+  .btn-brand {
+    @apply bg-brand text-noir shadow-[0_18px_44px_-20px_rgba(232,80,64,0.9)] hover:-translate-y-0.5 hover:bg-brand-dark hover:text-paper hover:shadow-[0_26px_56px_-20px_rgba(184,40,32,0.95)] active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply border border-frame/35 text-paper hover:-translate-y-0.5 hover:border-brand hover:bg-brand/[0.06] hover:text-brand active:translate-y-0;
+  }
+
+  .rule {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-frame/30 to-transparent;
+  }
+
+  .panel {
+    @apply rounded-sm border border-frame/20 bg-charcoal/[0.07] transition-[border-color,background-color,box-shadow,transform] duration-500;
+  }
+
+  .panel-hover {
+    @apply hover:-translate-y-1 hover:border-brand/50 hover:bg-charcoal/[0.16] hover:shadow-[0_34px_70px_-34px_rgba(232,80,64,0.45)];
+  }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-frame transition-colors duration-300 group-hover:text-brand;
+  }
+}
+
+/* ── Ambient canvas drift (transform only) ───────────────────── */
+.ambient-drift {
+  animation: ambient-drift 44s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.ambient-drift-slow {
+  animation: ambient-drift-rev 66s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4vw, 3vh, 0) scale(1.12);
+  }
+}
+
+@keyframes ambient-drift-rev {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(-4vw, -4vh, 0) scale(1);
+  }
+}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 1000ms var(--ease-luxe) both;
+}
+
+.hero-rise-2 {
+  animation: hero-rise 1000ms var(--ease-luxe) 140ms both;
+}
+
+.hero-rise-3 {
+  animation: hero-rise 1000ms var(--ease-luxe) 260ms both;
+}
+
+.hero-rise-4 {
+  animation: hero-rise 1000ms var(--ease-luxe) 380ms both;
+}
+
+/* A masked line that rises into place — used for the display line. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.line-inner {
+  display: block;
+  animation: line-rise 1150ms var(--ease-luxe) both;
+}
+
+@keyframes line-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 108%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Shared carousel progress. Duration comes from --slide-ms so the
+   bar and the autoplay always share one clock. */
 .hero-progress {
   transform-origin: left center;
-  animation: hero-progress 3s linear forwards;
+  animation: hero-progress var(--slide-ms, 6000ms) linear forwards;
 }
 
 @keyframes hero-progress {
@@ -45,57 +272,158 @@ html.lenis body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-progress {
-    display: none;
+/* Scroll cue — a light travelling down a hairline */
+.scroll-cue {
+  animation: cue-slide 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes cue-slide {
+  0% {
+    transform: translateY(-110%);
+  }
+  65%,
+  100% {
+    transform: translateY(110%);
   }
 }
 
-section[id] {
-  scroll-margin-top: 110px;
+/* ── Scroll reveal (JS adds .is-in) ──────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition:
+    opacity 900ms var(--ease-luxe),
+    transform 900ms var(--ease-luxe);
+  will-change: opacity, transform;
 }
 
-@media (min-width: 640px) {
-  section[id] {
-    scroll-margin-top: 152px;
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* ── Page-to-page entrance (app/(site)/template.jsx) ─────────── */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-body {
-  background-color: var(--color-ivory);
-  color: var(--color-ink);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
+.page-enter {
+  animation: page-enter 560ms var(--ease-luxe) both;
 }
 
-::selection {
-  background: var(--color-gold-soft);
-  color: var(--color-ink);
+/* ── Image drift (Ken Burns) ─────────────────────────────────── */
+.image-drift {
+  animation: image-drift 9s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-:focus-visible {
-  outline: 3px solid var(--color-gold);
-  outline-offset: 3px;
-  border-radius: 6px;
+@keyframes image-drift {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.1);
+  }
 }
 
-/* Slim themed scrollbar for scrollable panels */
-.nice-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-gold) transparent;
+/* ── Brand loader: petals bloom out of the centre ────────────── */
+.loader-petal {
+  border-radius: 100% 4px 100% 4px;
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
+  transform-origin: center;
+  animation: petal-bloom 900ms var(--ease-luxe) forwards;
 }
 
-.nice-scroll::-webkit-scrollbar {
-  width: 6px;
+@keyframes petal-bloom {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--r)) translateY(-34px) scale(1);
+  }
 }
 
-.nice-scroll::-webkit-scrollbar-thumb {
-  background: var(--color-gold);
-  border-radius: 999px;
+.loader-core {
+  animation: core-pulse 1.8s ease-in-out infinite;
 }
 
-.nice-scroll::-webkit-scrollbar-track {
-  background: transparent;
+@keyframes core-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.16);
+  }
+}
+
+.loader-dot {
+  animation: loader-blink 1.3s ease-in-out infinite;
+}
+
+@keyframes loader-blink {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.loader-bar {
+  transform-origin: left center;
+  animation: loader-fill 1300ms var(--ease-luxe) forwards;
+}
+
+@keyframes loader-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ── Showcase slider ─────────────────────────────────────────── */
+.showcase-rise {
+  opacity: 0;
+  animation: showcase-in 620ms var(--ease-luxe) forwards;
+}
+
+@keyframes showcase-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Honeypot: off-screen, never display:none so bots still fill it */
+.honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
 }
 
 /* Proper pointer cursors on every interactive element */
@@ -112,164 +440,61 @@ button:disabled,
   cursor: not-allowed;
 }
 
-/* Hero entrance — the one bold motion moment */
-@keyframes hero-rise {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Slim themed scrollbar for scrollable panels */
+.nice-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand) transparent;
 }
 
-.hero-entrance {
-  animation: hero-rise 900ms ease-out both;
+.nice-scroll::-webkit-scrollbar {
+  width: 6px;
 }
 
-.hero-entrance-2 {
-  animation: hero-rise 900ms ease-out 150ms both;
+.nice-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-brand);
+  border-radius: 999px;
 }
 
-/* Subtle scroll reveal (JS adds .reveal-shown) */
-.reveal {
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal-hidden {
-  opacity: 0;
-  transform: translateY(18px);
-}
-.reveal-shown {
-  opacity: 1;
-  transform: none;
+.nice-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-/* Brand loader — blooming flower (compositor-only: transform + opacity) */
-.loader-petal {
-  border-radius: 100% 4px 100% 4px;
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
-  transform-origin: center;
-  animation: petal-bloom 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes petal-bloom {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
-  }
-  60% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(var(--r)) translateY(-38px) scale(1);
-  }
-}
-
-.loader-core {
-  animation: core-pulse 1.6s ease-in-out infinite;
-}
-
-@keyframes core-pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.18);
-  }
-}
-
-.loader-dot {
-  animation: loader-blink 1.2s ease-in-out infinite;
-}
-
-@keyframes loader-blink {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .loader-petal,
-  .loader-core,
-  .loader-dot {
-    animation: none;
-  }
-  .loader-petal {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(var(--r)) translateY(-38px) scale(1);
-  }
-}
-
-/* Showcase slider entrance + drift (transform/opacity only — no blur) */
-.showcase-rise {
-  opacity: 0;
-  animation: showcase-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: transform, opacity;
-}
-
-@keyframes showcase-in {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.showcase-drift {
-  animation: showcase-kenburns 7s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-@keyframes showcase-kenburns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.07);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .showcase-rise,
-  .showcase-drift {
-    animation: none;
-  }
-  .showcase-rise {
-    opacity: 1;
-  }
-}
-
-/* Honeypot: off-screen, never display:none so bots still fill it */
-.honeypot {
-  position: absolute !important;
-  left: -9999px !important;
-  top: auto !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-}
-
+/* ── Reduced motion: everything settles instantly ────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .hero-entrance,
-  .hero-entrance-2 {
-    animation: none;
+
+  .hero-rise,
+  .hero-rise-2,
+  .hero-rise-3,
+  .hero-rise-4,
+  .line-inner,
+  .page-enter,
+  .scroll-cue,
+  .image-drift,
+  .ambient-drift,
+  .ambient-drift-slow,
+  .showcase-rise,
+  .loader-petal,
+  .loader-core,
+  .loader-dot,
+  .hero-progress {
+    animation: none !important;
   }
-  .hero-video {
-    display: none !important;
+
+  .hero-progress {
+    display: none;
   }
-  .reveal,
-  .reveal-hidden,
-  .reveal-shown {
-    transition: none;
+
+  .reveal {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+
+  .line-inner {
+    opacity: 1;
+    transform: none;
   }
 }

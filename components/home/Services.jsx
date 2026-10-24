@@ -4,21 +4,22 @@ import Reveal from "../ui/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import ServiceCard from "../ui/ServiceCard";
 
-// featuredOnly: home shows the featured few + a view-all button.
+// featuredOnly: home shows the featured few + a view-all link.
 // Full list lives on the /services page.
 export default function Services({ featuredOnly = false, services = seedServices, featured = null }) {
   const t = featuredOnly ? site.sections.featured : site.sections.services;
   const feat = featured || site.featuredServices;
   const list = featuredOnly ? services.filter((s) => feat.includes(s.slug)) : services;
-  return (
-    <section id="services" aria-labelledby="services-heading" className="bg-ivory py-16 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <SectionHeading id="services-heading" heading={t.heading} intro={t.intro} tone="dark" />
 
-        <ul className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  return (
+    <section id="services" aria-labelledby="services-heading" className="relative border-b border-frame/10 py-24 sm:py-32">
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
+        <SectionHeading id="services-heading" heading={t.heading} intro={t.intro} />
+
+        <ul className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
           {list.map((s, i) => (
             <li key={s.slug} className="h-full">
-              <Reveal delay={Math.min(i * 60, 240)} className="h-full">
+              <Reveal delay={Math.min(i * 90, 360)} className="h-full">
                 <ServiceCard service={s} index={i} />
               </Reveal>
             </li>
@@ -26,12 +27,10 @@ export default function Services({ featuredOnly = false, services = seedServices
         </ul>
 
         {featuredOnly ? (
-          <Reveal className="mt-10 text-center">
-            <Link
-              href={site.servicesPage.href}
-              className="inline-block rounded-full bg-teal-deep px-8 py-3.5 text-base font-semibold text-ivory transition-transform hover:-translate-y-0.5"
-            >
+          <Reveal className="mt-16 text-center" delay={120}>
+            <Link href={site.servicesPage.href} className="btn btn-ghost group">
               {site.servicesPage.viewAll}
+              <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1.5">→</span>
             </Link>
           </Reveal>
         ) : null}

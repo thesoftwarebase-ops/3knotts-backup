@@ -28,7 +28,7 @@ export default function LoginPage() {
       ))}
 
       <div className="relative flex w-full max-w-sm flex-col items-center">
-        <span className="inline-flex rounded-full shadow-[0_10px_30px_-10px_rgba(11,59,60,0.5)] ring-[3px] ring-gold ring-offset-4 ring-offset-ivory">
+        <span className="inline-flex rounded-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] ring-[3px] ring-gold ring-offset-4 ring-offset-ivory">
           <Image
             src={site.logo}
             alt={site.logoAlt}
