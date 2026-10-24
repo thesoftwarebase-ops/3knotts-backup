@@ -1,10 +1,30 @@
+const mediaUrl = process.env.NEXT_PUBLIC_MEDIA_URL || "https://ik.imagekit.io";
+let configuredMediaPattern;
+
+try {
+  const url = new URL(mediaUrl);
+  configuredMediaPattern = {
+    protocol: url.protocol.replace(":", ""),
+    hostname: url.hostname,
+    ...(url.port ? { port: url.port } : {}),
+    pathname: "/**"
+  };
+} catch {
+  configuredMediaPattern = null;
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" }
-      // When you move off Cloudinary, add your self-hosted media host here, e.g.:
-      // { protocol: "https", hostname: "media.allinonedreamplace.in", pathname: "/**" },
+      { protocol: "https", hostname: "ik.imagekit.io", pathname: "/**" },
+      ...(configuredMediaPattern &&
+      !(
+        configuredMediaPattern.protocol === "https" &&
+        configuredMediaPattern.hostname === "ik.imagekit.io"
+      )
+        ? [configuredMediaPattern]
+        : [])
     ]
   },
   async headers() {

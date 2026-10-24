@@ -61,19 +61,19 @@ export default function LoginForm() {
   }
 
   const inputCls =
-    "w-full rounded-xl border border-teal-mid/30 bg-ivory/60 px-4 py-3 text-base text-ink placeholder:text-ink/40 transition-all focus:border-gold focus:bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
+    "w-full rounded-xl border border-paper/15 bg-noir/50 px-4 py-3 text-base text-paper placeholder:text-paper/35 transition-all focus:border-brand focus:bg-noir/70 focus:outline-none focus:ring-2 focus:ring-brand/30";
 
   return (
     <form
       onSubmit={onSubmit}
-      className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-gold/50 bg-white p-6 shadow-[0_28px_70px_-28px_rgba(0,0,0,0.45)] sm:p-8"
+      className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-brand/40 bg-charcoal/80 p-6 shadow-[0_28px_70px_-28px_rgba(232,80,64,0.25)] sm:p-8"
     >
-      <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-2xl border border-gold/30" />
-      <div aria-hidden="true" className="relative mx-auto h-2 w-2 rotate-45 bg-gold" />
+      <span aria-hidden="true" className="pointer-events-none absolute inset-2 rounded-2xl border border-brand/20" />
+      <div aria-hidden="true" className="relative mx-auto h-2 w-2 rotate-45 bg-brand" />
       <h1 className="relative mt-4 text-center font-tagline text-4xl font-bold text-plum">
         {t.title}
       </h1>
-      <label htmlFor="admin-email" className="relative mb-1.5 mt-6 block text-sm font-bold text-ink">
+      <label htmlFor="admin-email" className="relative mb-1.5 mt-6 block text-sm font-bold text-paper">
         {t.emailLabel}
       </label>
       <input
@@ -86,7 +86,7 @@ export default function LoginForm() {
         placeholder={t.emailPlaceholder}
         className={`relative ${inputCls}`}
       />
-      <label htmlFor="admin-password" className="relative mb-1.5 mt-4 block text-sm font-bold text-ink">
+      <label htmlFor="admin-password" className="relative mb-1.5 mt-4 block text-sm font-bold text-paper">
         {t.passwordLabel}
       </label>
       <div className="relative">
@@ -105,7 +105,7 @@ export default function LoginForm() {
           onClick={() => setShowPassword((v) => !v)}
           aria-pressed={showPassword}
           aria-label={showPassword ? t.hidePassword : t.showPassword}
-          className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink/60 transition-colors hover:bg-gold/15 hover:text-ink"
+          className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-paper/50 transition-colors hover:bg-brand/15 hover:text-paper"
         >
           {showPassword ? (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" className="h-5 w-5">
@@ -123,7 +123,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={busy || !email.trim() || !password}
-        className="relative mt-4 w-full rounded-full bg-teal-deep px-6 py-3.5 text-base font-bold text-ivory transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+        className="relative mt-4 w-full rounded-full bg-brand px-6 py-3.5 text-base font-bold text-ivory transition-transform hover:-translate-y-0.5 disabled:opacity-60"
       >
         {t.button}
       </button>

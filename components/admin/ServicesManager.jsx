@@ -5,12 +5,12 @@ import { toast } from "sonner";
 import { showBusy, hideBusy } from "@/lib/busy";
 import { site } from "@/data/site";
 import { mediaImage } from "@/lib/media";
-import { uploadImage, adminToken, authHeaders } from "./upload";
+import { uploadImage, adminToken, authHeaders, deleteAssetRef } from "./upload";
 
 const inputCls =
-  "w-full rounded-xl border border-teal-mid/30 bg-white px-4 py-2.5 text-[15px] text-ink focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
+  "w-full rounded-xl border border-frame/25 bg-charcoal/60 px-4 py-2.5 text-[15px] text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
 const miniBtn =
-  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-ink transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
+  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-paper transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
 const dangerBtn =
   "rounded-full border border-plum/30 px-4 py-2 text-sm font-semibold text-plum transition-colors hover:border-plum";
 const solidDanger =
@@ -19,7 +19,7 @@ const solidDanger =
 function Row({ label, children }) {
   return (
     <div>
-      <p className="mb-1.5 text-sm font-bold text-ink">{label}</p>
+      <p className="mb-1.5 text-sm font-bold text-paper">{label}</p>
       {children}
     </div>
   );
@@ -38,12 +38,13 @@ function XButton({ onClick, label }) {
   );
 }
 
-// Cloudinary public_id from a stored path ("folder/name.jpg" → "folder/name").
-// Local /public paths return null (nothing to delete remotely).
-function cloudId(src) {
-  const s = String(src || "");
-  if (!s || s.startsWith("/")) return null;
-  return s.replace(/\.[a-z0-9]+$/i, "");
+// ImageKit file ids are stored alongside paths for reliable deletion. Older
+// records may have only a remote path, so the API can resolve that path too.
+function assetRef(src, fileId = "") {
+  const path = String(src || "").trim();
+  const id = String(fileId || "").trim();
+  if (!id && (!path || path.startsWith("/"))) return null;
+  return { fileId: id, filePath: path };
 }
 
 export default function ServicesManager() {
@@ -109,13 +110,33 @@ export default function ServicesManager() {
   async function uploadFor(i, slot, file, shotIdx = -1) {
     if (!file) return;
     const key = `${i}-${slot}-${shotIdx}`;
+    const s = services[i];
+    let prevSrc = "", prevFileId = "";
+    if (slot === "image") {
+      prevSrc = s?.image || "";
+      prevFileId = s?.imageFileId || "";
+    } else if (slot === "clientshot") {
+      prevSrc = s?.clients?.[shotIdx]?.src || "";
+      prevFileId = s?.clients?.[shotIdx]?.fileId || "";
+    } else {
+      prevSrc = s?.gallery?.[shotIdx]?.src || "";
+      prevFileId = s?.gallery?.[shotIdx]?.fileId || "";
+    }
     setBusy(key);
     showBusy(t.uploading);
     try {
-      const path = await uploadImage(file, "all-in-one-dream-place/services", adminToken());
-      if (slot === "image") patch(i, "image", path);
-      else if (slot === "clientshot") patchClient(i, shotIdx, { src: path });
-      else patchShot(i, shotIdx, { src: path });
+      const uploaded = await uploadImage(file, "3knotts/services", adminToken());
+      if (slot === "image") {
+        patch(i, "image", uploaded.path);
+        patch(i, "imageFileId", uploaded.fileId);
+      } else if (slot === "clientshot") {
+        patchClient(i, shotIdx, { src: uploaded.path, fileId: uploaded.fileId });
+      } else {
+        patchShot(i, shotIdx, { src: uploaded.path, fileId: uploaded.fileId });
+      }
+      if (prevSrc && !prevSrc.startsWith("/")) {
+        await deleteAssetRef(prevSrc, prevFileId);
+      }
       toast.success(t.uploaded);
     } catch (err) {
       toast.error(err.message);
@@ -129,6 +150,18 @@ export default function ServicesManager() {
     fileRefs.current[`${i}-${slot}-${shotIdx}`]?.click();
   }
 
+  async function removeShot(i, j) {
+    const g = services[i]?.gallery?.[j];
+    if (g) await deleteAssetRef(g.src, g.fileId);
+    removeFromList(i, "gallery", j);
+  }
+
+  async function removeClient(i, j) {
+    const g = services[i]?.clients?.[j];
+    if (g) await deleteAssetRef(g.src, g.fileId);
+    removeFromList(i, "clients", j);
+  }
+
   function addService() {
     const i = services.length;
     setServices((ss) => [
@@ -138,7 +171,7 @@ export default function ServicesManager() {
         title: "New Service",
         blurb: "",
         icon: "gift",
-        image: "/random.jpg",
+        image: "/flower.png",
         details: [],
         whyUs: [],
         gallery: [],
@@ -165,6 +198,7 @@ export default function ServicesManager() {
       })),
       clients: (s.clients || []).map((g) => ({
         src: String(g.src || ""),
+        fileId: String(g.fileId || "").trim(),
         caption: trim4(g.caption),
         text: String(g.text || "").trim().slice(0, 220)
       }))
@@ -202,16 +236,19 @@ export default function ServicesManager() {
     setWiping(true);
     showBusy(t.deleting);
     try {
-      // 1. Delete every Cloudinary asset of this service first.
-      const assets = [s.image, ...(s.gallery || []).map((g) => g.src), ...(s.clients || []).map((c) => c.src)]
-        .map(cloudId)
-        .filter(Boolean);
-      for (const publicId of assets) {
+      // 1. Delete every ImageKit asset of this service first.
+      const assets = [
+        assetRef(s.image, s.imageFileId),
+        ...(s.gallery || []).map((g) => assetRef(g.src, g.fileId)),
+        ...(s.clients || []).map((c) => assetRef(c.src, c.fileId))
+      ].filter(Boolean);
+      const uniqueAssets = [...new Map(assets.map((asset) => [asset.fileId || asset.filePath, asset])).values()];
+      for (const asset of uniqueAssets) {
         try {
           await fetch("/api/admin/media", {
             method: "DELETE",
             headers: authHeaders(),
-            body: JSON.stringify({ publicId })
+            body: JSON.stringify(asset)
           });
         } catch (err) {
           toast.error(err.message);
@@ -248,7 +285,7 @@ export default function ServicesManager() {
     }
   }
 
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
 
   // ---------- Detail view ----------
   if (selected !== null && services[selected]) {
@@ -256,19 +293,19 @@ export default function ServicesManager() {
     const s = services[selected];
     const isFeatured = featured.includes(s.slug);
     const shots = s.gallery || [];
-    const remoteShots = shots.filter((g) => cloudId(g.src)).length + (cloudId(s.image) ? 1 : 0);
+    const remoteShots = shots.filter((g) => assetRef(g.src, g.fileId)).length + (assetRef(s.image, s.imageFileId) ? 1 : 0);
     return (
       <div className="mt-6">
-        <button type="button" onClick={() => setSelected(null)} className="group inline-flex items-center gap-2 rounded-full border border-gold/60 px-5 py-2.5 text-sm font-bold text-ink transition-all hover:-translate-y-0.5 hover:border-gold">
+        <button type="button" onClick={() => setSelected(null)} className="group inline-flex items-center gap-2 rounded-full border border-gold/60 px-5 py-2.5 text-sm font-bold text-paper transition-all hover:-translate-y-0.5 hover:border-gold">
           <span aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5">←</span>
           {t.back}
         </button>
-        <p className="mt-4 rounded-2xl border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-medium leading-relaxed text-ink/80">
+        <p className="mt-4 rounded-2xl border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-medium leading-relaxed text-paper/80">
           {t.galleryRule}
         </p>
 
-        <div className="mt-4 overflow-hidden rounded-3xl border border-gold/50 bg-white">
-          <div className="relative aspect-[21/9] overflow-hidden border-b border-gold/40 bg-sand/50">
+        <div className="mt-4 overflow-hidden rounded-3xl border border-gold/50 bg-charcoal/60">
+          <div className="relative aspect-[21/9] overflow-hidden border-b border-gold/40 bg-charcoal/40">
             {s.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={mediaImage(s.image)} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
@@ -324,7 +361,7 @@ export default function ServicesManager() {
                     e.target.value = "";
                   }}
                 />
-                <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-ink">
+                <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-paper">
                   <input
                     type="checkbox"
                     checked={isFeatured}
@@ -332,7 +369,7 @@ export default function ServicesManager() {
                     onChange={(e) =>
                       setFeatured((f) => (e.target.checked ? [...f, s.slug] : f.filter((x) => x !== s.slug)))
                     }
-                    className="h-5 w-5 accent-[#D4A73C]"
+                    className="h-5 w-5 accent-golden"
                   />
                   {t.featuredService}
                 </label>
@@ -372,15 +409,15 @@ export default function ServicesManager() {
             </Row>
 
             <Row label={t.galleryLabel}>
-              <p className="-mt-1 mb-2 text-[13px] text-ink/60">{t.webpNote}</p>
+              <p className="-mt-1 mb-2 text-[13px] text-paper/60">{t.webpNote}</p>
               <span className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {(s.gallery || []).map((g, j) => (
-                  <span key={j} className="relative overflow-hidden rounded-xl border border-gold/40 bg-sand/40">
+                  <span key={j} className="relative overflow-hidden rounded-xl border border-gold/40 bg-charcoal/40">
                     {g.src ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={mediaImage(g.src)} alt="" aria-hidden="true" className="aspect-square h-auto w-full object-cover" />
                     ) : (
-                      <span aria-hidden="true" className="block aspect-square w-full bg-sand/40" />
+                      <span aria-hidden="true" className="block aspect-square w-full bg-charcoal/40" />
                     )}
                     <span className="flex items-center justify-between gap-1 p-2">
                       <input
@@ -389,7 +426,7 @@ export default function ServicesManager() {
                         onChange={(e) => patchShot(i, j, { caption: e.target.value })}
                         suppressHydrationWarning
                         aria-label={t.captionLabel}
-                        className="min-w-0 flex-1 rounded-lg border border-teal-deep/15 bg-white px-2 py-1.5 text-[13px] text-ink focus:border-gold focus:outline-none"
+                        className="min-w-0 flex-1 rounded-lg border border-frame/20 bg-charcoal/60 px-2 py-1.5 text-[13px] text-paper focus:border-gold focus:outline-none"
                       />
                       <button
                         type="button"
@@ -399,7 +436,7 @@ export default function ServicesManager() {
                         title={t.featuredShot}
                         className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-base transition-all ${
                           g.featured === true
-                            ? "border-gold bg-gold text-ink"
+                            ? "border-gold bg-gold text-noir"
                             : "border-gold/50 text-gold/50 hover:border-gold hover:text-gold"
                         }`}
                       >
@@ -417,7 +454,7 @@ export default function ServicesManager() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => removeFromList(i, "gallery", j)}
+                        onClick={() => removeShot(i, j)}
                         aria-label={t.remove}
                         className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-plum/30 text-lg text-plum transition-colors hover:border-plum"
                       >
@@ -439,7 +476,7 @@ export default function ServicesManager() {
                         e.target.value = "";
                       }}
                     />
-                    <span className={`px-2 pb-1 text-xs font-semibold ${(g.caption || "").trim().split(/\s+/).filter(Boolean).length > 4 ? "text-plum" : "text-ink/50"}`}>
+                    <span className={`px-2 pb-1 text-xs font-semibold ${(g.caption || "").trim().split(/\s+/).filter(Boolean).length > 4 ? "text-plum" : "text-paper/50"}`}>
                       {(g.caption || "").trim().split(/\s+/).filter(Boolean).length}/4 {t.captionWords}                    </span>
                   </span>
                 ))}
@@ -448,7 +485,7 @@ export default function ServicesManager() {
                 ) : (
                 <button
                   type="button"
-                  onClick={() => addToList(i, "gallery", { src: "/random.jpg", caption: "", featured: false })}
+                  onClick={() => addToList(i, "gallery", { src: "/flower.png", caption: "", featured: false })}
                   className="flex min-h-[120px] items-center justify-center rounded-xl border border-dashed border-gold/60 text-3xl text-gold transition-colors hover:border-gold hover:bg-gold/5"
                   aria-label={t.addShot}
                 >
@@ -459,15 +496,15 @@ export default function ServicesManager() {
             </Row>
 
             <Row label={t.clientLabel}>
-              <p className="-mt-1 mb-2 text-[13px] text-ink/60">{t.clientNote}</p>
+              <p className="-mt-1 mb-2 text-[13px] text-paper/60">{t.clientNote}</p>
               <span className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {(s.clients || []).map((g, j) => (
-                  <span key={`c${j}`} className="relative overflow-hidden rounded-xl border border-gold/40 bg-sand/40">
+                  <span key={`c${j}`} className="relative overflow-hidden rounded-xl border border-gold/40 bg-charcoal/40">
                     {g.src ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={mediaImage(g.src)} alt="" aria-hidden="true" className="aspect-square h-auto w-full object-cover" />
                     ) : (
-                      <span aria-hidden="true" className="block aspect-square w-full bg-sand/40" />
+                      <span aria-hidden="true" className="block aspect-square w-full bg-charcoal/40" />
                     )}
                     <span className="flex items-center gap-1 p-2">
                       <input
@@ -476,7 +513,7 @@ export default function ServicesManager() {
                         onChange={(e) => patchClient(i, j, { caption: e.target.value })}
                         suppressHydrationWarning
                         aria-label={t.captionLabel}
-                        className="min-w-0 flex-1 rounded-lg border border-teal-deep/15 bg-white px-2 py-1.5 text-[13px] text-ink focus:border-gold focus:outline-none"
+                        className="min-w-0 flex-1 rounded-lg border border-frame/20 bg-charcoal/60 px-2 py-1.5 text-[13px] text-paper focus:border-gold focus:outline-none"
                       />
                       <button
                         type="button"
@@ -490,7 +527,7 @@ export default function ServicesManager() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => removeFromList(i, "clients", j)}
+                        onClick={() => removeClient(i, j)}
                         aria-label={t.remove}
                         className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-plum/30 text-lg text-plum transition-colors hover:border-plum"
                       >
@@ -512,7 +549,7 @@ export default function ServicesManager() {
                         e.target.value = "";
                       }}
                     />
-                    <span className={`px-2 pb-1 text-xs font-semibold ${(g.caption || "").trim().split(/\s+/).filter(Boolean).length > 4 ? "text-plum" : "text-ink/50"}`}>
+                    <span className={`px-2 pb-1 text-xs font-semibold ${(g.caption || "").trim().split(/\s+/).filter(Boolean).length > 4 ? "text-plum" : "text-paper/50"}`}>
                       {(g.caption || "").trim().split(/\s+/).filter(Boolean).length}/4 {t.captionWords}
                     </span>
                     <textarea
@@ -523,7 +560,7 @@ export default function ServicesManager() {
                       suppressHydrationWarning
                       aria-label={t.clientDescLabel}
                       spellCheck="false"
-                      className="mt-0.5 block w-full resize-none rounded-lg border border-teal-deep/15 bg-white px-2 py-1.5 text-[13px] leading-snug text-ink focus:border-gold focus:outline-none"
+                      className="mt-0.5 block w-full resize-none rounded-lg border border-frame/20 bg-charcoal/60 px-2 py-1.5 text-[13px] leading-snug text-paper focus:border-gold focus:outline-none"
                     />
                   </span>
                 ))}
@@ -532,7 +569,7 @@ export default function ServicesManager() {
                 ) : (
                   <button
                     type="button"
-                    onClick={() => addToList(i, "clients", { src: "/random.jpg", caption: "" })}
+                    onClick={() => addToList(i, "clients", { src: "/flower.png", caption: "" })}
                     className="flex min-h-[120px] items-center justify-center rounded-xl border border-dashed border-gold/60 text-3xl text-gold transition-colors hover:border-gold hover:bg-gold/5"
                     aria-label={t.addShot}
                   >
@@ -547,7 +584,7 @@ export default function ServicesManager() {
                 type="button"
                 onClick={() => save()}
                 disabled={saving}
-                className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+                className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60"
               >
                 {t.save}
               </button>
@@ -569,12 +606,12 @@ export default function ServicesManager() {
               className="absolute inset-0"
               onClick={() => !wiping && setConfirmIdx(null)}
             />
-            <div className="relative w-full max-w-md rounded-3xl border-2 border-gold bg-ivory p-6 text-center shadow-[0_40px_90px_-20px_rgba(0,0,0,0.6)] sm:p-8">
+            <div className="relative w-full max-w-md rounded-3xl border-2 border-gold bg-noir p-6 text-center shadow-[0_40px_90px_-20px_rgba(0,0,0,0.6)] sm:p-8">
               <span aria-hidden="true" className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-plum text-3xl text-white">
                 !
               </span>
               <p className="mt-4 font-tagline text-4xl font-bold leading-tight text-plum">{t.delTitle || "Delete this service?"}</p>
-              <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-ink">
+              <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-paper">
                 <strong className="font-bold">{s.title || t.untitled}</strong>
                 {" — "}
                 {t.delBody || "This cannot be undone."}
@@ -623,9 +660,9 @@ export default function ServicesManager() {
                 type="button"
                 onClick={() => setSelected(i)}
                 aria-label={`${s.title}`}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(0,0,0,0.45)]"
+                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-gold/50 bg-charcoal/60 text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_44px_-18px_rgba(0,0,0,0.45)]"
               >
-                <span className="relative block aspect-[16/10] overflow-hidden bg-sand/50">
+                <span className="relative block aspect-[16/10] overflow-hidden bg-charcoal/40">
                   {s.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={mediaImage(s.image)} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -634,7 +671,7 @@ export default function ServicesManager() {
                   {home ? (
                     <span
                       aria-hidden="true"
-                      className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold text-lg leading-none text-ink shadow-[0_6px_16px_-4px_rgba(232,80,64,0.9)]"
+                      className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold text-lg leading-none text-paper shadow-[0_6px_16px_-4px_rgba(232,80,64,0.9)]"
                     >
                       ★
                     </span>
@@ -646,8 +683,8 @@ export default function ServicesManager() {
                   ) : null}
                 </span>
                 <span className="flex flex-1 flex-col px-5 pb-5 pt-4">
-                  <span className="block font-tagline text-2xl font-bold leading-snug text-ink">{s.title}</span>
-                  <span className="mt-1 block text-sm text-ink/60">
+                  <span className="block font-tagline text-2xl font-bold leading-snug text-paper">{s.title}</span>
+                  <span className="mt-1 block text-sm text-paper/60">
                     {shots} {shots === 1 ? t.shotOne : t.shotMany} · {s.slug}
                   </span>
                 </span>
@@ -671,7 +708,7 @@ export default function ServicesManager() {
           type="button"
           onClick={() => save()}
           disabled={saving}
-          className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+          className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60"
         >
           {t.save}
         </button>
@@ -679,21 +716,4 @@ export default function ServicesManager() {
     </div>
   );
 
-  function addService() {
-    setServices((ss) => [
-      ...ss,
-      {
-        slug: `new-service-${ss.length + 1}`,
-        title: "New Service",
-        blurb: "",
-        icon: "gift",
-        image: "/random.jpg",
-        details: [],
-        whyUs: [],
-        gallery: [],
-        clients: []
-      }
-    ]);
-    setSelected(services.length);
-  }
 }

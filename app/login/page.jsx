@@ -16,19 +16,19 @@ const corners = [
 
 export default function LoginPage() {
   return (
-    <div className="relative flex min-h-svh items-center justify-center overflow-clip bg-ivory px-4 py-28 sm:py-36">
+    <div className="relative flex min-h-svh items-center justify-center overflow-clip bg-noir px-4 py-28 sm:py-36">
       {corners.map((pos) => (
         <div
           key={pos}
           aria-hidden="true"
-          className={`pointer-events-none absolute ${pos} w-44 opacity-25 sm:w-64 [mask-image:radial-gradient(closest-side,black_65%,transparent)]`}
+          className={`pointer-events-none absolute ${pos} w-44 opacity-10 sm:w-64 [mask-image:radial-gradient(closest-side,black_65%,transparent)]`}
         >
           <img src={site.flower} alt="" draggable={false} className="h-auto w-full select-none" />
         </div>
       ))}
 
       <div className="relative flex w-full max-w-sm flex-col items-center">
-        <span className="inline-flex rounded-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] ring-[3px] ring-gold ring-offset-4 ring-offset-ivory">
+        <span className="inline-flex rounded-full shadow-[0_10px_30px_-10px_rgba(232,80,64,0.4)] ring-[3px] ring-brand ring-offset-4 ring-offset-noir">
           <Image
             src={site.logo}
             alt={site.logoAlt}

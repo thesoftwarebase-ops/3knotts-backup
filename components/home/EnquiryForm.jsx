@@ -55,7 +55,7 @@ function AlertIcon() {
   );
 }
 
-export default function EnquiryForm({ contactEmail = "" } = {}) {
+export default function EnquiryForm({ contactEmail = "", services = [], waNumber = "", settings = {} } = {}) {
   const [values, setValues] = useState(initial);
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
@@ -63,7 +63,9 @@ export default function EnquiryForm({ contactEmail = "" } = {}) {
 
   const t = site.sections.enquire;
   const f = site.form;
-  const waHref = `https://wa.me/${getWaNumber()}?text=${encodeURIComponent(site.whatsappGreeting)}`;
+  const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(site.whatsappGreeting)}`;
+  const hoursDays = settings.hoursDays || site.footer.hoursDays;
+  const hoursTime = settings.hoursTime || site.footer.hoursTime;
 
   function onChange(e) {
     const { name, value } = e.target;
@@ -201,12 +203,12 @@ export default function EnquiryForm({ contactEmail = "" } = {}) {
 
               <div className="mt-3 border border-frame/20 p-4">
                 <p className="text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/60">{site.footer.hoursTitle}</p>
-                <p className="mt-2 text-[11px] text-paper/50">{site.footer.hoursDays}</p>
-                <p className="mt-1 font-heading text-[14px] tracking-[0.06em] text-paper">{site.footer.hoursTime}</p>
+                <p className="mt-2 text-[11px] text-paper/50">{hoursDays}</p>
+                <p className="mt-1 font-heading text-[14px] tracking-[0.06em] text-paper">{hoursTime}</p>
               </div>
 
               <p className="mt-auto pt-4 text-[9px] font-semibold uppercase leading-[2] tracking-[0.26em] text-frame/35">
-                {site.address}
+                {settings.address || site.address}
               </p>
             </aside>
           </Reveal>
@@ -229,11 +231,11 @@ export default function EnquiryForm({ contactEmail = "" } = {}) {
                 {field("enq-location", "location", f.locationLabel,
                   <input id="enq-location" name="location" required value={values.location} onChange={onChange} suppressHydrationWarning className={inputCls} placeholder={f.locationPlaceholder} />)}
                 {field("enq-function", "function", f.functionLabel,
-                  <select id="enq-function" name="functionType" required value={values.functionType} onChange={onChange} suppressHydrationWarning className={inputCls}>
-                    <option value="">{f.functionPlaceholder}</option>
-                    {site.functions.map((fn) => (
-                      <option key={fn} value={fn}>
-                        {fn}
+                  <select id="enq-function" name="functionType" required value={values.functionType} onChange={onChange} suppressHydrationWarning className={`${inputCls} bg-noir text-paper`}>
+                    <option value="" className="bg-noir text-paper">{f.functionPlaceholder}</option>
+                    {services.map((s) => (
+                      <option key={s.slug} value={s.title} className="bg-noir text-paper">
+                        {s.title}
                       </option>
                     ))}
                   </select>)}

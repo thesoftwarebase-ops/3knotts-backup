@@ -2,7 +2,6 @@ import Link from "next/link";
 import { site } from "@/data/site";
 import Reveal from "../ui/Reveal";
 import SectionDivider from "../ui/SectionDivider";
-import Corners from "../ui/Corners";
 
 // The opening statement: a quiet, framed plate on black. Photograph-free
 // so it reads as the calm beat between the hero and the work.
@@ -12,10 +11,11 @@ export default function BrandIntro({ brand = site.brand }) {
     <section
       id="intro"
       aria-labelledby="brand-heading"
-      className="relative overflow-hidden border-b border-frame/10 py-28 sm:py-36"
+      className="relative overflow-hidden border-b border-frame/10 py-16 sm:py-22"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-frame/25 to-transparent" />
       <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-0 h-[28rem] w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,80,64,0.035),transparent_62%)] blur-[100px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 opacity-[0.025] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cpath%20d%3D%22M100%2020c0%2044-36%2080-80%2080%2044%200%2080%2036%2080%2080%200-44%2036-80%2080-80-44%200-80-36-80-80z%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%221%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%220.8%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2240%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fsvg%3E')] bg-contain bg-center" />
 
       <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
         <Reveal className="text-center">
@@ -23,27 +23,27 @@ export default function BrandIntro({ brand = site.brand }) {
             <SectionDivider align="center" />
           </div>
 
-          <p className="eyebrow mt-8">{site.name}</p>
+          <p className="eyebrow mt-6">{site.name}</p>
 
           <h2
             id="brand-heading"
-            className="mx-auto mt-6 max-w-3xl font-heading text-[clamp(1.9rem,5vw,3.4rem)] leading-[1.14] text-paper"
+            className="mx-auto mt-5 max-w-3xl font-heading text-[clamp(1.9rem,5vw,3.4rem)] leading-[1.14] text-paper"
           >
             {b.heading}
           </h2>
 
           {/* Ornamental rule */}
-          <div className="mx-auto mt-10 flex w-56 items-center gap-3 sm:w-72" aria-hidden="true">
+          <div className="mx-auto mt-7 flex w-56 items-center gap-3 sm:w-72" aria-hidden="true">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent to-frame/45" />
             <span className="h-1.5 w-1.5 rotate-45 bg-golden shadow-[0_0_14px_rgba(252,204,48,0.65)]" />
             <span className="h-px flex-1 bg-gradient-to-l from-transparent to-frame/45" />
           </div>
 
-          <p className="mx-auto mt-10 max-w-2xl text-[14px] leading-[2] text-paper/60 sm:text-[15px]">
+          <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-[2] text-paper/60 sm:text-[15px]">
             {b.text}
           </p>
 
-          <div className="mt-12 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
             <Link href={site.navCta.href} className="btn btn-brand group">
               {site.navCta.label}
               <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1.5">→</span>
@@ -51,25 +51,6 @@ export default function BrandIntro({ brand = site.brand }) {
             <Link href={b.cta.href} className="btn btn-ghost group">
               {b.cta.label}
             </Link>
-          </div>
-        </Reveal>
-
-        {/* Quiet house details, set like a colophon */}
-        <Reveal delay={140}>
-          <div className="relative mt-20 grid grid-cols-1 gap-px border-y border-frame/10 bg-frame/10 sm:grid-cols-3">
-            <Corners className="hidden sm:block" tone="border-frame/20" />
-            {[
-              { k: site.addressParts.locality, v: site.addressParts.street },
-              { k: site.footer.hoursTitle, v: `${site.footer.hoursDays} · ${site.footer.hoursTime}` },
-              { k: site.instagramLabel, v: site.instagramHandle }
-            ].map((row) => (
-              <div key={row.k} className="bg-noir px-5 py-6 text-center sm:px-6">
-                <p className="text-[8px] font-semibold uppercase leading-none tracking-[0.34em] text-frame/55">
-                  {row.k}
-                </p>
-                <p className="mt-3 text-[11px] font-medium leading-[1.7] text-paper/65">{row.v}</p>
-              </div>
-            ))}
           </div>
         </Reveal>
       </div>

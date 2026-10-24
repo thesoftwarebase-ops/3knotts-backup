@@ -4,11 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { site } from "@/data/site";
 
-const PETALS = ["#E85040", "#CC6C42", "#FCCC30", "#D2AE90", "#B82820", "#E85040", "#CC6C42", "#FCCC30"];
+const PARTICLES = [
+  { size: 3, left: "30%", delay: 0, duration: 3.2 },
+  { size: 2, left: "55%", delay: 0.8, duration: 2.8 },
+  { size: 4, left: "70%", delay: 1.6, duration: 3.6 },
+  { size: 2, left: "40%", delay: 2.2, duration: 3.0 },
+  { size: 3, left: "62%", delay: 0.4, duration: 3.4 },
+];
 
-// Full-screen brand curtain. Pure CSS animation (transform/opacity only).
-// The first load waits for the document; later navigations get a quick
-// 620ms curtain instead of a wall of black.
 export default function SiteLoader() {
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
@@ -49,7 +52,6 @@ export default function SiteLoader() {
     };
   }, []);
 
-  // A short curtain on every page traversal (the layout stays mounted).
   useEffect(() => {
     if (firstMount.current) {
       firstMount.current = false;
@@ -76,36 +78,112 @@ export default function SiteLoader() {
         leaving ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <div className="relative h-28 w-28" aria-hidden="true">
-        {PETALS.map((c, i) => (
+      {/* Logo showcase */}
+      <div className="relative flex items-center justify-center" aria-hidden="true">
+        {/* Large warm glow */}
+        <div className="loader-glow absolute h-56 w-56 rounded-full bg-brand/10 blur-3xl" />
+
+        {/* Floating ember particles */}
+        {PARTICLES.map((p, i) => (
           <span
             key={i}
-            className="loader-petal absolute left-1/2 top-1/2 h-10 w-10"
+            className="loader-ember absolute bottom-0 rounded-full bg-golden"
             style={{
-              backgroundColor: c,
-              ["--r"]: `${i * 45}deg`,
-              animationDelay: `${i * 80}ms`
+              width: p.size,
+              height: p.size,
+              left: p.left,
+              opacity: 0,
+              animation: `ember-rise ${p.duration}s ease-out ${p.delay}s infinite`,
             }}
           />
         ))}
-        <span className="loader-core absolute left-1/2 top-1/2 h-6 w-6 rounded-full bg-brand shadow-[0_0_26px_rgba(232,80,64,0.9)]" />
+
+        {/* Outer ring — largest, thinnest */}
+        <svg className="loader-ring-reverse absolute h-56 w-56" viewBox="0 0 224 224" fill="none">
+          <circle
+            cx="112"
+            cy="112"
+            r="108"
+            stroke="#D2AE90"
+            strokeWidth="0.5"
+            strokeLinecap="round"
+            strokeDasharray="679"
+            strokeDashoffset="679"
+            opacity="0.2"
+            className="loader-ring-draw-slow"
+          />
+        </svg>
+
+        {/* Middle ring — golden gradient, main feature */}
+        <svg className="loader-ring absolute h-48 w-48" viewBox="0 0 192 192" fill="none">
+          <circle
+            cx="96"
+            cy="96"
+            r="92"
+            stroke="url(#loader-grad)"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeDasharray="578"
+            strokeDashoffset="578"
+            className="loader-ring-draw"
+          />
+          <defs>
+            <linearGradient id="loader-grad" x1="0" y1="0" x2="192" y2="192">
+              <stop offset="0%" stopColor="#E85040" stopOpacity="1" />
+              <stop offset="35%" stopColor="#FCCC30" stopOpacity="0.9" />
+              <stop offset="65%" stopColor="#D2AE90" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#E85040" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Inner ring — brand red, tight around logo */}
+        <svg className="loader-ring absolute h-40 w-40" viewBox="0 0 160 160" fill="none" style={{ animationDuration: "8s" }}>
+          <circle
+            cx="80"
+            cy="80"
+            r="76"
+            stroke="#E85040"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+            strokeDasharray="478"
+            strokeDashoffset="478"
+            opacity="0.5"
+            className="loader-ring-draw-inner"
+          />
+        </svg>
+
+        {/* Orbiting shimmer dot — travels along the middle ring */}
+        <div className="loader-orbit absolute h-48 w-48">
+          <span className="loader-shimmer absolute -top-[3px] left-1/2 -ml-[3px] h-[6px] w-[6px] rounded-full bg-golden shadow-[0_0_8px_rgba(252,204,48,0.8)]" />
+        </div>
+
+        {/* The logo — big and prominent */}
+        <div className="loader-logo relative z-10 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-gold/20 shadow-[0_0_60px_rgba(232,80,64,0.18)] sm:h-36 sm:w-36">
+          <img
+            src={site.logoSm}
+            alt={site.logoAlt}
+            className="h-full w-full object-cover"
+          />
+          {/* Shimmer sweep across the logo */}
+          <div className="loader-shimmer-sweep absolute inset-0 rounded-full" />
+        </div>
       </div>
 
-      <p className="mt-8 px-6 text-center font-heading text-3xl leading-none text-transparent sm:text-4xl">
+      {/* Brand name */}
+      <p className="loader-text-up mt-10 px-6 text-center font-heading text-[2rem] leading-none text-transparent sm:text-[2.6rem]">
         <span className="wordmark">{site.name}</span>
       </p>
-      <p className="mt-4 px-6 text-center text-[9px] font-semibold uppercase leading-none tracking-[0.4em] text-frame/80">
+
+      {/* Tagline */}
+      <p className="loader-text-up mt-4 px-6 text-center text-[9px] font-semibold uppercase leading-none tracking-[0.4em] text-frame/70" style={{ animationDelay: "120ms" }}>
         {site.tagline}
       </p>
-      <div aria-hidden="true" className="mt-7 h-px w-40 overflow-hidden bg-charcoal/50">
-        <div className="loader-bar h-px w-full bg-gradient-to-r from-brand via-ember to-golden" />
+
+      {/* Progress bar */}
+      <div aria-hidden="true" className="loader-text-up relative mt-9 h-px w-44 overflow-hidden bg-charcoal/40" style={{ animationDelay: "200ms" }}>
+        <div className="loader-bar h-px w-full bg-gradient-to-r from-transparent via-brand to-transparent" />
       </div>
-      <p className="mt-6 text-[9px] font-medium uppercase tracking-[0.28em] text-paper/30">
-        {site.loader.note}
-        <span className="loader-dot" style={{ animationDelay: "0ms" }}>.</span>
-        <span className="loader-dot" style={{ animationDelay: "200ms" }}>.</span>
-        <span className="loader-dot" style={{ animationDelay: "400ms" }}>.</span>
-      </p>
     </div>
   );
 }

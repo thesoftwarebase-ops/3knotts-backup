@@ -27,14 +27,15 @@ export default function WorkGrid({ services = seedServices }) {
   const mosaic = tiles.length >= 5;
 
   return (
-    <section id="work" aria-labelledby="work-heading" className="relative border-b border-frame/10 py-24 sm:py-32">
+    <section id="work" aria-labelledby="work-heading" className="relative border-b border-frame/10 py-14 sm:py-20">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_70%_-30%,rgba(252,204,48,0.03),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-56 w-[45%] bg-[radial-gradient(ellipse_at_0%_100%,rgba(232,80,64,0.035),transparent_65%)]" />
 
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading id="work-heading" heading={t.heading} intro={t.intro} />
 
         <ul
-          className={`mt-16 grid grid-cols-2 gap-3 sm:gap-4 ${
+          className={`mt-10 grid grid-cols-2 gap-3 sm:gap-4 ${
             mosaic ? "lg:auto-rows-[11.5rem] lg:grid-cols-4" : "lg:grid-cols-3"
           }`}
         >
@@ -89,7 +90,7 @@ export default function WorkGrid({ services = seedServices }) {
           ))}
         </ul>
 
-        <Reveal className="mt-12 flex justify-center" delay={120}>
+        <Reveal className="mt-8 flex justify-center" delay={120}>
           <a
             href={site.instagram}
             target="_blank"

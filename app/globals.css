@@ -12,7 +12,7 @@
    paper     #F8F8F8  text on black
    ────────────────────────────────────────────────────────────── */
 @theme {
-  --color-noir: #000000;
+  --color-noir: #0a0a0a;
   --color-brand: #e85040;
   --color-brand-dark: #b82820;
   --color-ember: #cc6c42;
@@ -32,14 +32,14 @@
      The admin area keys off its own token names. Rather than touch
      its layout or components, these are mapped onto the 3Knotts
      palette: paper surfaces, noir text, red and gold accents. */
-  --color-teal-deep: #000000;
+  --color-teal-deep: #0a0a0a;
   --color-teal-mid: #404040;
   --color-teal-bright: #b82820;
   --color-gold: #e85040;
   --color-gold-soft: #fccc30;
   --color-ivory: #f8f8f8;
   --color-plum: #b82820;
-  --color-ink: #000000;
+  --color-ink: #0a0a0a;
   --color-sand: #efe3d5;
   --font-tagline: "Cinzel", Georgia, serif;
 }
@@ -61,11 +61,18 @@
   color: transparent;
 }
 
+/* TT ligature — fuses the two T's like the logo mark.
+   Must overcome parent tracking (e.g. tracking-[0.14em]) to actually merge. */
+.tt-ligature {
+  letter-spacing: -0.32em;
+  margin: 0 -0.04em;
+}
+
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
   scrollbar-width: thin;
-  scrollbar-color: rgba(232, 80, 64, 0.55) #000000;
+  scrollbar-color: rgba(232, 80, 64, 0.55) #0a0a0a;
 }
 
 html.lenis,
@@ -102,11 +109,11 @@ body {
   height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #0a0a0a;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, rgba(232, 80, 64, 0.85), rgba(184, 40, 32, 0.85));
-  border: 2px solid #000000;
+  border: 2px solid #0a0a0a;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -327,76 +334,154 @@ body::after {
 
 @keyframes image-drift {
   from {
-    transform: scale(1.02);
+    transform: scale(1);
   }
   to {
-    transform: scale(1.1);
+    transform: scale(1.02);
   }
 }
 
-/* ── Brand loader: petals bloom out of the centre ────────────── */
-.loader-petal {
-  border-radius: 100% 4px 100% 4px;
-  opacity: 0;
-  transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
-  transform-origin: center;
-  animation: petal-bloom 900ms var(--ease-luxe) forwards;
+/* ── Brand loader: golden rings draw around large logo ────────── */
+.loader-glow {
+  animation: glow-pulse 3s ease-in-out infinite;
 }
 
-@keyframes petal-bloom {
-  0% {
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.95); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.loader-ring {
+  animation: ring-spin 12s linear infinite;
+}
+
+.loader-ring-reverse {
+  animation: ring-spin-reverse 18s linear infinite;
+}
+
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ring-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.loader-ring-draw {
+  animation: ring-draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.loader-ring-draw-inner {
+  animation: ring-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
+}
+
+.loader-ring-draw-slow {
+  animation: ring-draw 2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes ring-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.loader-logo {
+  animation: logo-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes logo-reveal {
+  from {
     opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--r)) translateY(0) scale(0);
+    transform: scale(0.85);
   }
-  60% {
+  to {
     opacity: 1;
+    transform: scale(1);
   }
-  100% {
+}
+
+.loader-text-up {
+  animation: text-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes text-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
     opacity: 1;
-    transform: translate(-50%, -50%) rotate(var(--r)) translateY(-34px) scale(1);
-  }
-}
-
-.loader-core {
-  animation: core-pulse 1.8s ease-in-out infinite;
-}
-
-@keyframes core-pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.16);
-  }
-}
-
-.loader-dot {
-  animation: loader-blink 1.3s ease-in-out infinite;
-}
-
-@keyframes loader-blink {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 1;
+    transform: none;
   }
 }
 
 .loader-bar {
   transform-origin: left center;
-  animation: loader-fill 1300ms var(--ease-luxe) forwards;
+  animation: loader-fill 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 @keyframes loader-fill {
-  from {
-    transform: scaleX(0);
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Orbiting shimmer dot */
+.loader-orbit {
+  animation: orbit-spin 3.5s linear infinite;
+}
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loader-shimmer {
+  animation: shimmer-blink 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer-blink {
+  0%, 100% { opacity: 0.5; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Shimmer sweep across the logo */
+.loader-shimmer-sweep {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(252, 204, 48, 0.08) 45%,
+    rgba(252, 204, 48, 0.15) 50%,
+    rgba(252, 204, 48, 0.08) 55%,
+    transparent 70%
+  );
+  animation: shimmer-sweep 3s ease-in-out 0.8s infinite;
+}
+
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* Floating ember particles */
+@keyframes ember-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
   }
-  to {
-    transform: scaleX(1);
+  20% {
+    opacity: 0.7;
+    transform: translateY(-20px) scale(1);
   }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.3);
+  }
+}
+
+.loader-ember {
+  will-change: opacity, transform;
 }
 
 /* ── Showcase slider ─────────────────────────────────────────── */
@@ -459,6 +544,68 @@ button:disabled,
   background: transparent;
 }
 
+/* ── Shimmer dots — tiny golden sparkles for CTA and accent areas ── */
+@keyframes shimmer-pulse {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.4);
+  }
+}
+
+.shimmer-dot {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(252, 204, 48, 0.9), rgba(252, 204, 48, 0) 70%);
+  animation: shimmer-pulse 3.2s ease-in-out infinite;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+/* ── Flip word animation for hero tagline ─────────────────────── */
+.flip-word {
+  display: inline-block;
+  position: relative;
+  vertical-align: bottom;
+  height: 1.2em;
+  min-width: 6ch;
+  perspective: 1000px;
+}
+
+.flip-word-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  opacity: 0;
+  transform: rotateX(90deg);
+  transform-origin: center bottom;
+  animation: flip-word-cycle 7.2s infinite;
+  color: var(--color-brand);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 12px rgba(232, 80, 64, 0.4);
+}
+
+@keyframes flip-word-cycle {
+  0%, 5% {
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+  10%, 30% {
+    opacity: 1;
+    transform: rotateX(0deg);
+  }
+  35%, 100% {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+}
+
 /* ── Reduced motion: everything settles instantly ────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -476,10 +623,22 @@ button:disabled,
   .ambient-drift,
   .ambient-drift-slow,
   .showcase-rise,
-  .loader-petal,
-  .loader-core,
-  .loader-dot,
-  .hero-progress {
+  .loader-ring,
+  .loader-ring-reverse,
+  .loader-ring-draw,
+  .loader-ring-draw-inner,
+  .loader-ring-draw-slow,
+  .loader-glow,
+  .loader-logo,
+  .loader-text-up,
+  .loader-bar,
+  .loader-orbit,
+  .loader-shimmer,
+  .loader-shimmer-sweep,
+  .loader-ember,
+  .hero-progress,
+  .shimmer-dot,
+  .flip-word-inner {
     animation: none !important;
   }
 

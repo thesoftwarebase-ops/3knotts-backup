@@ -3,97 +3,29 @@
 // detail pages, work grid and footer all render from it, so nothing else changes.
 export const services = [
   {
-    slug: "plate-decoration-aarathi-plates",
-    title: "Plate Decoration & Aarathi Plates",
-    blurb: "Hand-dressed aarathi plates for welcome rituals and poojas.",
-    icon: "plate",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Welcome aarathi plate" }, { featured: false, src: "/random.jpg", caption: "Pooja plate detailing" }, { featured: false, src: "/random.jpg", caption: "Seer tray arrangement" }, { featured: false, src: "/random.jpg", caption: "Festival pooja arrangement" }],
+    slug: "backdrop-decoration",
+    title: "Backdrop Decoration",
+    blurb: "Elegant backdrops for ceremonies and receptions.",
+    icon: "backdrop",
+    image: "/flower.png",
+    gallery: [{ featured: true, src: "/flower.png", caption: "Backdrop decoration" }],
     details: [
-      "Welcome aarathis, pooja plates and seer trays dressed with fresh flowers, diyas and ribbon work.",
-      "Share your function and guest count — we match every plate to your ceremony."
+      "Backdrops draped with fresh flowers and fabric that photograph beautifully for your ceremony.",
+      "Tell us your venue dimensions — we design a backdrop that fits your space perfectly."
     ],
     whyUs: [
-      "Fresh flowers strung on the day, never a day earlier",
-      "Kumkum, turmeric and diya accents matched to your ceremony",
-      "Plates sized for family poojas and grand welcomes alike"
+      "Fresh flowers and fabric chosen on the day",
+      "Designed to fit your venue dimensions",
+      "Photographs beautifully from every angle"
     ]
   },
   {
-    slug: "luxury-hampers-trousseau-packing",
-    title: "Luxury Hampers & Trousseau Packing",
-    blurb: "Curated hampers and trousseau trays, packed to gift.",
-    icon: "hamper",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Dry-fruit hamper tray" }, { featured: false, src: "/random.jpg", caption: "Trousseau gift box" }, { featured: false, src: "/random.jpg", caption: "Basket arrangement" }, { featured: false, src: "/random.jpg", caption: "Wedding trousseau set" }],
-    details: [
-      "Dry-fruit, chocolate and keepsake hampers arranged in trays, boxes and baskets.",
-      "Trousseau packing for sarees, lehengas and gifts — layered, labelled and photo-ready."
-    ],
-    whyUs: [
-      "Dry-fruit, chocolate and keepsake mixes you choose",
-      "Trays, boxes and baskets dressed in your colours",
-      "Bulk orders packed uniform — every box identical"
-    ]
-  },
-  {
-    slug: "stalls",
-    title: "Stalls: Bangle, Flower, Photobooth, Mehendi, Bindi, Earrings, Games",
-    blurb: "Festive experience stalls for weddings and family functions.",
-    icon: "stall",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Bangle stall setup" }, { featured: false, src: "/random.jpg", caption: "Photobooth corner" }, { featured: false, src: "/random.jpg", caption: "Mehendi stall" }, { featured: false, src: "/random.jpg", caption: "Bindi and earrings stall" }],
-    details: [
-      "Bangle, flower, photobooth, mehendi, bindi, earrings and games stalls that keep guests delighted between ceremonies.",
-      "Pick any combination — we set up, manage and wind down each stall."
-    ],
-    whyUs: [
-      "Seven stall types, mix and match any combination",
-      "Artists and hosts managed by us, not you",
-      "Setup to teardown in a single visit"
-    ]
-  },
-  {
-    slug: "kitchen-decoration",
-    title: "Kitchen Decoration",
-    blurb: "Calm, welcoming kitchen styling for seer and ceremonies.",
-    icon: "kitchen",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Seer kitchen styling" }, { featured: false, src: "/random.jpg", caption: "Festive kitchen corner" }, { featured: false, src: "/random.jpg", caption: "Traditional accents" }, { featured: false, src: "/random.jpg", caption: "Morning-of-function finish" }],
-    details: [
-      "Kitchen and seer-area styling with flowers, fabric and traditional accents.",
-      "Made to photograph beautifully and welcome guests the moment they arrive."
-    ],
-    whyUs: [
-      "Styling that photographs beautifully at seer functions",
-      "Traditional accents with a calm, modern hand",
-      "Done in hours, without moving your kitchen around"
-    ]
-  },
-  {
-    slug: "return-gifts",
-    title: "Return Gifts: Traditional & Corporate",
-    blurb: "Thoughtful return gifts for guests, teams and clients.",
-    icon: "gift",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Traditional return gifts" }, { featured: false, src: "/random.jpg", caption: "Corporate gift boxes" }, { featured: false, src: "/random.jpg", caption: "Packed and tagged" }, { featured: false, src: "/random.jpg", caption: "Wedding favour table" }],
-    details: [
-      "Traditional return gifts for weddings and family functions, plus clean corporate gifting for teams and clients.",
-      "Tell us your count and occasion — we suggest, pack and finish every piece."
-    ],
-    whyUs: [
-      "Traditional and corporate ranges side by side",
-      "Small family counts to full wedding guest lists",
-      "Each piece finished, tagged and ready to hand over"
-    ]
-  },
-  {
-    slug: "garlands-hair-flowers",
-    title: "Garlands & Hair Flowers",
+    slug: "garlands",
+    title: "Garlands",
     blurb: "Fresh garlands, veni and hair flowers for the day.",
     icon: "garland",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Fresh jasmine strands" }, { featured: false, src: "/random.jpg", caption: "Bridal veni" }, { featured: false, src: "/random.jpg", caption: "Rose garland" }, { featured: false, src: "/random.jpg", caption: "Mixed bridal strands" }],
+    image: "/flower.png",
+    gallery: [{ featured: true, src: "/flower.png", caption: "Fresh jasmine strands" }],
     details: [
       "Fresh jasmine, rose and mixed garlands, veni and hair flowers strung on the day.",
       "Made to stay fresh through long ceremonies and endless photographs."
@@ -105,54 +37,20 @@ export const services = [
     ]
   },
   {
-    slug: "ring-platters",
-    title: "Ring Platters",
-    blurb: "Keepsake ring platters for engagements.",
-    icon: "ring",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Engagement platter" }, { featured: false, src: "/random.jpg", caption: "Floral ring setting" }, { featured: false, src: "/random.jpg", caption: "Keepsake details" }, { featured: false, src: "/random.jpg", caption: "Close-up ring frame" }],
-    details: [
-      "Engagement ring platters dressed with flowers, fabric and keepsake details.",
-      "Designed around your rings — and your photographer."
-    ],
-    whyUs: [
-      "Designed around your exact rings",
-      "Keepsake details you keep long after the day",
-      "Finished in time for your photographer"
-    ]
-  },
-  {
-    slug: "stage-decoration",
-    title: "Stage Decoration",
-    blurb: "Quiet, elegant stages for weddings and receptions.",
+    slug: "corporate-events",
+    title: "Corporate Events",
+    blurb: "Professional event decoration for corporate functions and galas.",
     icon: "stage",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Wedding stage drapes" }, { featured: false, src: "/random.jpg", caption: "Reception backdrop" }, { featured: false, src: "/random.jpg", caption: "Flower stagework" }, { featured: false, src: "/random.jpg", caption: "Evening reception glow" }],
+    image: "/flower.png",
+    gallery: [{ featured: true, src: "/flower.png", caption: "Corporate stage" }],
     details: [
-      "Wedding and reception stages in soft drapes, fresh flowers and warm light.",
-      "Calm backdrops that flatter the couple, not the decor."
+      "Professional styling for corporate galas, product launches and conferences.",
+      "Brand-aligned decor that makes your event memorable."
     ],
     whyUs: [
-      "Soft drapes, fresh flowers and warm light",
-      "Backdrops that flatter the couple, not the decor",
-      "Scaled to halls big and small"
-    ]
-  },
-  {
-    slug: "home-decoration",
-    title: "Home Decoration",
-    blurb: "Warm home styling for festivals and celebrations.",
-    icon: "home",
-    image: "/random.jpg",
-    gallery: [{ featured: true, src: "/random.jpg", caption: "Festive entrance" }, { featured: false, src: "/random.jpg", caption: "Pooja corner styling" }, { featured: false, src: "/random.jpg", caption: "Living room warmth" }, { featured: false, src: "/random.jpg", caption: "Doorway torans and lamps" }],
-    details: [
-      "Entrances, living rooms and pooja corners styled for festivals and family functions.",
-      "Festive warmth without turning your home upside down."
-    ],
-    whyUs: [
-      "Entrances, living rooms and pooja corners",
-      "Festival warmth without turning the house upside down",
-      "Finished before guests arrive, cleared after"
+      "Brand-aligned decor that makes your event memorable",
+      "Setup and teardown handled professionally",
+      "Fresh flowers chosen to match your branding"
     ]
   }
 ];
@@ -163,7 +61,7 @@ export const services = [
 export const WA_NUMBER = "919342780445";
 
 export function getWaNumber() {
-  return WA_NUMBER;
+  return site.whatsappNumber || WA_NUMBER;
 }
 
 // Route paths live here too — no href literals in components.
@@ -177,13 +75,17 @@ export function clientHref(slug) {
 
 export const site = {
   name: "3Knotts",
-  tagline: "Your Celebration, Our Creation.",
+  tagline: "We turn your dreams into reality",
+  taglinePrefix: "We turn your",
+  taglineSuffix: "into reality",
+  taglineRotations: ["dreams", "ideas", "visions"],
   url: "https://allinonedreamplace.in",
   homeHref: "/",
   locale: "en_IN",
   lang: "en",
 
   address: "No. 10/14, Near BCS Jain School, Washermanpet, Chennai - 600021, Tamil Nadu",
+  whatsappNumber: "9342780445",
   addressParts: {
     street: "No. 10/14, Near BCS Jain School, Washermanpet",
     locality: "Chennai",
@@ -204,7 +106,7 @@ export const site = {
   logoSm: "/logo-sm.jpg",
   logoAlt: "3Knotts logo",
   divider: "/partition.svg",
-  flower: "/random.jpg",
+  flower: "/flower.png",
 
   loader: {
     note: "Preparing something beautiful…"
@@ -217,8 +119,8 @@ export const site = {
     title: "Dashboard",
     uploading: "Uploading…",
     working: "Working…",
-    tabs: { enquiries: "Enquiries", email: "Email", hero: "Hero Slides", services: "Services", clients: "Clients", account: "Account", about: "About Us" },
-    tabOrder: ["enquiries", "email", "home", "services", "clients", "about", "account"],
+    tabs: { enquiries: "Enquiries", email: "Email", settings: "Settings", hero: "Hero Slides", services: "Services", clients: "Clients", account: "Account", about: "About Us" },
+    tabOrder: ["enquiries", "email", "settings", "home", "services", "clients", "about", "account"],
     homeLabel: "Home",
     homeTabs: {
       hero: "Hero Slides",
@@ -238,6 +140,9 @@ export const site = {
       brandTitle: "Brand Intro",
       brandHeading: "Heading",
       brandText: "Text",
+      taglinePrefix: "Tagline prefix (before rotating word)",
+      taglineSuffix: "Tagline suffix (after rotating word)",
+      taglineRotations: "Rotating words (comma-separated)",
       ctaLabel: "Button text",
       ctaHref: "Button link",
       featTitle: "Featured Services",
@@ -307,7 +212,12 @@ export const site = {
       add: "Add slide",
       save: "Save slides",
       saved: "Hero slides saved.",
-      remove: "Remove slide"
+      remove: "Remove slide",
+      taglineTitle: "Hero Tagline",
+      taglineHint: "The animated text shown over the videos. The rotating word cycles through the list below.",
+      taglinePrefix: "Text before rotating word",
+      taglineSuffix: "Text after rotating word",
+      taglineRotations: "Rotating words (comma-separated)"
     },
     emailMgr: {
       title: "Enquiry Email",
@@ -337,6 +247,21 @@ export const site = {
         testFailed: "Test email failed — Web3Forms said:",
         deleteFailed: "Could not remove the key."
       }
+    },
+    settingsMgr: {
+      title: "Site Settings",
+      intro: "WhatsApp number, business address and hours shown across the public site. Leave a field empty to fall back to the default.",
+      whatsappLabel: "WhatsApp number",
+      whatsappPlaceholder: "e.g. 9342780445",
+      whatsappNote: "International format, no + or spaces. Used for the WhatsApp chat link.",
+      addressLabel: "Business address",
+      addressPlaceholder: "Full address shown in the footer and enquiry page",
+      hoursDaysLabel: "Business days",
+      hoursDaysPlaceholder: "e.g. Monday – Sunday",
+      hoursTimeLabel: "Business hours",
+      hoursTimePlaceholder: "e.g. 7:00 AM – 8:30 PM",
+      save: "Save settings",
+      saved: "Settings saved."
     },
     clientsMgr: {
       title: "Clients",
@@ -380,7 +305,7 @@ export const site = {
       uploaded: "Photo uploaded.",
       back: "Back to services",
       delTitle: "Delete this service?",
-      delBody: "This permanently removes the service, its page, and its photos from Cloudinary. This cannot be undone.",
+      delBody: "This permanently removes the service, its page, and its photos from ImageKit. This cannot be undone.",
       delConfirm: "Yes, delete everything",
       delCancel: "Keep it",
       deleting: "Deleting…",
@@ -477,12 +402,12 @@ export const site = {
   hero: {
     // Local placeholders for now — replace from the dashboard later.
     // Each slide: { src, alt }. src may be a /public path or a
-    // Cloudinary path (resolved by lib/media.js either way).
+    // ImageKit path (resolved by lib/media.js).
     slides: [
-      { src: "/random.jpg", alt: "Celebration table styling" },
-      { src: "/random.jpg", alt: "Floral decoration detail" },
-      { src: "/random.jpg", alt: "Event stage flowers" },
-      { src: "/random.jpg", alt: "Festive home entrance" }
+      { src: "/flower.png", alt: "Celebration table styling" },
+      { src: "/flower.png", alt: "Floral decoration detail" },
+      { src: "/flower.png", alt: "Event stage flowers" },
+      { src: "/flower.png", alt: "Festive home entrance" }
     ],
     subtitle: "Event decoration and gifting in Chennai — plates, hampers, stalls, garlands, stages and warm home styling.",
     primaryCta: { label: "Plan your celebration", href: "#enquire" },
@@ -686,12 +611,9 @@ export const site = {
   serviceIcons: ["plate", "hamper", "stall", "kitchen", "gift", "garland", "ring", "stage", "home"],
 
   featuredServices: [
-    "plate-decoration-aarathi-plates",
-    "luxury-hampers-trousseau-packing",
-    "stalls",
-    "stage-decoration",
-    "garlands-hair-flowers",
-    "return-gifts"
+    "backdrop-decoration",
+    "garlands",
+    "corporate-events"
   ],
 
   cta: {

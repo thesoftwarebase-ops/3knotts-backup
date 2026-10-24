@@ -7,13 +7,13 @@ import { site } from "@/data/site";
 import { authHeaders } from "./upload";
 
 const inputCls =
-  "w-full rounded-xl border border-teal-mid/30 bg-white px-4 py-2.5 text-[15px] text-ink focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
+  "w-full rounded-xl border border-frame/25 bg-charcoal/60 px-4 py-2.5 text-[15px] text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
 const miniBtn =
-  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-ink transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
+  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-paper transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
 const dangerBtn =
   "rounded-full border border-plum/30 px-4 py-2 text-sm font-semibold text-plum transition-colors hover:border-plum";
 const saveBtn =
-  "rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60";
+  "rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60";
 
 // Dashboard → Email. Stores the client's free Web3Forms access key
 // (created at web3forms.com with their inbox) plus the business Gmail
@@ -149,17 +149,17 @@ export default function EmailManager() {
     }
   }
 
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
 
   return (
-    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
+    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-charcoal/60 p-5 sm:p-6">
       <div>
         <p className="font-tagline text-3xl font-bold text-plum">{t.title}</p>
-        <p className="mt-1 text-sm leading-relaxed text-ink/70">{t.intro}</p>
+        <p className="mt-1 text-sm leading-relaxed text-paper/70">{t.intro}</p>
       </div>
 
       {hasKey ? (
-        <p className="inline-flex w-fit items-center gap-2 rounded-full bg-gold/15 px-4 py-1.5 text-sm font-bold text-[#8a6a1f]">
+        <p className="inline-flex w-fit items-center gap-2 rounded-full bg-gold/15 px-4 py-1.5 text-sm font-bold text-golden">
           {t.onFile}
           <span aria-hidden="true">·</span>
           {keyPreview}
@@ -167,7 +167,7 @@ export default function EmailManager() {
       ) : null}
 
       <div>
-        <p className="mb-1.5 text-sm font-bold text-ink">{t.keyLabel}</p>
+        <p className="mb-1.5 text-sm font-bold text-paper">{t.keyLabel}</p>
         <input
           value={key}
           onChange={(e) => setKey(e.target.value)}
@@ -181,8 +181,8 @@ export default function EmailManager() {
       </div>
 
       <div>
-        <p className="mb-1.5 text-sm font-bold text-ink">{t.gmailLabel}</p>
-        <p className="mb-2 text-[13px] text-ink/60">{t.gmailNote}</p>
+        <p className="mb-1.5 text-sm font-bold text-paper">{t.gmailLabel}</p>
+        <p className="mb-2 text-[13px] text-paper/60">{t.gmailNote}</p>
         <input
           value={gmail}
           onChange={(e) => setGmail(e.target.value)}

@@ -8,13 +8,13 @@ import { mediaImage } from "@/lib/media";
 import { authHeaders } from "./upload";
 
 const inputCls =
-  "w-full rounded-xl border border-teal-mid/30 bg-white px-4 py-2.5 text-[15px] text-ink focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
+  "w-full rounded-xl border border-frame/25 bg-charcoal/60 px-4 py-2.5 text-[15px] text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
 const miniBtn =
-  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-ink transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
+  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-paper transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
 const dangerBtn =
   "rounded-full border border-plum/30 px-4 py-2 text-sm font-semibold text-plum transition-colors hover:border-plum";
 const saveBtn =
-  "rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60";
+  "rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60";
 
 function useContent(key) {
   const [value, setValue] = useState(null);
@@ -62,7 +62,7 @@ function useContent(key) {
 function Field({ label, children }) {
   return (
     <div>
-      <p className="mb-1.5 text-sm font-bold text-ink">{label}</p>
+      <p className="mb-1.5 text-sm font-bold text-paper">{label}</p>
       {children}
     </div>
   );
@@ -84,10 +84,10 @@ function RemoveX({ onClick, label }) {
 export function BrandManager() {
   const m = site.dashboard.homeMgr;
   const { value, setValue, loading, saving, save } = useContent("brand");
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   if (!value) return null;
   return (
-    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
+    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-charcoal/60 p-5 sm:p-6">
       <Field label={m.brandHeading}>
         <input value={value.heading || ""} onChange={(e) => setValue({ ...value, heading: e.target.value })} suppressHydrationWarning className={inputCls} />
       </Field>
@@ -103,7 +103,7 @@ export function BrandManager() {
         </Field>
       </div>
       <span>
-        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60">
           {m.save}
         </button>
       </span>
@@ -159,16 +159,16 @@ export function FeaturedManager() {
     }
   }
 
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   return (
-    <div className="mt-6 rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
-      <p className="text-sm text-ink/70">{m.featHint}</p>
+    <div className="mt-6 rounded-2xl border border-gold/50 bg-charcoal/60 p-5 sm:p-6">
+      <p className="text-sm text-paper/70">{m.featHint}</p>
       <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {services.map((s) => {
           const on = featured.includes(s.slug);
           return (
             <li key={s.slug}>
-              <label className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-all ${on ? "border-gold bg-gold/10" : "border-teal-deep/15 hover:border-gold/60"}`}>
+              <label className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-all ${on ? "border-gold bg-gold/10" : "border-frame/20 hover:border-gold/60"}`}>
                 <input
                   type="checkbox"
                   checked={on}
@@ -176,15 +176,15 @@ export function FeaturedManager() {
                   onChange={(e) =>
                     setFeatured((f) => (e.target.checked ? [...f, s.slug] : f.filter((x) => x !== s.slug)))
                   }
-                  className="h-5 w-5 shrink-0 accent-[#D4A73C]"
+                  className="h-5 w-5 shrink-0 accent-golden"
                 />
-                <span className="truncate text-[15px] font-semibold text-ink">{s.title}</span>
+                <span className="truncate text-[15px] font-semibold text-paper">{s.title}</span>
               </label>
             </li>
           );
         })}
       </ul>
-      <button type="button" onClick={save} disabled={saving} className="mt-4 rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+      <button type="button" onClick={save} disabled={saving} className="mt-4 rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60">
         {m.save}
       </button>
     </div>
@@ -194,13 +194,13 @@ export function FeaturedManager() {
 export function StepsManager() {
   const m = site.dashboard.homeMgr;
   const { value, setValue, loading, saving, save } = useContent("steps");
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   if (!value) return null;
   const set = (i, patch) => setValue(value.map((s, k) => (k === i ? { ...s, ...patch } : s)));
   return (
     <div className="mt-6 flex flex-col gap-5">
       {(value || []).map((s, i) => (
-        <div key={s.n + i} className="relative overflow-hidden rounded-3xl border border-gold/50 bg-white shadow-[0_18px_44px_-24px_rgba(0,0,0,0.4)]">
+        <div key={s.n + i} className="relative overflow-hidden rounded-3xl border border-gold/50 bg-charcoal/60 shadow-[0_18px_44px_-24px_rgba(0,0,0,0.4)]">
           <button
             type="button"
             onClick={() => setValue(value.filter((_, k) => k !== i))}
@@ -209,11 +209,11 @@ export function StepsManager() {
           >
             <span aria-hidden="true">×</span>
           </button>
-          <div className="flex items-center gap-4 border-b border-gold/30 bg-ivory/60 px-5 py-4 sm:px-6">
+          <div className="flex items-center gap-4 border-b border-gold/30 bg-charcoal/50 px-5 py-4 sm:px-6">
             <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-deep font-tagline text-xl font-bold text-gold-soft ring-2 ring-gold">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <p className="min-w-0 flex-1 truncate pr-10 font-tagline text-2xl font-bold text-ink">
+            <p className="min-w-0 flex-1 truncate pr-10 font-tagline text-2xl font-bold text-paper">
               {s.title || m.stepTitle}
             </p>
           </div>
@@ -234,7 +234,7 @@ export function StepsManager() {
             <Field label={m.stepPoints}>
               <span className="flex flex-col gap-2">
                 {(s.points || []).map((pt, j) => (
-                  <span key={j} className="flex items-center gap-2 rounded-xl bg-ivory/70 p-1.5 pl-3">
+                  <span key={j} className="flex items-center gap-2 rounded-xl bg-charcoal/50 p-1.5 pl-3">
                     <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rotate-45 bg-gold" />
                     <input
                       value={pt}
@@ -242,7 +242,7 @@ export function StepsManager() {
                         set(i, { points: (s.points || []).map((x, k) => (k === j ? e.target.value : x)) })
                       }
                       suppressHydrationWarning
-                      className="w-full rounded-lg bg-transparent px-2 py-1.5 text-[15px] text-ink focus:outline-none focus:ring-2 focus:ring-gold/40"
+                      className="w-full rounded-lg bg-transparent px-2 py-1.5 text-[15px] text-paper focus:outline-none focus:ring-2 focus:ring-gold/40"
                     />
                     <button
                       type="button"
@@ -273,7 +273,7 @@ export function StepsManager() {
                 {(s.rich || []).map((seg, j) => {
                   const styleKey = seg.b ? "bold" : seg.c || "plain";
                   return (
-                    <span key={j} className="flex items-center gap-2 rounded-xl bg-ivory/70 p-1.5 pl-3">
+                    <span key={j} className="flex items-center gap-2 rounded-xl bg-charcoal/50 p-1.5 pl-3">
                       <input
                         value={seg.t || ""}
                         onChange={(e) => {
@@ -281,7 +281,7 @@ export function StepsManager() {
                           set(i, { rich });
                         }}
                         suppressHydrationWarning
-                        className="w-full rounded-lg bg-transparent px-2 py-1.5 text-[15px] text-ink focus:outline-none focus:ring-2 focus:ring-gold/40"
+                        className="w-full rounded-lg bg-transparent px-2 py-1.5 text-[15px] text-paper focus:outline-none focus:ring-2 focus:ring-gold/40"
                       />
                       <select
                         value={styleKey}
@@ -295,7 +295,7 @@ export function StepsManager() {
                           set(i, { rich });
                         }}
                         aria-label={m.richStyle}
-                        className="w-24 shrink-0 rounded-lg border border-teal-mid/30 bg-white px-2 py-2 text-sm font-bold text-ink focus:border-gold focus:outline-none"
+                        className="w-24 shrink-0 rounded-lg border border-frame/25 bg-charcoal/60 px-2 py-2 text-sm font-bold text-paper focus:border-gold focus:outline-none"
                       >
                         {Object.entries(m.richStyles).map(([v, label]) => (
                           <option key={v} value={v}>
@@ -335,13 +335,13 @@ export function StepsManager() {
         onClick={() => setValue([...(value || []), { n: "", title: "", text: "", art: "", rich: null, points: [] }])}
         className="flex items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-gold/60 bg-gold/5 px-6 py-8 transition-all hover:-translate-y-0.5 hover:border-gold hover:bg-gold/10"
       >
-        <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold font-tagline text-3xl font-bold leading-none text-ink shadow-[0_10px_24px_-8px_rgba(232,80,64,0.9)]">
+        <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold font-tagline text-3xl font-bold leading-none text-paper shadow-[0_10px_24px_-8px_rgba(232,80,64,0.9)]">
           +
         </span>
         <span className="font-tagline text-3xl font-bold text-plum">{m.addStep}</span>
       </button>
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60">
           {m.save}
         </button>
       </div>
@@ -411,18 +411,18 @@ export function WorkNote({ onGoServices }) {
   }
 
   return (
-    <div className="mt-6 max-w-3xl rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
-      <p className="text-[15px] leading-relaxed text-ink/80">{m.workNote}</p>
+    <div className="mt-6 max-w-3xl rounded-2xl border border-gold/50 bg-charcoal/60 p-5 sm:p-6">
+      <p className="text-[15px] leading-relaxed text-paper/80">{m.workNote}</p>
       {loading ? (
-        <p className="mt-4 text-ink/60">{site.dashboard.loading}</p>
+        <p className="mt-4 text-paper/60">{site.dashboard.loading}</p>
       ) : shots.length === 0 ? (
-        <p className="mt-4 rounded-xl bg-ivory px-4 py-3 text-center text-[15px] font-medium text-ink/70">
+        <p className="mt-4 rounded-xl bg-noir px-4 py-3 text-center text-[15px] font-medium text-paper/70">
           {m.workEmpty}
         </p>
       ) : (
         <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {shots.map((w, i) => (
-            <li key={`${w.slug}-${i}`} className="group relative overflow-hidden rounded-xl border border-gold/40 bg-sand/40">
+            <li key={`${w.slug}-${i}`} className="group relative overflow-hidden rounded-xl border border-gold/40 bg-charcoal/40">
               {w.src ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={mediaImage(w.src)} alt="" aria-hidden="true" loading="lazy" className="aspect-square h-auto w-full object-cover" />
@@ -435,7 +435,7 @@ export function WorkNote({ onGoServices }) {
                 type="button"
                 onClick={() => unstar(i)}
                 aria-label={m.remove}
-                className="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-gold text-base font-bold leading-none text-ink shadow transition-transform hover:scale-110"
+                className="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-gold text-base font-bold leading-none text-paper shadow transition-transform hover:scale-110"
               >
                 <span aria-hidden="true">★</span>
               </button>
@@ -453,12 +453,12 @@ export function WorkNote({ onGoServices }) {
 export function TestimonialsManager() {
   const m = site.dashboard.homeMgr;
   const { value, setValue, loading, saving, save } = useContent("testimonials");
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   if (!value) return null;
   return (
     <div className="mt-6 flex flex-col gap-4">
       {(value || []).map((t, i) => (
-        <div key={i} className="rounded-2xl border border-gold/50 bg-white p-5">
+        <div key={i} className="rounded-2xl border border-gold/50 bg-charcoal/60 p-5">
           <Field label={m.quoteLabel}>
             <textarea value={t.quote || ""} onChange={(e) => setValue(value.map((x, k) => (k === i ? { ...x, quote: e.target.value } : x)))} rows={3} suppressHydrationWarning className={`${inputCls} resize-y max-h-44 overflow-y-auto`} />
           </Field>
@@ -482,7 +482,7 @@ export function TestimonialsManager() {
         <button type="button" onClick={() => setValue([...(value || []), { quote: "", name: "", detail: "", insta: "" }])} className={miniBtn}>
           {m.addQuote}
         </button>
-        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60">
           {m.save}
         </button>
       </div>
@@ -493,12 +493,12 @@ export function TestimonialsManager() {
 export function FaqManager() {
   const m = site.dashboard.homeMgr;
   const { value, setValue, loading, saving, save } = useContent("faq");
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   if (!value) return null;
   return (
     <div className="mt-6 flex flex-col gap-4">
       {(value || []).map((f, i) => (
-        <div key={i} className="rounded-2xl border border-gold/50 bg-white p-5">
+        <div key={i} className="rounded-2xl border border-gold/50 bg-charcoal/60 p-5">
           <Field label={m.qLabel}>
             <input value={f.q || ""} onChange={(e) => setValue(value.map((x, k) => (k === i ? { ...x, q: e.target.value } : x)))} suppressHydrationWarning className={inputCls} />
           </Field>
@@ -516,7 +516,7 @@ export function FaqManager() {
         <button type="button" onClick={() => setValue([...(value || []), { q: "", a: "" }])} className={miniBtn}>
           {m.addQa}
         </button>
-        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60">
+        <button type="button" onClick={() => save()} disabled={saving} className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60">
           {m.save}
         </button>
       </div>
@@ -530,25 +530,25 @@ export function FaqManager() {
 export function ClientsManager() {
   const m = site.dashboard.clientsMgr;
   const { value, setValue, loading, saving, save } = useContent("clients");
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   if (!value) return null;
   return (
-    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
+    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-charcoal/60 p-5 sm:p-6">
       <div>
         <p className="font-tagline text-3xl font-bold text-plum">{m.title}</p>
-        <p className="mt-1 text-sm leading-relaxed text-ink/70">{m.intro}</p>
+        <p className="mt-1 text-sm leading-relaxed text-paper/70">{m.intro}</p>
       </div>
-      <label className="flex items-center justify-between gap-4 rounded-xl border border-teal-mid/30 bg-white px-4 py-3">
+      <label className="flex items-center justify-between gap-4 rounded-xl border border-frame/25 bg-charcoal/60 px-4 py-3">
         <span>
-          <span className="block text-sm font-bold text-ink">{m.visibleLabel}</span>
-          <span className="block text-[13px] text-ink/60">{m.note}</span>
+          <span className="block text-sm font-bold text-paper">{m.visibleLabel}</span>
+          <span className="block text-[13px] text-paper/60">{m.note}</span>
         </span>
         <input
           type="checkbox"
           checked={Boolean(value.visible)}
           onChange={(e) => setValue({ ...value, visible: e.target.checked })}
           suppressHydrationWarning
-          className="h-5 w-5 shrink-0 accent-[#D4A73C]"
+          className="h-5 w-5 shrink-0 accent-golden"
         />
       </label>
       <div>

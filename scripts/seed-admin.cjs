@@ -2,15 +2,17 @@
 // Usage: node scripts/seed-admin.cjs <email> <password>
 // Never commit real credentials — pass them as arguments.
 const { createRequire } = require("node:module");
+const path = require("node:path");
 
-const requireFromProject = createRequire("C:/Users/akcod/Desktop/all_in_one_dream_place/package.json");
+const ROOT = path.join(__dirname, "..");
+const requireFromProject = createRequire(path.join(ROOT, "package.json"));
 const bcrypt = requireFromProject("bcryptjs");
 const { MongoClient } = requireFromProject("mongodb");
 
 const fs = require("fs");
 const env = {};
 const raw = fs
-  .readFileSync("C:/Users/akcod/Desktop/all_in_one_dream_place/.env.local", "utf8")
+  .readFileSync(path.join(ROOT, ".env.local"), "utf8")
   .replace(/^\uFEFF/, "")
   .replace(/\r/g, "");
 for (const line of raw.split("\n")) {

@@ -31,14 +31,15 @@ export default function Testimonials({ items }) {
   }, [paused, n, active]);
 
   return (
-    <section aria-labelledby="testimonials-heading" className="relative border-b border-frame/10 py-24 sm:py-32">
+    <section aria-labelledby="testimonials-heading" className="relative overflow-hidden border-b border-frame/10 py-14 sm:py-20">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_30%_-20%,rgba(232,80,64,0.03),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-[10%] top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 opacity-[0.02] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cpath%20d%3D%22M100%2020c0%2044-36%2080-80%2080%2044%200%2080%2036%2080%2080%200-44%2036-80%2080-80-44%200-80-36-80-80z%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%221%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%220.8%22%2F%3E%3C%2Fsvg%3E')] bg-contain bg-center" />
 
       <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
         <SectionHeading id="testimonials-heading" heading={t.heading} intro={t.intro} />
 
         {n ? (
-          <Reveal className="mt-16">
+          <Reveal className="mt-10">
             <div
               className="relative overflow-hidden rounded-sm border border-frame/20 bg-charcoal/[0.06]"
               onMouseEnter={() => setPaused(true)}
@@ -155,7 +156,7 @@ export default function Testimonials({ items }) {
             </div>
           </Reveal>
         ) : (
-          <Reveal className="mt-16">
+          <Reveal className="mt-10">
             <div className="mx-auto max-w-2xl rounded-sm border border-dashed border-frame/30 px-6 py-14 text-center">
               <span aria-hidden="true" className="font-heading text-4xl leading-none text-frame/30">&ldquo;</span>
               <p className="mt-4 font-heading text-xl text-paper">{t.emptyHeading}</p>

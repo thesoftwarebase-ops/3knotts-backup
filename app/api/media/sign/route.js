@@ -1,8 +1,8 @@
-import { signUpload } from "@/lib/cloudinary";
+import { signUpload } from "@/lib/imagekit";
 import { verifySession, bearerToken } from "@/lib/admin-auth";
 
-// Returns a short-lived signature for direct browser → Cloudinary uploads.
-// The API secret never leaves the server.
+// Returns short-lived ImageKit authentication parameters for direct browser
+// uploads. The private API key never leaves the server.
 // Gate: UPLOAD_TOKEN header, or a valid admin Bearer token.
 export async function POST(request) {
   const required = process.env.UPLOAD_TOKEN || "";
@@ -20,8 +20,7 @@ export async function POST(request) {
   try {
     const signed = signUpload({
       folder: body.folder,
-      publicId: body.publicId,
-      resourceType: body.resourceType
+      publicId: body.publicId
     });
     return Response.json({ ok: true, ...signed });
   } catch (e) {

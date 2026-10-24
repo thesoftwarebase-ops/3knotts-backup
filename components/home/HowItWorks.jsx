@@ -111,7 +111,7 @@ export default function HowItWorks({ steps }) {
   }, [wire]);
 
   return (
-    <section aria-labelledby="how-heading" className="relative overflow-clip border-y border-frame/20 bg-charcoal/10 py-24 sm:py-32">
+    <section aria-labelledby="how-heading" className="relative overflow-clip border-y border-frame/20 bg-charcoal/10 py-14 sm:py-20">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(ellipse_at_50%_-10%,rgba(204,108,66,0.03),transparent_65%)]"
@@ -138,7 +138,7 @@ export default function HowItWorks({ steps }) {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading id="how-heading" heading={t.heading} intro={t.intro} tone="dark" divider={false} />
 
-        <div className="mt-16">
+        <div className="mt-10">
           <ol ref={listRef} className="relative flex flex-col gap-16 md:gap-[140px]">
             <svg
               aria-hidden="true"
@@ -204,7 +204,7 @@ export default function HowItWorks({ steps }) {
           </ol>
         </div>
 
-        <div className="mt-16 flex items-center justify-center gap-3 w-[170px] opacity-50">
+        <div className="mt-10 flex items-center justify-center gap-3 w-[170px] opacity-50">
           <span className="h-[1px] flex-1 bg-gradient-to-r from-frame/35 to-transparent" />
           <span className="h-2 w-2 rotate-45 bg-brand/50" />
           <span className="h-[1px] flex-1 bg-gradient-to-l from-frame/35 to-transparent" />

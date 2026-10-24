@@ -11,6 +11,7 @@ import HeroManager from "./HeroManager";
 import ServicesManager from "./ServicesManager";
 import AboutManager from "./AboutManager";
 import EmailManager from "./EmailManager";
+import SettingsManager from "./SettingsManager";
 import {
   BrandManager,
   FeaturedManager,
@@ -188,18 +189,18 @@ export default function DashboardPanel() {
     "inline-flex items-center rounded-full px-3 py-1 text-[13px] font-bold ";
   const pillTone = (s) =>
     s === "new"
-      ? "bg-gold/20 text-[#8a6a1f]"
+      ? "bg-gold/20 text-golden"
       : s === "contacted"
         ? "bg-teal-deep/10 text-teal-bright"
-        : "bg-green-100 text-green-800";
+        : "bg-green-900/30 text-green-400";
 
   const inputCls =
-    "w-full rounded-xl border border-teal-mid/30 bg-white px-4 py-3 text-base text-ink placeholder:text-ink/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
+    "w-full rounded-xl border border-frame/25 bg-charcoal/60 px-4 py-3 text-base text-paper placeholder:text-paper/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
 
   if (!ready) {
     return (
-      <div className="flex min-h-svh items-center justify-center bg-ivory">
-        <p className="text-ink/60">{t.loading}</p>
+      <div className="flex min-h-svh items-center justify-center bg-noir">
+        <p className="text-paper/60">{t.loading}</p>
       </div>
     );
   }
@@ -212,7 +213,7 @@ export default function DashboardPanel() {
         </span>
         <div>
           <p className="font-tagline text-2xl font-bold leading-none text-plum">{t.title}</p>
-          {email ? <p className="mt-1 truncate text-xs font-medium text-ink/60">{email}</p> : null}
+          {email ? <p className="mt-1 truncate text-xs font-medium text-paper/60">{email}</p> : null}
         </div>
       </div>
       <nav aria-label={t.title} className="nice-scroll mt-8 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto pr-1">
@@ -225,8 +226,8 @@ export default function DashboardPanel() {
                 aria-expanded={homeOpen}
                 className={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-[15px] font-bold transition-all ${
                   tab.startsWith("home-")
-                    ? "bg-gold/20 text-ink"
-                    : "text-ink/70 hover:translate-x-0.5 hover:bg-gold/10 hover:text-ink"
+                    ? "bg-gold/20 text-paper"
+                    : "text-paper/70 hover:translate-x-0.5 hover:bg-gold/10 hover:text-paper"
                 }`}
               >
                 {t.homeLabel}
@@ -251,8 +252,8 @@ export default function DashboardPanel() {
                           aria-current={isActive ? "page" : undefined}
                           className={`rounded-lg px-4 py-2 text-left text-sm font-semibold transition-all ${
                             isActive
-                              ? "bg-gold text-ink shadow-[0_8px_20px_-8px_rgba(232,80,64,0.9)]"
-                              : "text-ink/65 hover:translate-x-0.5 hover:bg-gold/10 hover:text-ink"
+                              ? "bg-gold text-noir shadow-[0_8px_20px_-8px_rgba(232,80,64,0.9)]"
+                              : "text-paper/65 hover:translate-x-0.5 hover:bg-gold/10 hover:text-paper"
                           }`}
                         >
                           {t.homeTabs[h]}
@@ -274,8 +275,8 @@ export default function DashboardPanel() {
               aria-current={tab === k ? "page" : undefined}
               className={`rounded-xl px-4 py-3 text-left text-[15px] font-bold transition-all ${
                 tab === k
-                  ? "bg-gold text-ink shadow-[0_8px_20px_-8px_rgba(232,80,64,0.9)]"
-                  : "text-ink/70 hover:translate-x-0.5 hover:bg-gold/10 hover:text-ink"
+                  ? "bg-gold text-noir shadow-[0_8px_20px_-8px_rgba(232,80,64,0.9)]"
+                  : "text-paper/70 hover:translate-x-0.5 hover:bg-gold/10 hover:text-paper"
               }`}
             >
               {t.tabs[k]}
@@ -286,7 +287,7 @@ export default function DashboardPanel() {
       <button
         type="button"
         onClick={logout}
-        className="mt-auto rounded-full border border-gold/60 px-5 py-2.5 text-sm font-bold text-ink transition-all hover:-translate-y-0.5 hover:border-gold"
+        className="mt-auto rounded-full border border-gold/60 px-5 py-2.5 text-sm font-bold text-paper transition-all hover:-translate-y-0.5 hover:border-gold"
       >
         {t.logout}
       </button>
@@ -301,19 +302,19 @@ export default function DashboardPanel() {
   );
 
   return (
-    <div className="relative min-h-svh overflow-clip bg-ivory lg:pl-64">
-      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed left-0 top-0 z-0 h-auto w-40 rotate-180 select-none opacity-40 [mask-image:radial-gradient(farthest-side_at_0%_0%,black_55%,transparent)] sm:w-56" />
-      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed right-0 top-0 z-0 h-auto w-40 -rotate-90 select-none opacity-40 [mask-image:radial-gradient(farthest-side_at_100%_0%,black_55%,transparent)] sm:w-56" />
-      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed bottom-0 left-0 z-0 h-auto w-40 rotate-90 select-none opacity-40 [mask-image:radial-gradient(farthest-side_at_0%_100%,black_55%,transparent)] sm:w-56" />
-      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed bottom-0 right-0 z-0 h-auto w-40 select-none opacity-40 [mask-image:radial-gradient(farthest-side_at_100%_100%,black_55%,transparent)] sm:w-56" />
+    <div className="relative min-h-svh overflow-clip bg-noir lg:pl-64">
+      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed left-0 top-0 z-0 h-auto w-40 rotate-180 select-none opacity-15 [mask-image:radial-gradient(farthest-side_at_0%_0%,black_55%,transparent)] sm:w-56" />
+      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed right-0 top-0 z-0 h-auto w-40 -rotate-90 select-none opacity-15 [mask-image:radial-gradient(farthest-side_at_100%_0%,black_55%,transparent)] sm:w-56" />
+      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed bottom-0 left-0 z-0 h-auto w-40 rotate-90 select-none opacity-15 [mask-image:radial-gradient(farthest-side_at_0%_100%,black_55%,transparent)] sm:w-56" />
+      <img src={site.flower} alt="" aria-hidden="true" draggable={false} loading="lazy" className="pointer-events-none fixed bottom-0 right-0 z-0 h-auto w-40 select-none opacity-15 [mask-image:radial-gradient(farthest-side_at_100%_100%,black_55%,transparent)] sm:w-56" />
 
       {/* Sidebar — desktop */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-gold/40 bg-white/80 px-5 py-6 backdrop-blur lg:flex">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-gold/40 bg-noir/90 px-5 py-6 backdrop-blur lg:flex">
         {nav}
       </aside>
 
       {/* Top bar + drawer — mobile */}
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-gold/40 bg-ivory/95 px-4 py-3 backdrop-blur lg:hidden">
+      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-gold/40 bg-noir/95 px-4 py-3 backdrop-blur lg:hidden">
         <p className="font-tagline text-2xl font-bold text-plum">{t.title}</p>
         <button
           type="button"
@@ -338,8 +339,8 @@ export default function DashboardPanel() {
           drawer ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div aria-hidden="true" className="absolute inset-0 bg-ink/50" onClick={() => setDrawer(false)} />
-        <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-ivory px-5 py-6 shadow-2xl">
+        <div aria-hidden="true" className="absolute inset-0 bg-noir/70" onClick={() => setDrawer(false)} />
+        <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-noir px-5 py-6 shadow-2xl">
           <button
             type="button"
             onClick={() => setDrawer(false)}
@@ -356,13 +357,13 @@ export default function DashboardPanel() {
       <div className="relative z-10 mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
         {tab === "enquiries" ? (
           <div>
-            <p className="text-sm font-medium text-ink/60">
+            <p className="text-sm font-medium text-paper/60">
               {rows.length} {t.showing}
             </p>
             {loading ? (
-              <p className="mt-6 text-ink/60">{t.loading}</p>
+              <p className="mt-6 text-paper/60">{t.loading}</p>
             ) : rows.length === 0 ? (
-              <p className="mt-6 rounded-2xl border border-gold/40 bg-white p-6 text-center text-ink/70">
+              <p className="mt-6 rounded-2xl border border-gold/40 bg-charcoal/60 p-6 text-center text-paper/70">
                 {t.empty}
               </p>
             ) : (
@@ -370,27 +371,27 @@ export default function DashboardPanel() {
                 {rows.map((r) => {
                   const next = ORDER[(ORDER.indexOf(r.status) + 1) % ORDER.length];
                   return (
-                    <li key={r.id} className="rounded-2xl border border-gold/50 bg-white p-5">
+                    <li key={r.id} className="rounded-2xl border border-gold/50 bg-charcoal/60 p-5">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <p className="font-tagline text-2xl font-bold text-ink">{r.name}</p>
+                        <p className="font-tagline text-2xl font-bold text-paper">{r.name}</p>
                         <span className={pill + pillTone(r.status)}>{t.status[r.status] || r.status}</span>
                       </div>
-                      <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-[15px] text-ink/80 sm:grid-cols-2">
+                      <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-[15px] text-paper/80 sm:grid-cols-2">
                         <div><dt className="sr-only">{site.form.phoneLabel}</dt><dd><a className="font-semibold text-teal-bright" href={`tel:${r.phone}`}>{r.phone}</a></dd></div>
                         <div><dt className="sr-only">{site.form.dateLabel}</dt><dd>{r.date}</dd></div>
                         <div><dt className="sr-only">{site.form.locationLabel}</dt><dd>{r.location}</dd></div>
                         <div><dt className="sr-only">{site.form.functionLabel}</dt><dd>{r.functionType}</dd></div>
                         {r.budget ? <div><dt className="sr-only">{site.form.budgetLabel}</dt><dd>{r.budget}</dd></div> : null}
-                        {r.createdAt ? <div><dt className="sr-only">{t.received}</dt><dd className="text-ink/60">{new Date(r.createdAt).toLocaleString()}</dd></div> : null}
+                        {r.createdAt ? <div><dt className="sr-only">{t.received}</dt><dd className="text-paper/60">{new Date(r.createdAt).toLocaleString()}</dd></div> : null}
                       </dl>
-                      <p className="mt-3 rounded-xl bg-ivory px-4 py-3 text-[15px] leading-relaxed text-ink/85">
+                      <p className="mt-3 rounded-xl bg-noir px-4 py-3 text-[15px] leading-relaxed text-paper/85">
                         {r.requirement}
                       </p>
                       <div className="mt-4 flex flex-wrap gap-2">
                         <button
                           type="button"
                           onClick={() => advance(r)}
-                          className="rounded-full bg-gold px-5 py-2 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5"
+                          className="rounded-full bg-gold px-5 py-2 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5"
                         >
                           {t.next} {t.status[next]}
                         </button>
@@ -410,6 +411,8 @@ export default function DashboardPanel() {
           </div>
         ) : tab === "email" ? (
           <EmailManager />
+        ) : tab === "settings" ? (
+          <SettingsManager />
         ) : tab === "home-hero" ? (
           <HeroManager />
         ) : tab === "home-brand" ? (
@@ -431,15 +434,15 @@ export default function DashboardPanel() {
         ) : tab === "about" ? (
           <AboutManager />
         ) : (
-          <form onSubmit={saveAccount} className="max-w-md rounded-2xl border border-gold/50 bg-white p-6">
+          <form onSubmit={saveAccount} className="max-w-md rounded-2xl border border-gold/50 bg-charcoal/60 p-6">
             <p className="font-tagline text-3xl font-bold text-plum">{t.accountTitle}</p>
-            <p className="mt-1 text-sm text-ink/70">{t.accountIntro}</p>
+            <p className="mt-1 text-sm text-paper/70">{t.accountIntro}</p>
             {email ? (
-              <p className="mt-3 rounded-xl bg-ivory px-4 py-2.5 text-sm font-bold text-teal-bright">
+              <p className="mt-3 rounded-xl bg-noir px-4 py-2.5 text-sm font-bold text-teal-bright">
                 {email}
               </p>
             ) : null}
-            <label htmlFor="acc-current" className="mb-1.5 mt-5 block text-sm font-bold text-ink">
+            <label htmlFor="acc-current" className="mb-1.5 mt-5 block text-sm font-bold text-paper">
               {site.adminLogin.passwordLabel} *
             </label>
             <input
@@ -452,7 +455,7 @@ export default function DashboardPanel() {
               suppressHydrationWarning
               className={inputCls}
             />
-            <label htmlFor="acc-email" className="mb-1.5 mt-4 block text-sm font-bold text-ink">
+            <label htmlFor="acc-email" className="mb-1.5 mt-4 block text-sm font-bold text-paper">
               {t.newEmailLabel}
             </label>
             <input
@@ -464,7 +467,7 @@ export default function DashboardPanel() {
               suppressHydrationWarning
               className={inputCls}
             />
-            <label htmlFor="acc-new" className="mb-1.5 mt-4 block text-sm font-bold text-ink">
+            <label htmlFor="acc-new" className="mb-1.5 mt-4 block text-sm font-bold text-paper">
               {t.newPasswordLabel}
             </label>
             <input

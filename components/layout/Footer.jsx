@@ -25,9 +25,14 @@ function Arrow() {
 const linkCls =
   "group flex items-center justify-between gap-3 py-2 text-[12px] font-medium leading-snug text-paper/50 transition-colors duration-300 hover:text-paper";
 
-export default function Footer({ services = seedServices }) {
+export default function Footer({ services = seedServices, settings = {} }) {
   const ft = site.footer;
-  const waHref = `https://wa.me/${getWaNumber()}?text=${encodeURIComponent(site.whatsappGreeting)}`;
+  const address = settings.address || site.address;
+  const hoursDays = settings.hoursDays || ft.hoursDays;
+  const hoursTime = settings.hoursTime || ft.hoursTime;
+  const waNumber = settings.whatsappNumber || getWaNumber();
+  const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(site.whatsappGreeting)}`;
+  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const exploreLinks = [
     { label: site.servicesPage.breadcrumbHome, href: site.homeHref },
     ...site.nav,
@@ -130,10 +135,10 @@ export default function Footer({ services = seedServices }) {
               {ft.contactTitle}
             </p>
             <address className="mt-5 border-t border-frame/10 pt-4 text-[12.5px] not-italic leading-[1.85] text-paper/50">
-              <p>{site.address}</p>
+              <p>{address}</p>
               <p className="mt-3">
                 <a
-                  href={site.mapsUrl}
+                  href={mapsHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 font-medium text-paper/75 transition-colors duration-300 hover:text-brand"
@@ -151,8 +156,8 @@ export default function Footer({ services = seedServices }) {
                 <ClockIcon />
                 {ft.hoursTitle}
               </p>
-              <p className="mt-3 text-[11px] font-medium text-paper/45">{ft.hoursDays}</p>
-              <p className="mt-1.5 font-heading text-[15px] tracking-[0.06em] text-paper">{ft.hoursTime}</p>
+              <p className="mt-3 text-[11px] font-medium text-paper/45">{hoursDays}</p>
+              <p className="mt-1.5 font-heading text-[15px] tracking-[0.06em] text-paper">{hoursTime}</p>
             </div>
           </div>
         </div>

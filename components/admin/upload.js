@@ -1,9 +1,8 @@
 "use client";
 
 // Uploads go through our own API route (POST multipart to /api/admin/media),
-// which forwards to Cloudinary server-side. The browser never talks to
-// Cloudinary directly, so cross-origin failures cannot happen.
-// Returns the storable path. Throws with a readable message on failure.
+// which forwards to ImageKit server-side. The private key never reaches the
+// browser. Returns the storable path plus ImageKit's file id.
 export async function uploadImage(file, folder, token) {
   if (!file) throw new Error("No file chosen.");
   const form = new FormData();
@@ -15,10 +14,10 @@ export async function uploadImage(file, folder, token) {
     body: form
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok || !data.ok || !data.path) {
+  if (!res.ok || !data.ok || !data.path || !data.fileId) {
     throw new Error(data.error || "Upload failed.");
   }
-  return data.path;
+  return { path: data.path, fileId: data.fileId };
 }
 
 export function adminToken() {
@@ -27,4 +26,19 @@ export function adminToken() {
 
 export function authHeaders() {
   return { "Content-Type": "application/json", Authorization: `Bearer ${adminToken()}` };
+}
+
+// Delete a single ImageKit asset. Swallow errors so callers never block
+// on cleanup failures — an orphaned file is cheaper than a broken upload.
+export async function deleteAssetRef(src, fileId = "") {
+  const ref = String(src || "").trim();
+  const id = String(fileId || "").trim();
+  if (!id && (!ref || ref.startsWith("/"))) return;
+  try {
+    await fetch("/api/admin/media", {
+      method: "DELETE",
+      headers: authHeaders(),
+      body: JSON.stringify({ fileId: id, filePath: ref })
+    });
+  } catch {}
 }

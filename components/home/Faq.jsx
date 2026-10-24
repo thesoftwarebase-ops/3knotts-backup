@@ -8,13 +8,14 @@ export default function Faq({ items }) {
   const list = items ?? t.items;
 
   return (
-    <section aria-labelledby="faq-heading" className="relative border-b border-frame/10 py-24 sm:py-32">
+    <section aria-labelledby="faq-heading" className="relative border-b border-frame/10 py-14 sm:py-20">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_70%_-30%,rgba(252,204,48,0.03),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-48 w-[40%] bg-[radial-gradient(ellipse_at_0%_100%,rgba(232,80,64,0.025),transparent_60%)]" />
 
       <div className="relative mx-auto max-w-3xl px-5 sm:px-8">
         <SectionHeading id="faq-heading" heading={t.heading} intro={t.intro} divider={false} />
 
-        <div className="mt-14 border-t border-frame/15">
+        <div className="mt-8 border-t border-frame/15">
           {list.map((item, i) => (
             <details key={item.q} name="faq" className="group relative border-b border-frame/15">
               <span

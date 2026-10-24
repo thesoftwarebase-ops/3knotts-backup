@@ -5,12 +5,12 @@ import { toast } from "sonner";
 import { showBusy, hideBusy } from "@/lib/busy";
 import { site } from "@/data/site";
 import { mediaImage } from "@/lib/media";
-import { uploadImage, adminToken, authHeaders } from "./upload";
+import { uploadImage, adminToken, authHeaders, deleteAssetRef } from "./upload";
 
 const inputCls =
-  "w-full rounded-xl border border-teal-mid/30 bg-white px-4 py-2.5 text-[15px] text-ink focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
+  "w-full rounded-xl border border-frame/25 bg-charcoal/60 px-4 py-2.5 text-[15px] text-paper focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/40";
 const miniBtn =
-  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-ink transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
+  "rounded-full border border-gold/60 px-4 py-2 text-sm font-bold text-paper transition-all hover:-translate-y-0.5 hover:border-gold disabled:opacity-60";
 
 export default function AboutManager() {
   const m = site.dashboard.aboutMgr;
@@ -39,11 +39,16 @@ export default function AboutManager() {
 
   async function replace(file) {
     if (!file) return;
+    const prevSrc = value?.ownerImage || "";
+    const prevFileId = value?.ownerImageFileId || "";
     setBusy(true);
     showBusy(m.uploading);
     try {
-      const path = await uploadImage(file, "all-in-one-dream-place/about", adminToken());
-      setValue((v) => ({ ...v, ownerImage: path }));
+      const uploaded = await uploadImage(file, "3knotts/about", adminToken());
+      setValue((v) => ({ ...v, ownerImage: uploaded.path, ownerImageFileId: uploaded.fileId }));
+      if (prevSrc && !prevSrc.startsWith("/")) {
+        await deleteAssetRef(prevSrc, prevFileId);
+      }
       toast.success(m.uploaded);
     } catch (err) {
       toast.error(err.message);
@@ -74,13 +79,13 @@ export default function AboutManager() {
     }
   }
 
-  if (loading) return <p className="mt-6 text-ink/60">{site.dashboard.loading}</p>;
+  if (loading) return <p className="mt-6 text-paper/60">{site.dashboard.loading}</p>;
   if (!value) return null;
 
   const set = (patch) => setValue({ ...value, ...patch });
 
   return (
-    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-white p-5 sm:p-6">
+    <div className="mt-6 flex max-w-2xl flex-col gap-4 rounded-2xl border border-gold/50 bg-charcoal/60 p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
         {value.ownerImage ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -92,8 +97,8 @@ export default function AboutManager() {
           />
         ) : null}
         <div>
-          <p className="mb-1.5 text-sm font-bold text-ink">{m.ownerImageLabel}</p>
-          <p className="mb-2 text-[13px] text-ink/60">{m.webpNote}</p>
+          <p className="mb-1.5 text-sm font-bold text-paper">{m.ownerImageLabel}</p>
+          <p className="mb-2 text-[13px] text-paper/60">{m.webpNote}</p>
           <button type="button" disabled={busy} onClick={() => fileRef.current?.click()} className={miniBtn}>
             {busy ? m.uploading : m.replaceImage}
           </button>
@@ -112,7 +117,7 @@ export default function AboutManager() {
           />
         </div>
         <div className="flex-1">
-          <p className="mb-1.5 text-sm font-bold text-ink">{m.ownerRoleLabel}</p>
+          <p className="mb-1.5 text-sm font-bold text-paper">{m.ownerRoleLabel}</p>
           <input
             value={value.ownerRole || ""}
             onChange={(e) => set({ ownerRole: e.target.value })}
@@ -123,7 +128,7 @@ export default function AboutManager() {
       </div>
 
       <div>
-        <p className="mb-1.5 text-sm font-bold text-ink">{m.headingLabel}</p>
+        <p className="mb-1.5 text-sm font-bold text-paper">{m.headingLabel}</p>
         <input
           value={value.heading || ""}
           onChange={(e) => set({ heading: e.target.value })}
@@ -133,7 +138,7 @@ export default function AboutManager() {
       </div>
 
       <div>
-        <p className="mb-1.5 text-sm font-bold text-ink">{m.introLabel}</p>
+        <p className="mb-1.5 text-sm font-bold text-paper">{m.introLabel}</p>
         <input
           value={value.intro || ""}
           onChange={(e) => set({ intro: e.target.value })}
@@ -143,7 +148,7 @@ export default function AboutManager() {
       </div>
 
       <div>
-        <p className="mb-1.5 text-sm font-bold text-ink">{m.ledeLabel}</p>
+        <p className="mb-1.5 text-sm font-bold text-paper">{m.ledeLabel}</p>
           <textarea
             value={value.lede || ""}
             onChange={(e) => set({ lede: e.target.value })}
@@ -154,7 +159,7 @@ export default function AboutManager() {
       </div>
 
       <div>
-        <p className="mb-1.5 text-sm font-bold text-ink">{m.textLabel}</p>
+        <p className="mb-1.5 text-sm font-bold text-paper">{m.textLabel}</p>
         <span className="flex flex-col gap-2">
           {(value.paragraphs || []).map((p, i) => (
             <span key={i} className="flex items-start gap-2">
@@ -194,7 +199,7 @@ export default function AboutManager() {
           type="button"
           onClick={save}
           disabled={saving}
-          className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-ink transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+          className="rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-paper transition-transform hover:-translate-y-0.5 disabled:opacity-60"
         >
           {m.save}
         </button>

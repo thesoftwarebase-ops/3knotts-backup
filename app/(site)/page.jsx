@@ -6,14 +6,15 @@ import WorkGrid from "@/components/home/WorkGrid";
 import Testimonials from "@/components/home/Testimonials";
 import Faq from "@/components/home/Faq";
 import CtaBand from "@/components/ui/CtaBand";
-import { getHeroSlides, getServices, getFeatured, getContent } from "@/lib/content";
+import { getHeroSlides, getHeroTagline, getServices, getFeatured, getContent } from "@/lib/content";
 
 // Dashboard edits go live within a minute — no rebuild needed.
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [slides, services, featured, brand, testimonials, faq, steps] = await Promise.all([
+  const [slides, tagline, services, featured, brand, testimonials, faq, steps] = await Promise.all([
     getHeroSlides(),
+    getHeroTagline(),
     getServices(),
     getFeatured(),
     getContent("brand"),
@@ -23,7 +24,7 @@ export default async function HomePage() {
   ]);
   return (
     <>
-      <Hero slides={slides} />
+      <Hero slides={slides} tagline={tagline} brand={brand} />
       <BrandIntro brand={brand} />
       <Services featuredOnly services={services} featured={featured} />
       <HowItWorks steps={steps} />

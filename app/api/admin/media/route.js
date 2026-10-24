@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifySession, bearerToken } from "@/lib/admin-auth";
-import { deleteAsset, signUpload, getCloudinaryConfig } from "@/lib/cloudinary";
+import { deleteAsset, uploadAsset } from "@/lib/imagekit";
 import { site } from "@/data/site";
 
 const ERR = site.dashboard.errors;
@@ -14,8 +14,8 @@ function denied() {
 }
 
 // Server-side upload: the browser posts the file here, this route
-// forwards it to Cloudinary. Browser never touches Cloudinary, so
-// cross-origin (CORS) failures are impossible by construction.
+// normalizes it and sends it to ImageKit. The private ImageKit key never
+// reaches the browser.
 export async function POST(request) {
   if (!(await authed(request))) return denied();
   let form;
@@ -25,44 +25,44 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, error: site.dashboard.errors.badRequest }, { status: 400 });
   }
   const file = form.get("file");
-  const folder = String(form.get("folder") || "all-in-one-dream-place/uploads");
+  const folder = String(form.get("folder") || "3knotts/uploads");
   if (!file || typeof file.arrayBuffer !== "function") {
     return NextResponse.json({ ok: false, error: ERR.noFile }, { status: 400 });
   }
-  if (typeof file.size === "number" && file.size > 12 * 1024 * 1024) {
-    return NextResponse.json({ ok: false, error: ERR.tooLarge }, { status: 413 });
+  const isVideo = file.type?.startsWith("video/");
+  const sizeLimit = isVideo ? 10 * 1024 * 1024 : 12 * 1024 * 1024;
+  if (typeof file.size === "number" && file.size > sizeLimit) {
+    return NextResponse.json({ ok: false, error: isVideo ? "Video must be under 10MB." : ERR.tooLarge }, { status: 413 });
   }
-  // Every new upload is normalized to WebP here. Already-hosted files
-  // are never touched — only what comes through this endpoint.
+  // Every new image upload is normalized to WebP here. Videos pass through unchanged.
+  // Already-hosted files are never touched — only what comes through this endpoint.
   let payload;
-  try {
-    const sharp = (await import("sharp")).default;
-    const webp = await sharp(Buffer.from(await file.arrayBuffer()))
-      .rotate()
-      .webp({ quality: 82 })
-      .toBuffer();
-    payload = new Blob([webp], { type: "image/webp" });
-  } catch {
-    return NextResponse.json({ ok: false, error: ERR.notImage }, { status: 400 });
+  let fileName;
+  if (isVideo) {
+    payload = file;
+    fileName = file.name || "video.mp4";
+  } else {
+    try {
+      const sharp = (await import("sharp")).default;
+      const buf = Buffer.from(await file.arrayBuffer());
+      const meta = await sharp(buf).metadata().catch(() => null);
+      if (!meta || !meta.format) {
+        return NextResponse.json({ ok: false, error: ERR.notImage }, { status: 400 });
+      }
+      const webp = await sharp(buf).rotate().webp({ quality: 82 }).toBuffer();
+      payload = new Blob([webp], { type: "image/webp" });
+      fileName = "photo.webp";
+    } catch (e) {
+      const msg = (e?.message || "").toLowerCase();
+      if (msg.includes("format") || msg.includes("image") || msg.includes("vips")) {
+        return NextResponse.json({ ok: false, error: ERR.notImage }, { status: 400 });
+      }
+      return NextResponse.json({ ok: false, error: "Image processing failed. Try a different file." }, { status: 400 });
+    }
   }
   try {
-    const { cloudName, apiKey } = getCloudinaryConfig();
-    const signed = signUpload({ folder, resourceType: "image" });
-    const out = new FormData();
-    out.append("file", payload, "photo.webp");
-    out.append("api_key", apiKey);
-    out.append("timestamp", String(signed.timestamp));
-    out.append("folder", signed.folder);
-    out.append("signature", signed.signature);
-    const up = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-      method: "POST",
-      body: out
-    });
-    const done = await up.json().catch(() => ({}));
-    if (!up.ok || done.error || !done.public_id) {
-      throw new Error(done?.error?.message || ERR.uploadFailed);
-    }
-    return NextResponse.json({ ok: true, path: `${done.public_id}.${done.format}` });
+    const uploaded = await uploadAsset({ data: payload, fileName, folder });
+    return NextResponse.json({ ok: true, ...uploaded });
   } catch (e) {
     return NextResponse.json({ ok: false, error: e.message || ERR.uploadFailed }, { status: 500 });
   }
@@ -79,13 +79,13 @@ export async function DELETE(request) {
   } catch {
     return NextResponse.json({ ok: false, error: site.dashboard.errors.badRequest }, { status: 400 });
   }
-  const publicId = String(body.publicId || "").trim();
-  if (!publicId || publicId.startsWith("/")) {
+  const fileId = String(body.fileId || "").trim();
+  const filePath = String(body.filePath || body.publicId || "").trim();
+  if (!fileId && (!filePath || filePath.startsWith("/"))) {
     return NextResponse.json({ ok: false, error: "Nothing to delete." }, { status: 400 });
   }
   try {
-    await deleteAsset(publicId, body.resourceType === "video" ? "video" : "image");
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, ...(await deleteAsset({ fileId, filePath })) });
   } catch (e) {
     return NextResponse.json({ ok: false, error: e.message || "Delete failed." }, { status: 400 });
   }

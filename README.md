@@ -1,6 +1,6 @@
-# All in One Dream Place
+# 3Knotts
 
-Next.js App Router site for All in One Dream Place, Chennai.
+Next.js App Router site for 3Knotts, Chennai.
 Tagline: "Your Celebration, Our Creation."
 
 ## Quick start
@@ -25,22 +25,24 @@ Everything (home, services page, detail page + sitemap entry, work grid, footer)
 Delivery (what visitors see): all media paths live in `data/site.js`.
 URLs are built by `lib/media.js` from `NEXT_PUBLIC_MEDIA_URL`.
 
-- Cloudinary now: `NEXT_PUBLIC_MEDIA_URL=https://res.cloudinary.com/YOUR_CLOUD_NAME`
+- ImageKit now: `NEXT_PUBLIC_MEDIA_URL=https://ik.imagekit.io/YOUR_IMAGEKIT_ID`
 - Self-hosted later: `NEXT_PUBLIC_MEDIA_URL=https://media.yourdomain.com`
 
-Keep the folder `all-in-one-dream-place/videos/...` and `all-in-one-dream-place/images/...` identical in both places.
+Keep the folder `3knotts/videos/...` and `3knotts/images/...` identical in both places.
 
-Management (uploads/deletes): `lib/cloudinary.js` is server-only and uses
-`CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET`
-from env (never `NEXT_PUBLIC_`, never committed - `.env.local` is gitignored).
+Management (uploads/deletes): `lib/imagekit.js` is server-only and uses
+`IMAGEKIT_PRIVATE_KEY` from env (never `NEXT_PUBLIC_`, never committed -
+`.env.local` is gitignored). `IMAGEKIT_PUBLIC_KEY` is optional and is returned
+only for clients that use the direct-upload authentication endpoint.
 
-- `POST /api/media/sign` with `{ folder, publicId?, resourceType? }`
-  returns a short-lived signature for direct browser -> Cloudinary upload.
-  Folders are locked inside `all-in-one-dream-place/`.
+- `POST /api/media/sign` with `{ folder }` returns short-lived ImageKit
+  authentication parameters for direct browser uploads.
+  Folders are locked inside `3knotts/`.
 - Set `UPLOAD_TOKEN` env to gate the endpoint with an `x-upload-token` header.
-- Coolify swap: reimplement `signUpload()` / `deleteAsset()` in
-  `lib/cloudinary.js` against your self-hosted server + point
-  `NEXT_PUBLIC_MEDIA_URL` at it. Components don't change.
+- The admin upload route converts images to WebP before uploading them to
+  ImageKit. Uploaded file ids are stored with their paths so deletes remain
+  reliable; older path-only records are resolved through ImageKit before
+  deletion.
 
 ## Enquiry email (Web3Forms)
 
@@ -66,7 +68,7 @@ an empty value hides the row.
 
 ## Coolify
 
-- Same 6 env vars as `.env.example`.
+- Same env vars as `.env.example`.
 - Keep Atlas, or add a Coolify MongoDB service and point `MONGODB_URI` at it.
 - `nixpacks.toml` handles build/start. No Dockerfile.
 - For self-hosted media, attach a persistent volume and set `NEXT_PUBLIC_MEDIA_URL` to that host.

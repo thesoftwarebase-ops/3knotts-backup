@@ -44,14 +44,6 @@ export default async function AboutPage() {
                   />
                   <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-noir via-noir/10 to-transparent" />
                   <Corners tone="border-frame/35" />
-                  <figcaption className="absolute inset-x-0 bottom-0 p-6 text-center">
-                    <p className="font-heading text-[15px] leading-none text-transparent">
-                      <span className="wordmark">{site.name}</span>
-                    </p>
-                    <p className="mt-3 text-[8px] font-semibold uppercase tracking-[0.36em] text-frame/75">
-                      {a.ownerRole}
-                    </p>
-                  </figcaption>
                 </div>
 
                 {/* Offset hairline plate for depth */}

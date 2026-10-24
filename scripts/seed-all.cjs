@@ -4,14 +4,16 @@
 // Usage: node scripts/seed-all.cjs [admin-email] [admin-password]
 // Without args: content only, admin untouched.
 const { createRequire } = require("node:module");
+const path = require("node:path");
 const fs = require("fs");
 
-const requireFromProject = createRequire("C:/Users/akcod/Desktop/all_in_one_dream_place/package.json");
+const ROOT = path.join(__dirname, "..");
+const requireFromProject = createRequire(path.join(ROOT, "package.json"));
 const bcrypt = requireFromProject("bcryptjs");
 const { MongoClient } = requireFromProject("mongodb");
 
 const env = {};
-for (const line of fs.readFileSync("C:/Users/akcod/Desktop/all_in_one_dream_place/.env.local", "utf8").replace(/\r/g, "").split("\n")) {
+for (const line of fs.readFileSync(path.join(ROOT, ".env.local"), "utf8").replace(/\r/g, "").split("\n")) {
   const m = line.match(/^([A-Z_]+)=(.*)$/);
   if (m) env[m[1]] = m[2].trim();
 }
@@ -22,7 +24,7 @@ async function main() {
     process.exit(1);
   }
   const { pathToFileURL } = require("node:url");
-  const mod = await import(pathToFileURL("C:/Users/akcod/Desktop/all_in_one_dream_place/data/site.js").href);
+  const mod = await import(pathToFileURL(path.join(ROOT, "data", "site.js")).href);
   const S = mod.site;
   const seedServices = mod.services;
   const client = new MongoClient(env.MONGODB_URI, { serverSelectionTimeoutMS: 15000 });

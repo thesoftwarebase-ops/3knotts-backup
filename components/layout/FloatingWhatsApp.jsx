@@ -1,7 +1,7 @@
 import { site, getWaNumber, floatingAriaLabel } from "@/data/site";
 
-export default function FloatingWhatsApp() {
-  const waNumber = getWaNumber();
+export default function FloatingWhatsApp({ settings = {} }) {
+  const waNumber = settings.whatsappNumber || getWaNumber();
   const href = `https://wa.me/${waNumber}?text=${encodeURIComponent(site.whatsappGreeting)}`;
   return (
     <a
