@@ -47,7 +47,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Utility strip */}
       <div className="hidden border-b border-frame/10 bg-noir/85 backdrop-blur-md sm:block">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 text-[9px] font-medium uppercase leading-none tracking-[0.3em] text-paper/40">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 text-[10px] font-medium uppercase leading-none tracking-[0.3em] text-paper/40">
           <a
             href={waHref}
             target="_blank"
@@ -88,17 +88,17 @@ export default function Navbar({ navLinks = site.nav } = {}) {
               <img
                 src={site.logoSm}
                 alt={site.logoAlt}
-                width={88}
-                height={88}
+                width={112}
+                height={112}
                 loading="eager"
-                className="h-11 w-11 rounded-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-12 sm:w-12"
+                className="h-16 w-16 rounded-full object-cover transition-transform duration-700 group-hover:scale-105 sm:h-[72px] sm:w-[72px]"
               />
             </span>
             <span className="hidden flex-col gap-1.5 leading-none sm:flex">
-              <span className="font-heading text-[13px] tracking-[0.14em] text-paper transition-colors duration-300 group-hover:text-brand">
+              <span className="font-heading text-[15px] tracking-[0.14em] text-paper transition-colors duration-300 group-hover:text-brand">
                 {site.name}
               </span>
-              <span className="text-[8px] font-medium uppercase tracking-[0.3em] text-frame/65">
+              <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-frame/65">
                 {site.tagline}
               </span>
             </span>
@@ -127,7 +127,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
                   <Link
                     href={l.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`group relative block py-2 text-[10px] font-medium uppercase tracking-[0.26em] transition-colors duration-300 ${
+                    className={`group relative block py-2 text-[13px] font-medium uppercase tracking-[0.26em] transition-colors duration-300 ${
                       isActive ? "text-brand" : "text-paper/65 hover:text-paper"
                     }`}
                   >
@@ -145,7 +145,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
             <li>
               <Link
                 href={site.navCta.href}
-                className="btn btn-brand px-6 py-3 text-[10px] tracking-[0.24em]"
+                className="btn btn-brand px-6 py-3 text-[11px] tracking-[0.24em]"
               >
                 {site.navCta.label}
               </Link>
