@@ -169,7 +169,7 @@ export default function Footer({ services = seedServices, settings = {} }) {
           <p className="font-heading text-[clamp(1.9rem,8vw,4.6rem)] leading-[0.9] text-transparent">
             <span className="wordmark">{site.name}</span>
           </p>
-          <p className="max-w-[15rem] text-[9px] font-medium uppercase leading-[2] tracking-[0.28em] text-frame/45 sm:text-right">
+          <p className="max-w-[15rem] text-[12px] font-medium uppercase leading-[2] tracking-[0.28em] text-frame/45 sm:text-right">
             {site.tagline}
           </p>
         </div>
