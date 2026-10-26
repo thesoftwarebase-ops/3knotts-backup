@@ -102,8 +102,8 @@ export const site = {
   instagramLabel: "Instagram",
   instagramHandle: "@3knotts",
 
-  logo: "/logo.jpg",
-  logoSm: "/logo-sm.jpg",
+  logo: "/logo-redesign.png",
+  logoSm: "/logo-sm.png",
   logoAlt: "3Knotts logo",
   divider: "/partition.svg",
   flower: "/flower.png",
@@ -624,7 +624,7 @@ export const site = {
   servicesPage: {
     breadcrumbHome: "Home",
     href: "/services",
-    abstract: "Nine crafts, one studio — every plate dressed, every hamper packed, every stage raised by hand in Chennai. Open any service to see what it holds.",
+    abstract: "{count} {craft}, one studio — every plate dressed, every hamper packed, every stage raised by hand in Chennai. Open any service to see what it holds.",
     viewAll: "View all services",
     exploreLabel: "Explore",
     whyHeading: "Why book this with us",
@@ -634,3 +634,12 @@ export const site = {
 };
 
 export const floatingAriaLabel = `Chat with ${site.name} on WhatsApp`;
+
+// The count is always fetched live from the backend (getServices) and
+// passed in, so this stays correct as services are added or removed.
+export function servicesAbstract(count) {
+  const n = Math.max(0, Number(count) || 0);
+  return site.servicesPage.abstract
+    .replace("{count}", String(n))
+    .replace("{craft}", n === 1 ? "craft" : "crafts");
+}

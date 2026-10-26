@@ -12,10 +12,11 @@ export default function CtaBand() {
   return (
     <section
       aria-label={c.heading}
+      data-scheme="wine"
       className="relative overflow-hidden border-y border-frame/20 bg-noir py-14 sm:py-20"
     >
-      {/* Ember wash + oversized outlined word behind the message */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_115%,rgba(232,80,64,0.06),transparent_62%)]" />
+      {/* Gold wash + oversized outlined word behind the message */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_115%,rgba(166,124,0,0.08),transparent_62%)]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_-10%,rgba(252,204,48,0.03),transparent_55%)]" />
       <span aria-hidden="true" className="shimmer-dot left-[12%] top-[22%] h-1.5 w-1.5" />
       <span aria-hidden="true" className="shimmer-dot left-[85%] top-[18%] h-1 w-1" style={{ animationDelay: "0.8s" }} />

@@ -205,7 +205,7 @@ export function StepsManager() {
             type="button"
             onClick={() => setValue(value.filter((_, k) => k !== i))}
             aria-label={m.remove}
-            className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-plum/30 text-lg text-plum transition-all hover:scale-105 hover:border-plum hover:bg-plum hover:text-white"
+            className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-plum/30 text-lg text-plum transition-all hover:scale-105 hover:border-plum hover:bg-plum hover:text-wine"
           >
             <span aria-hidden="true">×</span>
           </button>
@@ -248,7 +248,7 @@ export function StepsManager() {
                       type="button"
                       onClick={() => set(i, { points: (s.points || []).filter((_, k) => k !== j) })}
                       aria-label={m.remove}
-                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-lg text-plum/60 transition-colors hover:bg-plum hover:text-white"
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-lg text-plum/60 transition-colors hover:bg-plum hover:text-wine"
                     >
                       <span aria-hidden="true">×</span>
                     </button>
@@ -307,7 +307,7 @@ export function StepsManager() {
                         type="button"
                         onClick={() => set(i, { rich: (s.rich || []).filter((_, k) => k !== j) })}
                         aria-label={m.remove}
-                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-lg text-plum/60 transition-colors hover:bg-plum hover:text-white"
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-lg text-plum/60 transition-colors hover:bg-plum hover:text-wine"
                       >
                         <span aria-hidden="true">×</span>
                       </button>
@@ -335,7 +335,7 @@ export function StepsManager() {
         onClick={() => setValue([...(value || []), { n: "", title: "", text: "", art: "", rich: null, points: [] }])}
         className="flex items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-gold/60 bg-gold/5 px-6 py-8 transition-all hover:-translate-y-0.5 hover:border-gold hover:bg-gold/10"
       >
-        <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold font-tagline text-3xl font-bold leading-none text-paper shadow-[0_10px_24px_-8px_rgba(232,80,64,0.9)]">
+        <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold font-tagline text-3xl font-bold leading-none text-paper shadow-[0_10px_24px_-8px_rgba(166,124,0,0.5)]">
           +
         </span>
         <span className="font-tagline text-3xl font-bold text-plum">{m.addStep}</span>

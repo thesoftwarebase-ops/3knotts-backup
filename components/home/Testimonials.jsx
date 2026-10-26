@@ -32,8 +32,8 @@ export default function Testimonials({ items }) {
 
   return (
     <section aria-labelledby="testimonials-heading" className="relative overflow-hidden border-b border-frame/10 py-14 sm:py-20">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_30%_-20%,rgba(232,80,64,0.03),transparent_65%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute -right-[10%] top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 opacity-[0.02] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cpath%20d%3D%22M100%2020c0%2044-36%2080-80%2080%2044%200%2080%2036%2080%2080%200-44%2036-80%2080-80-44%200-80-36-80-80z%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%221%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%23D2AE90%22%20stroke-width%3D%220.8%22%2F%3E%3C%2Fsvg%3E')] bg-contain bg-center" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_at_30%_-20%,rgba(126,37,48,0.045),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-[10%] top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 opacity-[0.05] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cpath%20d%3D%22M100%2020c0%2044-36%2080-80%2080%2044%200%2080%2036%2080%2080%200-44%2036-80%2080-80-44%200-80-36-80-80z%22%20fill%3D%22none%22%20stroke%3D%22%238C6D2A%22%20stroke-width%3D%221%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%22100%22%20r%3D%2220%22%20fill%3D%22none%22%20stroke%3D%22%238C6D2A%22%20stroke-width%3D%220.8%22%2F%3E%3C%2Fsvg%3E')] bg-contain bg-center" />
 
       <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
         <SectionHeading id="testimonials-heading" heading={t.heading} intro={t.intro} />
@@ -78,6 +78,7 @@ export default function Testimonials({ items }) {
                     >
                       <span
                         aria-hidden="true"
+                        data-scheme="wine"
                         className="inline-flex h-12 w-12 items-center justify-center border border-frame/35 bg-noir font-heading text-[12px] tracking-[0.14em] text-transparent"
                       >
                         <span className="wordmark">{initials}</span>
@@ -91,7 +92,7 @@ export default function Testimonials({ items }) {
                         <span aria-hidden="true" className="h-px w-10 bg-brand" />
                         <p className="mt-4 font-heading text-[11px] tracking-[0.26em] text-paper">{item.name}</p>
                         {item.detail ? (
-                          <p className="mt-2 text-[8.5px] font-medium uppercase tracking-[0.3em] text-frame/60">
+                          <p className="mt-2 text-[8.5px] font-medium uppercase tracking-[0.3em] text-paper/45">
                             {item.detail}
                           </p>
                         ) : null}
@@ -149,7 +150,7 @@ export default function Testimonials({ items }) {
                   <span aria-hidden="true">›</span>
                 </button>
 
-                <p aria-hidden="true" className="ml-1 font-heading text-[10px] tracking-[0.24em] text-frame/45">
+                <p aria-hidden="true" className="ml-1 font-heading text-[10px] tracking-[0.24em] text-paper/40">
                   {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
                 </p>
               </div>

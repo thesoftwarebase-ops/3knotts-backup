@@ -16,7 +16,7 @@ const corners = [
 
 export default function LoginPage() {
   return (
-    <div className="relative flex min-h-svh items-center justify-center overflow-clip bg-noir px-4 py-28 sm:py-36">
+    <div data-scheme="wine" className="relative flex min-h-svh items-center justify-center overflow-clip bg-noir px-4 py-28 sm:py-36">
       {corners.map((pos) => (
         <div
           key={pos}
@@ -28,7 +28,7 @@ export default function LoginPage() {
       ))}
 
       <div className="relative flex w-full max-w-sm flex-col items-center">
-        <span className="inline-flex rounded-full shadow-[0_10px_30px_-10px_rgba(232,80,64,0.4)] ring-[3px] ring-brand ring-offset-4 ring-offset-noir">
+        <span className="inline-flex rounded-full shadow-[0_10px_30px_-10px_rgba(166,124,0,0.35)] ring-[3px] ring-brand ring-offset-4 ring-offset-noir">
           <Image
             src={site.logo}
             alt={site.logoAlt}

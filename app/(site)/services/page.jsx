@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/data/site";
+import { site, servicesAbstract } from "@/data/site";
 import { getServices } from "@/lib/content";
 import Reveal from "@/components/ui/Reveal";
 import ServiceCard from "@/components/ui/ServiceCard";
@@ -16,22 +16,23 @@ export default async function ServicesPage() {
   const t = site.sections.services;
   const cta = site.servicesPage;
   const services = await getServices();
+  const abstract = servicesAbstract(services.length);
 
   return (
     <div className="relative overflow-hidden pt-32 sm:pt-40">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_20%_-20%,rgba(232,80,64,0.05),transparent_60%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[20rem] bg-[radial-gradient(ellipse_at_80%_120%,rgba(252,204,48,0.025),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_20%_-20%,rgba(126,37,48,0.05),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[20rem] bg-[radial-gradient(ellipse_at_80%_120%,rgba(166,124,0,0.05),transparent_60%)]" />
 
       {/* Page hero */}
       <section aria-labelledby="services-page-heading" className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
           <nav aria-label={site.a11y.breadcrumb} className="flex justify-center">
-            <p className="flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.3em] text-frame/50">
+            <p className="flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.3em] text-paper/45">
               <Link href={site.homeHref} className="transition-colors duration-300 hover:text-brand">
                 {cta.breadcrumbHome}
               </Link>
               <span aria-hidden="true" className="h-px w-6 bg-frame/25" />
-              <span aria-current="page" className="text-frame/80">{t.heading}</span>
+              <span aria-current="page" className="text-brand/85">{t.heading}</span>
             </p>
           </nav>
 
@@ -44,12 +45,12 @@ export default async function ServicesPage() {
 
           <div className="mx-auto mt-8 flex w-56 items-center gap-3 sm:w-72" aria-hidden="true">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent to-frame/45" />
-            <span className="h-1.5 w-1.5 rotate-45 bg-golden shadow-[0_0_14px_rgba(252,204,48,0.65)]" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-golden shadow-[0_0_14px_rgba(166,124,0,0.45)]" />
             <span className="h-px flex-1 bg-gradient-to-l from-transparent to-frame/45" />
           </div>
 
           <p className="mx-auto mt-8 max-w-2xl text-[14px] leading-[2] text-paper/60 sm:text-[15px]">
-            {cta.abstract}
+            {abstract}
           </p>
         </Reveal>
       </section>

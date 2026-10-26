@@ -13,9 +13,9 @@ export default function ServiceCard({ service: s, index = 0, href }) {
     <Link
       href={cardHref}
       aria-label={`${s.title} — ${site.servicesPage.exploreLabel}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-frame/20 bg-charcoal/[0.06] transition-[border-color,transform,box-shadow,background-color] duration-500 hover:-translate-y-1.5 hover:border-brand/55 hover:bg-charcoal/[0.12] hover:shadow-[0_40px_80px_-40px_rgba(232,80,64,0.55)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-sm border border-frame/20 bg-charcoal/[0.06] transition-[border-color,transform,box-shadow,background-color] duration-500 hover:-translate-y-1.5 hover:border-brand/55 hover:bg-charcoal/[0.12] hover:shadow-[0_40px_80px_-40px_rgba(126,37,48,0.35)]"
     >
-      <span className="relative block aspect-[4/5] overflow-hidden bg-noir">
+      <span data-scheme="wine" className="relative block aspect-[4/5] overflow-hidden bg-noir">
         <Image
           src={mediaImage(s.image)}
           alt=""
@@ -27,7 +27,7 @@ export default function ServiceCard({ service: s, index = 0, href }) {
         />
         {/* Cinematic grade so any photograph sits in the black field. */}
         <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-noir via-noir/25 to-noir/20" />
-        <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_120%,rgba(232,80,64,0.18),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_120%,rgba(166,124,0,0.2),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
         {/* Hairline ticks */}
         <span aria-hidden="true" className="absolute left-3 top-3 h-3.5 w-3.5 border-l border-t border-frame/45 transition-colors duration-500 group-hover:border-golden/70" />
@@ -35,7 +35,7 @@ export default function ServiceCard({ service: s, index = 0, href }) {
 
         <span
           aria-hidden="true"
-          className="absolute right-3 top-3 rounded-sm border border-frame/35 bg-noir/60 px-2 py-1 font-heading text-[10px] leading-none tracking-[0.16em] text-frame backdrop-blur-sm transition-colors duration-500 group-hover:border-brand/60 group-hover:text-brand"
+          className="absolute right-3 top-3 rounded-sm border border-frame/35 bg-noir/60 px-2 py-1 font-heading text-[10px] leading-none tracking-[0.16em] text-frame backdrop-blur-sm transition-colors duration-500 group-hover:border-golden/60 group-hover:text-golden"
         >
           {String(index + 1).padStart(2, "0")}
         </span>

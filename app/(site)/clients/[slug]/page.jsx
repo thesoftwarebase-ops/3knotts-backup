@@ -39,7 +39,7 @@ export default async function ClientDetailPage({ params }) {
   return (
     <>
       <div className="relative overflow-hidden pb-20 pt-32 sm:pb-24 sm:pt-40">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-[radial-gradient(ellipse_at_75%_-20%,rgba(252,204,48,0.04),transparent_60%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-[radial-gradient(ellipse_at_75%_-20%,rgba(166,124,0,0.06),transparent_60%)]" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-noir to-transparent" />
 
         <article className="relative mx-auto max-w-6xl px-5 sm:px-8">
@@ -50,7 +50,7 @@ export default async function ClientDetailPage({ params }) {
             </h1>
             <Link
               href={site.clients.href}
-              className="group mt-7 inline-flex items-center gap-2.5 border border-frame/25 px-5 py-2.5 text-[9px] font-semibold uppercase tracking-[0.24em] text-frame transition-colors duration-300 hover:border-brand hover:text-brand"
+              className="group mt-7 inline-flex items-center gap-2.5 border border-frame/25 px-5 py-2.5 text-[9px] font-semibold uppercase tracking-[0.24em] text-brand/75 transition-colors duration-300 hover:border-brand hover:text-brand"
             >
               <span aria-hidden="true" className="transition-transform duration-500 group-hover:-translate-x-0.5">←</span>
               {site.clients.backLabel}
@@ -60,7 +60,7 @@ export default async function ClientDetailPage({ params }) {
           <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
             <Reveal delay={80} className="lg:col-span-5">
               <figure className="relative">
-                <div className="relative overflow-hidden rounded-sm border border-frame/25 bg-noir">
+                <div data-scheme="wine" className="relative overflow-hidden rounded-sm border border-frame/25 bg-noir">
                   <Image
                     src={mediaImage(s.image)}
                     alt={s.title}

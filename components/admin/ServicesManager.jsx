@@ -14,7 +14,7 @@ const miniBtn =
 const dangerBtn =
   "rounded-full border border-plum/30 px-4 py-2 text-sm font-semibold text-plum transition-colors hover:border-plum";
 const solidDanger =
-  "rounded-full bg-plum px-6 py-2.5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60";
+    "rounded-full bg-plum px-6 py-2.5 text-sm font-bold text-wine transition-transform hover:-translate-y-0.5 disabled:opacity-60";
 
 function Row({ label, children }) {
   return (
@@ -436,7 +436,7 @@ export default function ServicesManager() {
                         title={t.featuredShot}
                         className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-base transition-all ${
                           g.featured === true
-                            ? "border-gold bg-gold text-noir"
+                            ? "border-gold bg-gold text-ivory"
                             : "border-gold/50 text-gold/50 hover:border-gold hover:text-gold"
                         }`}
                       >
@@ -607,7 +607,7 @@ export default function ServicesManager() {
               onClick={() => !wiping && setConfirmIdx(null)}
             />
             <div className="relative w-full max-w-md rounded-3xl border-2 border-gold bg-noir p-6 text-center shadow-[0_40px_90px_-20px_rgba(0,0,0,0.6)] sm:p-8">
-              <span aria-hidden="true" className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-plum text-3xl text-white">
+              <span aria-hidden="true" className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-plum text-3xl text-wine">
                 !
               </span>
               <p className="mt-4 font-tagline text-4xl font-bold leading-tight text-plum">{t.delTitle || "Delete this service?"}</p>
@@ -624,8 +624,8 @@ export default function ServicesManager() {
                   type="button"
                   onClick={() => wipeService(i)}
                   disabled={wiping}
-                  style={{ backgroundColor: "#5B2A4B", color: "#ffffff" }}
-                  className="w-full rounded-full px-6 py-3.5 text-base font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-10px_rgba(91,42,75,0.7)] disabled:opacity-60"
+                  style={{ backgroundColor: "#521620", color: "#F6F1E7" }}
+                  className="w-full rounded-full px-6 py-3.5 text-base font-bold transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-10px_rgba(82,22,32,0.7)] disabled:opacity-60"
                 >
                   {wiping ? t.deleting || "Deleting…" : t.delConfirm || "Yes, delete everything"}
                 </button>
@@ -633,7 +633,7 @@ export default function ServicesManager() {
                   type="button"
                   onClick={() => setConfirmIdx(null)}
                   disabled={wiping}
-                  style={{ backgroundColor: "#ffffff", color: "#16302F" }}
+                  style={{ backgroundColor: "#F6F1E7", color: "#2A0B10" }}
                   className="w-full rounded-full border-2 border-teal-deep/30 px-6 py-3 text-base font-bold transition-all hover:-translate-y-0.5 hover:border-teal-deep disabled:opacity-60"
                 >
                   {t.delCancel || "Keep it"}
@@ -671,13 +671,13 @@ export default function ServicesManager() {
                   {home ? (
                     <span
                       aria-hidden="true"
-                      className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold text-lg leading-none text-paper shadow-[0_6px_16px_-4px_rgba(232,80,64,0.9)]"
+                      className="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold text-lg leading-none text-paper shadow-[0_6px_16px_-4px_rgba(166,124,0,0.5)]"
                     >
                       ★
                     </span>
                   ) : null}
                   {work ? (
-                    <span className="absolute right-3 top-3 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-gold-soft backdrop-blur-sm">
+                    <span className="absolute right-3 top-3 rounded-full bg-wine/60 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-gold-soft backdrop-blur-sm">
                       {t.workBadge} · {work}
                     </span>
                   ) : null}

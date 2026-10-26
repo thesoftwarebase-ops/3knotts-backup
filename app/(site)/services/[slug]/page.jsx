@@ -38,13 +38,13 @@ export default async function ServiceDetailPage({ params }) {
   return (
     <>
       <div className="relative overflow-hidden pb-20 pt-32 sm:pb-24 sm:pt-40">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-[radial-gradient(ellipse_at_75%_-20%,rgba(232,80,64,0.05),transparent_60%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[32rem] bg-[radial-gradient(ellipse_at_75%_-20%,rgba(126,37,48,0.05),transparent_60%)]" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-noir to-transparent" />
 
         <article className="relative mx-auto max-w-6xl px-5 sm:px-8">
           <Reveal>
             <nav aria-label={site.a11y.breadcrumb}>
-              <p className="flex flex-wrap items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-frame/50">
+              <p className="flex flex-wrap items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-paper/45">
                 <Link href={site.homeHref} className="transition-colors duration-300 hover:text-brand">
                   {site.servicesPage.breadcrumbHome}
                 </Link>
@@ -53,7 +53,7 @@ export default async function ServiceDetailPage({ params }) {
                   {site.sections.services.heading}
                 </Link>
                 <span aria-hidden="true" className="h-px w-5 bg-frame/25" />
-                <span aria-current="page" className="text-frame/80">{s.title}</span>
+                <span aria-current="page" className="text-brand/85">{s.title}</span>
               </p>
             </nav>
 
@@ -66,7 +66,7 @@ export default async function ServiceDetailPage({ params }) {
             {/* Photograph */}
             <Reveal delay={80} className="lg:col-span-5">
               <figure className="relative">
-                <div className="relative overflow-hidden rounded-sm border border-frame/25 bg-noir">
+                <div data-scheme="wine" className="relative overflow-hidden rounded-sm border border-frame/25 bg-noir">
                   <Image
                     src={mediaImage(s.image)}
                     alt={s.title}

@@ -24,19 +24,19 @@ export default async function ClientsPage() {
 
   return (
     <div className="relative overflow-hidden pt-32 sm:pt-40">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_20%_-20%,rgba(252,204,48,0.035),transparent_60%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[20rem] bg-[radial-gradient(ellipse_at_80%_120%,rgba(232,80,64,0.025),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_20%_-20%,rgba(166,124,0,0.06),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[20rem] bg-[radial-gradient(ellipse_at_80%_120%,rgba(126,37,48,0.04),transparent_60%)]" />
 
       {/* Page hero */}
       <section aria-labelledby="clients-page-heading" className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
           <nav aria-label={site.a11y.breadcrumb} className="flex justify-center">
-            <p className="flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.3em] text-frame/50">
+            <p className="flex items-center gap-3 text-[9px] font-semibold uppercase tracking-[0.3em] text-paper/45">
               <Link href={site.homeHref} className="transition-colors duration-300 hover:text-brand">
                 {site.servicesPage.breadcrumbHome}
               </Link>
               <span aria-hidden="true" className="h-px w-6 bg-frame/25" />
-              <span aria-current="page" className="text-frame/80">{t.label}</span>
+              <span aria-current="page" className="text-brand/85">{t.label}</span>
             </p>
           </nav>
 
@@ -49,7 +49,7 @@ export default async function ClientsPage() {
 
           <div className="mx-auto mt-8 flex w-56 items-center gap-3 sm:w-72" aria-hidden="true">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent to-frame/45" />
-            <span className="h-1.5 w-1.5 rotate-45 bg-golden shadow-[0_0_14px_rgba(252,204,48,0.65)]" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-golden shadow-[0_0_14px_rgba(166,124,0,0.45)]" />
             <span className="h-px flex-1 bg-gradient-to-l from-transparent to-frame/45" />
           </div>
 

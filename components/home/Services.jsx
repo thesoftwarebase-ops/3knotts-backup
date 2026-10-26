@@ -13,8 +13,8 @@ export default function Services({ featuredOnly = false, services = seedServices
 
   return (
     <section id="services" aria-labelledby="services-heading" className="relative border-b border-frame/10 py-14 sm:py-20">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_20%_-20%,rgba(232,80,64,0.03),transparent_60%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[radial-gradient(ellipse_at_80%_120%,rgba(252,204,48,0.02),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_20%_-20%,rgba(126,37,48,0.045),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[radial-gradient(ellipse_at_80%_120%,rgba(166,124,0,0.05),transparent_60%)]" />
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading id="services-heading" heading={t.heading} intro={t.intro} />
 

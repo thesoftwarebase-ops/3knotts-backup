@@ -252,7 +252,7 @@ export default function DashboardPanel() {
                           aria-current={isActive ? "page" : undefined}
                           className={`rounded-lg px-4 py-2 text-left text-sm font-semibold transition-all ${
                             isActive
-                              ? "bg-gold text-noir shadow-[0_8px_20px_-8px_rgba(232,80,64,0.9)]"
+                              ? "bg-gold text-ivory shadow-[0_8px_20px_-8px_rgba(166,124,0,0.5)]"
                               : "text-paper/65 hover:translate-x-0.5 hover:bg-gold/10 hover:text-paper"
                           }`}
                         >
@@ -275,7 +275,7 @@ export default function DashboardPanel() {
               aria-current={tab === k ? "page" : undefined}
               className={`rounded-xl px-4 py-3 text-left text-[15px] font-bold transition-all ${
                 tab === k
-                  ? "bg-gold text-noir shadow-[0_8px_20px_-8px_rgba(232,80,64,0.9)]"
+                  ? "bg-gold text-ivory shadow-[0_8px_20px_-8px_rgba(166,124,0,0.5)]"
                   : "text-paper/70 hover:translate-x-0.5 hover:bg-gold/10 hover:text-paper"
               }`}
             >

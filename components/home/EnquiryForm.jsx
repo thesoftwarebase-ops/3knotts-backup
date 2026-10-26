@@ -122,7 +122,7 @@ export default function EnquiryForm({ contactEmail = "", services = [], waNumber
   const inputCls =
     "w-full rounded-sm border border-frame/25 bg-noir px-4 py-3 text-[13px] text-paper placeholder:text-paper/25 transition-[border-color,box-shadow,background-color] duration-300 hover:border-frame/40 focus:border-brand focus:bg-charcoal/[0.08] focus:outline-none focus:ring-1 focus:ring-brand/30";
 
-  const labelCls = "mb-2 flex items-center gap-2 text-[9px] font-semibold uppercase leading-none tracking-[0.24em] text-frame/75";
+  const labelCls = "mb-2 flex items-center gap-2 text-[9px] font-semibold uppercase leading-none tracking-[0.24em] text-brand/80";
 
   const field = (id, icon, label, control, optional) => (
     <div>
@@ -137,8 +137,8 @@ export default function EnquiryForm({ contactEmail = "", services = [], waNumber
 
   return (
     <section id="enquire" aria-labelledby="enquire-heading" className="relative overflow-hidden pb-24 pt-32 sm:pb-32 sm:pt-40">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_30%_-20%,rgba(232,80,64,0.05),transparent_60%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute -right-20 bottom-10 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(252,204,48,0.03),transparent_65%)] blur-[80px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_30%_-20%,rgba(126,37,48,0.05),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-20 bottom-10 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(166,124,0,0.06),transparent_65%)] blur-[80px]" />
 
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading as="h1" id="enquire-heading" heading={t.heading} intro={t.intro} divider={false} />
@@ -160,10 +160,10 @@ export default function EnquiryForm({ contactEmail = "", services = [], waNumber
                   <WhatsAppIcon className="h-5 w-5" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/55">{f.chatInstead}</span>
+                  <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-paper/50">{f.chatInstead}</span>
                   <span className="mt-1.5 block text-[13px] font-medium text-paper">{site.footer.whatsappLabel}</span>
                 </span>
-                <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-brand">→</span>
+                <span aria-hidden="true" className="ml-auto text-brand/50 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-brand">→</span>
               </a>
 
               {contactEmail ? (
@@ -179,7 +179,7 @@ export default function EnquiryForm({ contactEmail = "", services = [], waNumber
                     </svg>
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/55">{f.emailInstead}</span>
+                    <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-paper/50">{f.emailInstead}</span>
                     <span className="mt-1.5 block break-all text-[13px] font-medium text-paper">{contactEmail}</span>
                   </span>
                 </a>
@@ -195,19 +195,19 @@ export default function EnquiryForm({ contactEmail = "", services = [], waNumber
                   <InstagramIcon className="h-5 w-5" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/55">{site.instagramLabel}</span>
+                  <span className="block text-[8px] font-semibold uppercase tracking-[0.28em] text-paper/50">{site.instagramLabel}</span>
                   <span className="mt-1.5 block text-[13px] font-medium text-paper">{site.instagramHandle}</span>
                 </span>
-                <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-brand">→</span>
+                <span aria-hidden="true" className="ml-auto text-brand/50 transition-transform duration-500 group-hover:translate-x-1 group-hover:text-brand">→</span>
               </a>
 
               <div className="mt-3 border border-frame/20 p-4">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.28em] text-frame/60">{site.footer.hoursTitle}</p>
+                <p className="text-[8px] font-semibold uppercase tracking-[0.28em] text-paper/50">{site.footer.hoursTitle}</p>
                 <p className="mt-2 text-[11px] text-paper/50">{hoursDays}</p>
                 <p className="mt-1 font-heading text-[14px] tracking-[0.06em] text-paper">{hoursTime}</p>
               </div>
 
-              <p className="mt-auto pt-4 text-[9px] font-semibold uppercase leading-[2] tracking-[0.26em] text-frame/35">
+              <p className="mt-auto pt-4 text-[9px] font-semibold uppercase leading-[2] tracking-[0.26em] text-paper/30">
                 {settings.address || site.address}
               </p>
             </aside>

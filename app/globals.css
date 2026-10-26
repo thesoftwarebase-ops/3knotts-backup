@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   3Knotts — art direction 2026
-   noir      #000000  page field
-   brand     #E85040  primary red (buttons, accents)
-   brand-dark#B82820  hover / shadow
-   ember     #CC6C42  gradient start
-   golden    #FCCC30  gradient end
-   frame     #D2AE90  hairlines, borders, small caps
-   charcoal  #404040  quiet surfaces
-   paper     #F8F8F8  text on black
+   3Knotts — burgundy & ivory, 2026
+   noir      #F0E8DA  page field (ivory)
+   brand     #7E2530  primary burgundy (buttons, accents)
+   brand-dark#521620  hover / shadow
+   ember     #CC6C42  logo gradient start
+   golden    #C7A147  logo gold, ornament on ivory
+   frame     #8C6D2A  antique gold hairlines, borders
+   charcoal  #8A7458  warm taupe surfaces
+   paper     #2F2F2F  warm charcoal text
+   ivory     #F6F1E7  text on burgundy
+   wine      #2A0B10  deep sections, footer, admin
    ────────────────────────────────────────────────────────────── */
 @theme {
-  --color-noir: #0a0a0a;
-  --color-brand: #e85040;
-  --color-brand-dark: #b82820;
+  --color-noir: #f0e8da;
+  --color-brand: #7e2530;
+  --color-brand-dark: #521620;
   --color-ember: #cc6c42;
-  --color-golden: #fccc30;
-  --color-frame: #d2ae90;
-  --color-charcoal: #404040;
-  --color-paper: #f8f8f8;
-  --color-whatsapp: #25d366;
+  --color-golden: #c7a147;
+  --color-frame: #8c6d2a;
+  --color-charcoal: #8a7458;
+  --color-paper: #2f2f2f;
+  --color-ivory: #f6f1e7;
+  --color-wine: #2a0b10;
+  --color-wine-soft: #3a1219;
+  --color-antique: #a67c00;
+  --color-whatsapp: #128c4a;
 
   --font-heading: "Cinzel", Georgia, "Times New Roman", serif;
   --font-body: "Montserrat", system-ui, -apple-system, sans-serif;
@@ -31,17 +37,44 @@
   /* ── Dashboard palette ───────────────────────────────────────
      The admin area keys off its own token names. Rather than touch
      its layout or components, these are mapped onto the 3Knotts
-     palette: paper surfaces, noir text, red and gold accents. */
-  --color-teal-deep: #0a0a0a;
-  --color-teal-mid: #404040;
-  --color-teal-bright: #b82820;
-  --color-gold: #e85040;
+     palette: wine surfaces, ivory text, burgundy and gold accents. */
+  --color-teal-deep: #2a0b10;
+  --color-teal-mid: #5a3038;
+  --color-teal-bright: #c25a64;
+  --color-gold: #b04a55;
   --color-gold-soft: #fccc30;
-  --color-ivory: #f8f8f8;
-  --color-plum: #b82820;
-  --color-ink: #0a0a0a;
-  --color-sand: #efe3d5;
+  --color-plum: #c7a147;
+  --color-ink: #1c070c;
+  --color-sand: #f0e7d6;
   --font-tagline: "Cinzel", Georgia, serif;
+}
+
+/* Deep wine surfaces — hero, header, footer, CTA band, media plates
+   and the admin area. Scoped tokens keep every utility inside these
+   areas legible while the rest of the site stays on ivory. */
+[data-scheme="wine"] {
+  --color-noir: #2a0b10;
+  --color-brand: #a63a44;
+  --color-brand-dark: #7e2530;
+  --color-frame: #d2ae90;
+  --color-charcoal: #4a1a24;
+  --color-paper: #f6f1e7;
+  --color-golden: #fccc30;
+  --color-whatsapp: #25d366;
+  color-scheme: dark;
+}
+
+/* Section titles are burgundy on ivory; over wine they return to ivory. */
+h1,
+h2,
+h3 {
+  color: var(--color-brand);
+}
+
+[data-scheme="wine"] h1,
+[data-scheme="wine"] h2,
+[data-scheme="wine"] h3 {
+  color: var(--color-paper);
 }
 
 /* Cinzel is always caps, semibold, generously tracked. Declared
@@ -70,9 +103,9 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
   scrollbar-width: thin;
-  scrollbar-color: rgba(232, 80, 64, 0.55) #0a0a0a;
+  scrollbar-color: rgba(107, 31, 38, 0.55) #efe7d7;
 }
 
 html.lenis,
@@ -95,7 +128,7 @@ body {
 
 ::selection {
   background: var(--color-brand);
-  color: var(--color-noir);
+  color: var(--color-ivory);
 }
 
 :focus-visible {
@@ -109,11 +142,11 @@ body {
   height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #efe7d7;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(232, 80, 64, 0.85), rgba(184, 40, 32, 0.85));
-  border: 2px solid #0a0a0a;
+  background: linear-gradient(180deg, rgba(107, 31, 38, 0.85), rgba(82, 22, 32, 0.85));
+  border: 2px solid #efe7d7;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -139,7 +172,7 @@ body::after {
   inset: 0;
   z-index: 9998;
   pointer-events: none;
-  opacity: 0.032;
+  opacity: 0.024;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
@@ -151,7 +184,7 @@ body::after {
   }
 
   .eyebrow {
-    @apply text-[10px] font-semibold uppercase leading-none tracking-[0.36em] text-frame/75;
+    @apply text-[10px] font-semibold uppercase leading-none tracking-[0.36em] text-brand/80;
   }
 
   .btn {
@@ -159,7 +192,7 @@ body::after {
   }
 
   .btn-brand {
-    @apply bg-brand text-noir shadow-[0_18px_44px_-20px_rgba(232,80,64,0.9)] hover:-translate-y-0.5 hover:bg-brand-dark hover:text-paper hover:shadow-[0_26px_56px_-20px_rgba(184,40,32,0.95)] active:translate-y-0;
+    @apply bg-brand text-ivory shadow-[0_18px_44px_-20px_rgba(126,37,48,0.65)] hover:-translate-y-0.5 hover:bg-brand-dark hover:text-ivory hover:shadow-[0_26px_56px_-20px_rgba(82,22,32,0.7)] active:translate-y-0;
   }
 
   .btn-ghost {
@@ -175,12 +208,29 @@ body::after {
   }
 
   .panel-hover {
-    @apply hover:-translate-y-1 hover:border-brand/50 hover:bg-charcoal/[0.16] hover:shadow-[0_34px_70px_-34px_rgba(232,80,64,0.45)];
+    @apply hover:-translate-y-1 hover:border-brand/50 hover:bg-charcoal/[0.16] hover:shadow-[0_34px_70px_-34px_rgba(126,37,48,0.35)];
   }
 
   .link-arrow {
-    @apply inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-frame transition-colors duration-300 group-hover:text-brand;
+    @apply inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-brand/75 transition-colors duration-300 group-hover:text-brand;
   }
+}
+
+/* Small caps stay beige over wine. */
+[data-scheme="wine"] .eyebrow {
+  color: rgba(210, 174, 144, 0.75);
+}
+
+/* Solid burgundy fills always carry ivory type. */
+.bg-brand {
+  color: var(--color-ivory);
+}
+
+/* Ghost buttons turn antique gold on the deep wine surfaces. */
+[data-scheme="wine"] .btn-ghost:hover {
+  border-color: var(--color-golden);
+  background-color: rgba(252, 204, 48, 0.06);
+  color: var(--color-golden);
 }
 
 /* ── Ambient canvas drift (transform only) ───────────────────── */
@@ -588,7 +638,13 @@ button:disabled,
   font-style: italic;
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 12px rgba(232, 80, 64, 0.4);
+  text-shadow: 0 2px 12px rgba(107, 31, 38, 0.3);
+}
+
+/* The rotating hero word glows gold over the wine-washed film. */
+[data-scheme="wine"] .flip-word-inner {
+  color: var(--color-golden);
+  text-shadow: 0 2px 16px rgba(166, 124, 0, 0.35);
 }
 
 @keyframes flip-word-cycle {

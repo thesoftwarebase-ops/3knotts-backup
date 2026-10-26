@@ -25,7 +25,7 @@ export const metadata = {
     title: site.meta.ogTitle,
     description: site.meta.ogDescription,
     url: site.homeHref,
-    images: [{ url: site.logo, width: 1200, height: 1200, alt: site.logoAlt }]
+    images: [{ url: site.logo, width: 512, height: 512, alt: site.logoAlt }]
   },
   icons: {
     icon: site.logo
@@ -82,8 +82,8 @@ export default function RootLayout({ children }) {
           position="bottom-center"
           toastOptions={{
             style: {
-              background: "#0A0A0A",
-              color: "#F8F8F8",
+              background: "#2A0B10",
+              color: "#F6F1E7",
               border: "1px solid rgba(210,174,144,0.35)",
               borderRadius: "4px"
             }

@@ -9,8 +9,8 @@ export default function Faq({ items }) {
 
   return (
     <section aria-labelledby="faq-heading" className="relative border-b border-frame/10 py-14 sm:py-20">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_70%_-30%,rgba(252,204,48,0.03),transparent_65%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-48 w-[40%] bg-[radial-gradient(ellipse_at_0%_100%,rgba(232,80,64,0.025),transparent_60%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_70%_-30%,rgba(166,124,0,0.05),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-48 w-[40%] bg-[radial-gradient(ellipse_at_0%_100%,rgba(126,37,48,0.04),transparent_60%)]" />
 
       <div className="relative mx-auto max-w-3xl px-5 sm:px-8">
         <SectionHeading id="faq-heading" heading={t.heading} intro={t.intro} divider={false} />
@@ -23,7 +23,7 @@ export default function Faq({ items }) {
                 className="absolute inset-y-0 left-0 w-px origin-top scale-y-0 bg-gradient-to-b from-brand to-transparent transition-transform duration-500 group-open:scale-y-100"
               />
               <summary className="flex cursor-pointer list-none items-center gap-5 px-1 py-6 transition-colors duration-300 [&::-webkit-details-marker]:hidden sm:gap-6 sm:py-7">
-                <span className="font-heading text-[10px] leading-none tracking-[0.2em] text-frame/45 transition-colors duration-300 group-hover:text-brand group-open:text-brand">
+                <span className="font-heading text-[10px] leading-none tracking-[0.2em] text-paper/35 transition-colors duration-300 group-hover:text-brand group-open:text-brand">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="flex-1 font-heading text-[13px] leading-[1.5] text-paper transition-colors duration-300 group-hover:text-brand sm:text-[15px]">
@@ -31,7 +31,7 @@ export default function Faq({ items }) {
                 </span>
                 <span
                   aria-hidden="true"
-                  className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center border border-frame/25 text-base leading-none text-frame transition-all duration-500 group-hover:border-brand/60 group-hover:text-brand group-open:rotate-45 group-open:border-brand group-open:bg-brand group-open:text-noir"
+                  className="relative inline-flex h-8 w-8 shrink-0 items-center justify-center border border-frame/25 text-base leading-none text-brand/70 transition-all duration-500 group-hover:border-brand/60 group-hover:text-brand group-open:rotate-45 group-open:border-brand group-open:bg-brand group-open:text-ivory"
                 >
                   +
                 </span>

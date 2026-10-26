@@ -23,7 +23,7 @@ export default async function AboutPage() {
   return (
     <>
       <div className="relative overflow-hidden pb-20 pt-32 sm:pb-24 sm:pt-40">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_25%_-20%,rgba(232,80,64,0.05),transparent_60%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[30rem] bg-[radial-gradient(ellipse_at_25%_-20%,rgba(126,37,48,0.05),transparent_60%)]" />
 
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
           <SectionHeading as="h1" id="about-heading" heading={a.heading} intro={a.intro} />

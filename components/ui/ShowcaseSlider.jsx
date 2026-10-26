@@ -41,7 +41,7 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
   const current = items[active];
 
   return (
-    <div onClick={isolate ? (e) => e.stopPropagation() : undefined}>
+    <div data-scheme="wine" onClick={isolate ? (e) => e.stopPropagation() : undefined}>
       <div
         className={
           isCard
@@ -110,7 +110,7 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
                   className={`absolute inset-0 ${
                     isActive
                       ? "bg-gradient-to-t from-noir via-noir/35 to-noir/25"
-                      : "bg-black/45"
+                      : "bg-wine/45"
                   }`}
                 />
                 {!isActive && !parked ? (
@@ -172,7 +172,7 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
               type="button"
               onClick={() => go(-1)}
               aria-label={site.a11y.sliderPrev}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-frame/35 bg-noir/60 text-xl text-paper backdrop-blur-sm transition-all duration-300 hover:border-brand hover:bg-brand hover:text-noir active:scale-95"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-frame/35 bg-noir/60 text-xl text-paper backdrop-blur-sm transition-all duration-300 hover:border-golden hover:bg-golden hover:text-wine active:scale-95"
             >
               <span aria-hidden="true">‹</span>
             </button>
@@ -180,7 +180,7 @@ export default function ShowcaseSlider({ items, variant = "page", isolate = fals
               type="button"
               onClick={() => go(1)}
               aria-label={site.a11y.sliderNext}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-frame/35 bg-noir/60 text-xl text-paper backdrop-blur-sm transition-all duration-300 hover:border-brand hover:bg-brand hover:text-noir active:scale-95"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-frame/35 bg-noir/60 text-xl text-paper backdrop-blur-sm transition-all duration-300 hover:border-golden hover:bg-golden hover:text-wine active:scale-95"
             >
               <span aria-hidden="true">›</span>
             </button>

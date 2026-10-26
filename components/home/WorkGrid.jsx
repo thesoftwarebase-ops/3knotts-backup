@@ -28,8 +28,8 @@ export default function WorkGrid({ services = seedServices }) {
 
   return (
     <section id="work" aria-labelledby="work-heading" className="relative border-b border-frame/10 py-14 sm:py-20">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_70%_-30%,rgba(252,204,48,0.03),transparent_65%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-56 w-[45%] bg-[radial-gradient(ellipse_at_0%_100%,rgba(232,80,64,0.035),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_70%_-30%,rgba(166,124,0,0.05),transparent_65%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-56 w-[45%] bg-[radial-gradient(ellipse_at_0%_100%,rgba(126,37,48,0.05),transparent_65%)]" />
 
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading id="work-heading" heading={t.heading} intro={t.intro} />
@@ -47,6 +47,7 @@ export default function WorkGrid({ services = seedServices }) {
               <Reveal delay={Math.min(i * 80, 320)} className="h-full">
                 <Link
                   href={serviceHref(w.service.slug)}
+                  data-scheme="wine"
                   className={`group relative block h-full overflow-hidden rounded-sm border border-frame/20 bg-charcoal/10 transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-brand/50 ${
                     mosaic ? "min-h-[13rem] lg:min-h-0" : "aspect-[4/5]"
                   }`}
@@ -62,7 +63,7 @@ export default function WorkGrid({ services = seedServices }) {
                     className="object-cover opacity-80 saturate-[0.9] transition-all duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07] group-hover:opacity-100"
                   />
                   <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-noir via-noir/25 to-noir/10 transition-opacity duration-500 group-hover:from-noir/95" />
-                  <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_120%,rgba(232,80,64,0.22),transparent_62%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_120%,rgba(166,124,0,0.25),transparent_62%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                   <span
                     aria-hidden="true"
@@ -79,7 +80,7 @@ export default function WorkGrid({ services = seedServices }) {
                       <span className="text-[8px] font-semibold uppercase tracking-[0.26em] text-frame/70">
                         {w.service.title}
                       </span>
-                      <span aria-hidden="true" className="text-[12px] text-brand opacity-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:opacity-100">
+                      <span aria-hidden="true" className="text-[12px] text-golden opacity-0 transition-all duration-500 group-hover:translate-x-0.5 group-hover:opacity-100">
                         →
                       </span>
                     </span>
@@ -98,7 +99,7 @@ export default function WorkGrid({ services = seedServices }) {
             className="btn btn-ghost group"
           >
             {site.instagramLabel}
-            <span aria-hidden="true" className="text-frame transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand">
+            <span aria-hidden="true" className="text-brand/70 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand">
               ↗
             </span>
           </a>

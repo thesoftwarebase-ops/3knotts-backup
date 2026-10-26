@@ -16,7 +16,7 @@ const BASE_Y = ROW_H;
 const DROP = 60;
 const ENTER_RUN = 110;
 
-const RICH_COLORS = { plum: "text-paper", teal: "text-brand", gold: "text-golden" };
+const RICH_COLORS = { plum: "text-paper", teal: "text-brand", gold: "text-brand-dark" };
 
 function cubicAt(p0, c1, c2, p3, t) {
   const u = 1 - t;
@@ -114,7 +114,7 @@ export default function HowItWorks({ steps }) {
     <section aria-labelledby="how-heading" className="relative overflow-clip border-y border-frame/20 bg-charcoal/10 py-14 sm:py-20">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(ellipse_at_50%_-10%,rgba(204,108,66,0.03),transparent_65%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(ellipse_at_50%_-10%,rgba(126,37,48,0.04),transparent_65%)]"
       />
       <div
         aria-hidden="true"
@@ -122,7 +122,7 @@ export default function HowItWorks({ steps }) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 top-1/4 h-[30rem] w-[30rem] bg-[radial-gradient(circle,rgba(252,204,48,0.04),transparent_70%)] blur-[90px]"
+        className="pointer-events-none absolute -right-32 top-1/4 h-[30rem] w-[30rem] bg-[radial-gradient(circle,rgba(166,124,0,0.06),transparent_70%)] blur-[90px]"
       />
 
       {/* Corner frames */}
@@ -147,15 +147,15 @@ export default function HowItWorks({ steps }) {
               className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
             >
               {wire.d ? (
-                <path d={wire.d} fill="none" stroke="#E85040" strokeWidth="3" strokeLinecap="round" opacity="0.5" vectorEffect="non-scaling-stroke" />
+                <path d={wire.d} fill="none" stroke="#7E2530" strokeWidth="3" strokeLinecap="round" opacity="0.45" vectorEffect="non-scaling-stroke" />
               ) : null}
             </svg>
             {wire.nodes.map((n, i) => (
               <span key={i} aria-hidden="true" style={{ left: n.left, top: n.top }} className="absolute z-10 hidden h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-frame bg-charcoal/20 md:block" />
             ))}
-            <span ref={desktopDotRef} aria-hidden="true" className="absolute left-0 top-0 z-10 hidden h-4 w-4 rounded-full bg-brand shadow-[0_0_20px_rgba(232,80,64,0.9)] will-change-transform md:block" />
+            <span ref={desktopDotRef} aria-hidden="true" className="absolute left-0 top-0 z-10 hidden h-4 w-4 rounded-full bg-brand shadow-[0_0_20px_rgba(126,37,48,0.55)] will-change-transform md:block" />
             <div aria-hidden="true" className="absolute inset-y-0 left-5 w-0.5 -translate-x-1/2 rounded bg-brand/25 md:hidden" />
-            <span ref={mobileDotRef} aria-hidden="true" className="absolute left-0 top-0 z-10 h-4 w-4 rounded-full bg-brand shadow-[0_0_20px_rgba(232,80,64,0.9)] will-change-transform md:hidden" />
+            <span ref={mobileDotRef} aria-hidden="true" className="absolute left-0 top-0 z-10 h-4 w-4 rounded-full bg-brand shadow-[0_0_20px_rgba(126,37,48,0.55)] will-change-transform md:hidden" />
 
             {list.map((s, i) => {
               const flip = i % 2 === 1;
@@ -167,7 +167,7 @@ export default function HowItWorks({ steps }) {
                       <span aria-hidden="true" className="absolute inset-x-10 top-0 h-px origin-center scale-x-0 bg-brand transition-transform duration-500 group-hover:scale-x-100" />
                       <span aria-hidden="true" className="pointer-events-none absolute right-6 top-3 select-none font-heading text-7xl leading-none text-paper/5 transition-colors duration-500 group-hover:text-brand/10 sm:text-8xl">{s.n}</span>
                       <p className="relative text-[11px] font-semibold tracking-[0.3em] text-brand">{s.n}</p>
-                      <h3 className="relative mt-3 font-heading text-2xl leading-snug text-paper transition-colors duration-300 group-hover:text-brand sm:text-3xl">{s.title}</h3>
+                      <h3 className="relative mt-3 font-heading text-2xl leading-snug text-paper transition-colors duration-300 group-hover:text-brand-dark sm:text-3xl">{s.title}</h3>
                       <p className="relative mt-4 max-w-md text-[15px] leading-relaxed text-paper/65 sm:text-base">
                         {(s.rich || [{ t: s.text }]).map((seg, k) => (
                           <span key={k} className={seg.b ? "font-bold text-paper" : seg.c ? `font-semibold ${RICH_COLORS[seg.c] || ""}` : ""}>{seg.t}</span>

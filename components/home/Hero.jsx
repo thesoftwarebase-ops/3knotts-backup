@@ -123,6 +123,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
     <section
       id={site.anchors.top}
       aria-label={site.a11y.hero}
+      data-scheme="wine"
       className="relative flex min-h-[100svh] items-center overflow-hidden bg-noir"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
@@ -156,7 +157,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
       {/* Left side background overlay for text - stronger but still shows video */}
       <div aria-hidden="true" className="absolute inset-y-0 left-0 w-full lg:w-3/5 bg-gradient-to-r from-noir/80 via-noir/60 to-transparent" />
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-noir/50 via-transparent to-noir/30" />
-      <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(0,0,0,0.2),transparent_70%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(42,11,16,0.25),transparent_70%)]" />
 
       {/* Hairline frame */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-4 z-20 hidden border border-frame/15 sm:block sm:inset-6" />
@@ -192,7 +193,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
 
           <div className="hero-rise-3 mt-9 flex items-center gap-3" aria-hidden="true">
             <span className="h-px w-14 bg-gradient-to-r from-frame/70 to-transparent" />
-            <span className="h-1.5 w-1.5 rotate-45 bg-brand shadow-[0_0_14px_rgba(232,80,64,0.9)]" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-golden shadow-[0_0_14px_rgba(252,204,48,0.7)]" />
             <span className="h-px w-24 bg-gradient-to-l from-frame/40 to-transparent" />
           </div>
 
@@ -201,7 +202,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
           </p>
 
           <div className="hero-rise-4 mt-11 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <Link href={primaryHref} className="btn btn-brand group shadow-[0_8px_24px_rgba(232,80,64,0.4)]">
+            <Link href={primaryHref} className="btn btn-brand group shadow-[0_8px_24px_rgba(166,124,0,0.35)]">
               {site.hero.primaryCta.label}
               <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-1.5">
                 →
@@ -253,7 +254,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
                     aria-label={`${i + 1} / ${n}`}
                     aria-current={i === active ? "true" : undefined}
                     className={`h-px transition-all duration-500 ${
-                      i === active ? "w-8 bg-brand" : "w-4 bg-frame/30 hover:bg-frame/60"
+                      i === active ? "w-8 bg-golden" : "w-4 bg-frame/30 hover:bg-frame/60"
                     }`}
                   />
                 ))}
@@ -266,7 +267,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
                   type="button"
                   onClick={() => go(-1)}
                   aria-label={site.a11y.sliderPrev}
-                  className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-lg text-paper backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-noir active:scale-95"
+                  className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-lg text-paper backdrop-blur-sm transition-colors duration-300 hover:border-golden hover:bg-golden hover:text-wine active:scale-95"
                 >
                   <span aria-hidden="true">‹</span>
                 </button>
@@ -274,7 +275,7 @@ export default function Hero({ slides, tagline: heroTagline, brand }) {
                   type="button"
                   onClick={() => go(1)}
                   aria-label={site.a11y.sliderNext}
-                  className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-lg text-paper backdrop-blur-sm transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-noir active:scale-95"
+                  className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-lg text-paper backdrop-blur-sm transition-colors duration-300 hover:border-golden hover:bg-golden hover:text-wine active:scale-95"
                 >
                   <span aria-hidden="true">›</span>
                 </button>

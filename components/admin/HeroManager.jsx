@@ -136,7 +136,7 @@ export default function HeroManager() {
                 )
               ) : null}
               <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/50 to-transparent" />
-              <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-black/50 px-2.5 py-1 font-tagline text-lg font-bold leading-none text-ivory backdrop-blur-sm">
+              <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-wine/60 px-2.5 py-1 font-tagline text-lg font-bold leading-none text-ivory backdrop-blur-sm">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="absolute inset-x-0 bottom-0 p-3">
@@ -146,7 +146,7 @@ export default function HeroManager() {
                   suppressHydrationWarning
                   aria-label={m.alt}
                   placeholder={m.alt}
-                  className="w-full rounded-xl border border-ivory/40 bg-black/45 px-3 py-2 text-sm font-medium text-ivory backdrop-blur-sm placeholder:text-ivory/60 focus:border-gold focus:outline-none"
+                  className="w-full rounded-xl border border-ivory/40 bg-wine/55 px-3 py-2 text-sm font-medium text-ivory backdrop-blur-sm placeholder:text-ivory/60 focus:border-gold focus:outline-none"
                 />
               </span>
             </span>
@@ -178,7 +178,7 @@ export default function HeroManager() {
                 type="button"
                 onClick={() => removeSlide(i)}
                 aria-label={m.remove}
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-plum/30 text-xl text-plum transition-all hover:scale-105 hover:border-plum hover:bg-plum hover:text-white"
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-plum/30 text-xl text-plum transition-all hover:scale-105 hover:border-plum hover:bg-plum hover:text-wine"
               >
                 <span aria-hidden="true">×</span>
               </button>
@@ -240,7 +240,7 @@ export default function HeroManager() {
         type="button"
         onClick={save}
         disabled={saving}
-        className="mt-4 rounded-full bg-gold px-8 py-3 text-base font-bold text-paper shadow-[0_10px_30px_-10px_rgba(232,80,64,0.9)] transition-all hover:-translate-y-0.5 disabled:opacity-60"
+        className="mt-4 rounded-full bg-gold px-8 py-3 text-base font-bold text-paper shadow-[0_10px_30px_-10px_rgba(166,124,0,0.5)] transition-all hover:-translate-y-0.5 disabled:opacity-60"
       >
         {m.save}
       </button>

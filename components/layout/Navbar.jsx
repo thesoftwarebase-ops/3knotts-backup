@@ -44,7 +44,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
   const waHref = `https://wa.me/${getWaNumber()}`;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header data-scheme="wine" className="fixed inset-x-0 top-0 z-50">
       {/* Utility strip */}
       <div className="hidden border-b border-frame/10 bg-noir/85 backdrop-blur-md sm:block">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5 text-[10px] font-medium uppercase leading-none tracking-[0.3em] text-paper/40">
@@ -84,7 +84,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
           className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-3.5 sm:px-6 sm:py-4"
         >
           <Link href={site.homeHref} className="group flex shrink-0 items-center gap-3.5" aria-label={`${site.name} — home`}>
-            <span className="relative inline-flex rounded-full border border-frame/30 p-[3px] transition-colors duration-500 group-hover:border-brand/60">
+            <span className="relative inline-flex rounded-full border border-frame/50 p-[3px] transition-colors duration-500 group-hover:border-golden/60">
               <img
                 src={site.logoSm}
                 alt={site.logoAlt}
@@ -95,7 +95,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
               />
             </span>
             <span className="hidden flex-col gap-1.5 leading-none sm:flex">
-              <span className="font-heading text-[15px] tracking-[0.14em] text-paper transition-colors duration-300 group-hover:text-brand">
+              <span className="font-heading text-[15px] tracking-[0.14em] text-paper transition-colors duration-300 group-hover:text-golden">
                 {site.name}
               </span>
               <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-frame/65">
@@ -106,7 +106,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
 
           <button
             type="button"
-            className="inline-flex items-center gap-2.5 border border-frame/30 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-paper transition-colors duration-300 hover:border-brand hover:text-brand md:hidden"
+            className="inline-flex items-center gap-2.5 border border-frame/30 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-paper transition-colors duration-300 hover:border-golden hover:text-golden md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen(true)}
@@ -128,13 +128,13 @@ export default function Navbar({ navLinks = site.nav } = {}) {
                     href={l.href}
                     aria-current={isActive ? "page" : undefined}
                     className={`group relative block py-2 text-[13px] font-medium uppercase tracking-[0.26em] transition-colors duration-300 ${
-                      isActive ? "text-brand" : "text-paper/65 hover:text-paper"
+                      isActive ? "text-golden" : "text-paper/65 hover:text-paper"
                     }`}
                   >
                     {l.label}
                     <span
                       aria-hidden="true"
-                      className={`absolute -bottom-px left-0 h-px w-full origin-left bg-gradient-to-r from-brand to-ember transition-transform duration-500 ${
+                      className={`absolute -bottom-px left-0 h-px w-full origin-left bg-gradient-to-r from-golden to-ember transition-transform duration-500 ${
                         isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
                     />
@@ -156,7 +156,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
         {/* Reading progress — brand into gold */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-frame/10">
           <div
-            className="h-px origin-left bg-gradient-to-r from-brand-dark via-brand to-golden shadow-[0_0_14px_rgba(232,80,64,0.7)] transition-transform duration-150 ease-out"
+            className="h-px origin-left bg-gradient-to-r from-brand-dark via-brand to-golden shadow-[0_0_14px_rgba(252,204,48,0.45)] transition-transform duration-150 ease-out"
             style={{ transform: `scaleX(${progress})` }}
           />
         </div>
@@ -170,8 +170,8 @@ export default function Navbar({ navLinks = site.nav } = {}) {
           open ? "visible opacity-100" : "pointer-events-none invisible opacity-0"
         }`}
       >
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_0%,rgba(232,80,64,0.06),transparent_55%)]" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-brand/[0.06] to-transparent" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_0%,rgba(166,124,0,0.08),transparent_55%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-golden/[0.06] to-transparent" />
 
         <div className="relative flex items-center justify-between border-b border-frame/15 px-5 py-4">
           <span className="inline-flex items-center gap-3">
@@ -181,7 +181,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
               width={48}
               height={48}
               loading="eager"
-              className="h-10 w-10 rounded-full border border-frame/30 object-cover"
+              className="h-10 w-10 rounded-full border border-frame/50 object-cover"
             />
             <span className="font-heading text-[11px] tracking-[0.14em] text-paper">{site.name}</span>
           </span>
@@ -189,7 +189,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
             type="button"
             onClick={() => setOpen(false)}
             aria-label={site.menuOpenLabel}
-            className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-xl leading-none text-paper transition-colors hover:border-brand hover:text-brand"
+            className="inline-flex h-10 w-10 items-center justify-center border border-frame/30 text-xl leading-none text-paper transition-colors hover:border-golden hover:text-golden"
           >
             <span aria-hidden="true">×</span>
           </button>
@@ -211,17 +211,17 @@ export default function Navbar({ navLinks = site.nav } = {}) {
                     onClick={() => setOpen(false)}
                     className="group flex items-center gap-5 py-5"
                   >
-                    <span aria-hidden="true" className="text-[9px] font-semibold tracking-[0.24em] text-brand/80">
+                    <span aria-hidden="true" className="text-[9px] font-semibold tracking-[0.24em] text-golden/80">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span
                       className={`font-heading text-[clamp(1.5rem,7vw,2rem)] leading-none transition-colors duration-300 ${
-                        isActive ? "text-transparent" : "text-paper group-hover:text-brand"
+                        isActive ? "text-transparent" : "text-paper group-hover:text-golden"
                       }`}
                     >
                       <span className={isActive ? "wordmark" : undefined}>{l.label}</span>
                     </span>
-                    <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1.5 group-hover:text-brand">
+                    <span aria-hidden="true" className="ml-auto text-frame/40 transition-transform duration-500 group-hover:translate-x-1.5 group-hover:text-golden">
                       →
                     </span>
                   </Link>
@@ -258,7 +258,7 @@ export default function Navbar({ navLinks = site.nav } = {}) {
               rel="noopener noreferrer"
               tabIndex={open ? 0 : -1}
               aria-label={site.instagramLabel}
-              className="inline-flex h-[46px] w-[46px] items-center justify-center border border-frame/30 transition-colors hover:border-brand"
+              className="inline-flex h-[46px] w-[46px] items-center justify-center border border-frame/30 transition-colors hover:border-golden"
             >
               <InstagramIcon className="h-4 w-4" />
             </a>

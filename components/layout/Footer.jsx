@@ -15,7 +15,7 @@ function Arrow() {
   return (
     <span
       aria-hidden="true"
-      className="-translate-x-1.5 text-brand opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100"
+      className="-translate-x-1.5 text-golden opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100"
     >
       →
     </span>
@@ -40,16 +40,16 @@ export default function Footer({ services = seedServices, settings = {} }) {
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-frame/20 bg-noir">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand/60 to-transparent" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-20%,rgba(232,80,64,0.04),transparent_60%)]" />
+    <footer data-scheme="wine" className="relative overflow-hidden border-t border-frame/20 bg-noir">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-golden/50 to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_-20%,rgba(166,124,0,0.06),transparent_60%)]" />
 
       <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-12">
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link href={site.homeHref} className="group inline-flex items-center gap-3.5" aria-label={`${site.name} — home`}>
-              <span className="inline-flex rounded-full border border-frame/30 p-[3px] transition-colors duration-500 group-hover:border-brand/60">
+              <span className="inline-flex rounded-full border border-frame/50 p-[3px] transition-colors duration-500 group-hover:border-golden/60">
                 <img
                   src={site.logoSm}
                   alt={site.logoAlt}
@@ -77,7 +77,7 @@ export default function Footer({ services = seedServices, settings = {} }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${site.instagramLabel} — ${site.instagramHandle}`}
-                className="inline-flex h-10 w-10 items-center justify-center border border-frame/25 text-paper/70 transition-colors duration-300 hover:border-brand hover:text-brand"
+                className="inline-flex h-10 w-10 items-center justify-center border border-frame/25 text-paper/70 transition-colors duration-300 hover:border-golden hover:text-golden"
               >
                 <InstagramIcon className="h-4 w-4" />
               </a>
@@ -141,7 +141,7 @@ export default function Footer({ services = seedServices, settings = {} }) {
                   href={mapsHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 font-medium text-paper/75 transition-colors duration-300 hover:text-brand"
+                  className="group inline-flex items-center gap-2 font-medium text-paper/75 transition-colors duration-300 hover:text-golden"
                 >
                   <span className="border-b border-frame/30 pb-0.5">{site.mapsLabel}</span>
                   <span aria-hidden="true" className="-translate-x-1 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
@@ -182,7 +182,7 @@ export default function Footer({ services = seedServices, settings = {} }) {
           </p>
           <a
             href={`#${site.anchors.top}`}
-            className="group inline-flex shrink-0 items-center gap-2.5 border border-frame/20 px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.24em] text-paper/60 transition-colors duration-300 hover:border-brand hover:text-brand"
+            className="group inline-flex shrink-0 items-center gap-2.5 border border-frame/20 px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.24em] text-paper/60 transition-colors duration-300 hover:border-golden hover:text-golden"
           >
             <span aria-hidden="true" className="transition-transform duration-500 group-hover:-translate-y-0.5">↑</span>
             {ft.backToTop}

@@ -74,6 +74,7 @@ export default function SiteLoader() {
     <div
       role="status"
       aria-label={site.loader.note}
+      data-scheme="wine"
       className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-noir transition-opacity duration-[480ms] ease-out ${
         leaving ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
@@ -129,10 +130,10 @@ export default function SiteLoader() {
           />
           <defs>
             <linearGradient id="loader-grad" x1="0" y1="0" x2="192" y2="192">
-              <stop offset="0%" stopColor="#E85040" stopOpacity="1" />
+              <stop offset="0%" stopColor="#A63A44" stopOpacity="1" />
               <stop offset="35%" stopColor="#FCCC30" stopOpacity="0.9" />
               <stop offset="65%" stopColor="#D2AE90" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#E85040" stopOpacity="1" />
+              <stop offset="100%" stopColor="#A63A44" stopOpacity="1" />
             </linearGradient>
           </defs>
         </svg>
@@ -143,7 +144,7 @@ export default function SiteLoader() {
             cx="80"
             cy="80"
             r="76"
-            stroke="#E85040"
+            stroke="#A63A44"
             strokeWidth="0.8"
             strokeLinecap="round"
             strokeDasharray="478"
@@ -159,7 +160,7 @@ export default function SiteLoader() {
         </div>
 
         {/* The logo — big and prominent */}
-        <div className="loader-logo relative z-10 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-gold/20 shadow-[0_0_60px_rgba(232,80,64,0.18)] sm:h-36 sm:w-36">
+        <div className="loader-logo relative z-10 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-golden/25 shadow-[0_0_60px_rgba(166,124,0,0.22)] sm:h-36 sm:w-36">
           <img
             src={site.logoSm}
             alt={site.logoAlt}
