@@ -227,7 +227,7 @@ export default function EnquiryForm({ contactEmail = "", services = [], waNumber
                 {field("enq-phone", "phone", f.phoneLabel,
                   <input id="enq-phone" name="phone" autoComplete="tel" inputMode="tel" required value={values.phone} onChange={onChange} suppressHydrationWarning className={inputCls} placeholder={f.phonePlaceholder} />)}
                 {field("enq-date", "date", f.dateLabel,
-                  <input id="enq-date" name="date" type="date" required value={values.date} onChange={onChange} suppressHydrationWarning className={inputCls} />)}
+                  <input id="enq-date" name="date" type="date" required value={values.date} onChange={onChange} min={new Date().toISOString().split("T")[0]} suppressHydrationWarning className={inputCls} />)}
                 {field("enq-location", "location", f.locationLabel,
                   <input id="enq-location" name="location" required value={values.location} onChange={onChange} suppressHydrationWarning className={inputCls} placeholder={f.locationPlaceholder} />)}
                 {field("enq-function", "function", f.functionLabel,

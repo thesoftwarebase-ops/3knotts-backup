@@ -1,16 +1,34 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingWhatsApp from "@/components/layout/FloatingWhatsApp";
-import { site } from "@/data/site";
+import ChatWidget from "@/components/layout/ChatWidget";
+import { site, getWaNumber } from "@/data/site";
 import { getServices, getContent, getSettings } from "@/lib/content";
 
 // Marketing chrome: nav, footer and floating button live here,
 // so private routes like /login render bare.
 export default async function SiteLayout({ children }) {
-  const [services, clients, settings] = await Promise.all([getServices(), getContent("clients"), getSettings()]);
+  const [services, clients, settings, chatbot] = await Promise.all([
+    getServices(),
+    getContent("clients"),
+    getSettings(),
+    getContent("chatbot")
+  ]);
   const navLinks = clients.visible === false
     ? site.nav.filter((l) => l.href !== "/clients")
     : site.nav;
+  // Public-safe slice of the chatbot config: no apiKey, no model, no
+  // knowledge paragraph - the server holds those and speaks for the bot.
+  // Service titles come straight from the Services tab in the dashboard,
+  // so a Service-list question always offers the live list.
+  const chatPublic = chatbot.enabled
+    ? {
+        welcome: chatbot.welcomeMessage,
+        questions: chatbot.questions.map((q) => ({ text: q.text, type: q.type || "text" })),
+        services: services.map((s) => s.title),
+        askEnabled: Boolean(chatbot.apiKey && chatbot.chatParagraph)
+      }
+    : null;
   return (
     <>
       {/* Site canvas — burgundy and antique-gold washes over ivory, a
@@ -30,6 +48,7 @@ export default async function SiteLayout({ children }) {
       <main id={site.anchors.main}>{children}</main>
       <Footer services={services} settings={settings} />
       <FloatingWhatsApp settings={settings} />
+      <ChatWidget chat={chatPublic} waNumber={settings.whatsappNumber || getWaNumber()} />
     </>
   );
 }

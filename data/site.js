@@ -119,8 +119,8 @@ export const site = {
     title: "Dashboard",
     uploading: "Uploading…",
     working: "Working…",
-    tabs: { enquiries: "Enquiries", email: "Email", settings: "Settings", hero: "Hero Slides", services: "Services", clients: "Clients", account: "Account", about: "About Us" },
-    tabOrder: ["enquiries", "email", "settings", "home", "services", "clients", "about", "account"],
+    tabs: { enquiries: "Enquiries", email: "Email", settings: "Settings", chatbot: "Chatbot", hero: "Hero Slides", services: "Services", clients: "Clients", account: "Account", about: "About Us" },
+    tabOrder: ["enquiries", "email", "settings", "chatbot", "home", "services", "clients", "about", "account"],
     homeLabel: "Home",
     homeTabs: {
       hero: "Hero Slides",
@@ -263,6 +263,32 @@ export const site = {
       save: "Save settings",
       saved: "Settings saved."
     },
+    chatbotMgr: {
+      title: "Chatbot",
+      intro: "A floating assistant on every page. Visitors can request a service through your guided questions or ask free questions answered from the paragraph below. The Groq API key is stored in the database and never shown to visitors.",
+      enabledLabel: "Show the chatbot on the site",
+      apiKeyLabel: "Groq API key",
+      apiKeyPlaceholder: "gsk_...",
+      apiKeyNote: "Sent to Groq only from the server. Never exposed to visitors.",
+      modelLabel: "Model",
+      modelPlaceholder: "e.g. openai/gpt-oss-120b",
+      modelNote: "Any Groq model id. Lower-tier models cost less per message.",
+      paragraphLabel: "Assistant knowledge paragraph",
+      paragraphPlaceholder: "What the assistant knows: services, style, pricing policy, booking flow...",
+      paragraphNote: "Fed to the assistant as its instructions for free questions. Keep it current.",
+      welcomeLabel: "Welcome message",
+      welcomePlaceholder: "Hi! Welcome to 3Knotts. How can we help?",
+      questionsLabel: "Guided questions",
+      questionsNote: "Asked one by one after a visitor taps I need a service. When the last one is answered, the chat locks and the visitor sends the answers to your WhatsApp number.",
+      questionPlaceholder: "e.g. What is your name?",
+      typeLabel: "Input type",
+      questionOf: "Question {n} of {total}",
+      typeOptions: { text: "Text answer", services: "Service list", date: "Date picker" },
+      addQuestion: "Add question",
+      remove: "Remove",
+      save: "Save chatbot",
+      saved: "Chatbot saved."
+    },
     clientsMgr: {
       title: "Clients",
       intro: "A Clients section is being built for the site. Switch it on to show the Clients link in the menu and open the page. Switch it off while the content comes together — both the link and the page stay hidden.",
@@ -369,6 +395,49 @@ export const site = {
     instaProfile: "Open Instagram profile in a new tab"
   },
   whatsappGreeting: "Hello 3Knotts! I'd like to plan a celebration.",
+
+  // Seed values for the chatbot content key. Admin edits all of it in
+  // the dashboard Chatbot tab; apiKey is fetched only by the server.
+  chatbotDefaults: {
+    enabled: false,
+    apiKey: "",
+    model: "openai/gpt-oss-120b",
+    chatParagraph: "",
+    welcomeMessage: "Hi! Welcome to 3Knotts. How can we help you today?",
+    questions: [
+      { text: "What is your name?", type: "text" },
+      { text: "Which service do you need?", type: "services" },
+      { text: "What is the date of the function?", type: "date" },
+      { text: "Anything else we should know?", type: "text" }
+    ]
+  },
+
+  // Public floating chat widget copy (wine-scoped chrome).
+  chatWidget: {
+    openLabel: "Chat with us",
+    closeLabel: "Close chat",
+    clearLabel: "Clear chat",
+    title: "3Knotts Assistant",
+    menuNote: "Choose how we can help you.",
+    needService: "I need a service",
+    askQuestion: "Ask a question",
+    askIntro: "Go ahead, ask me anything about our services.",
+    askUnavailable: "Ask-a-question is unavailable right now.",
+    questionOf: "Question {n} of {total}",
+    typing: "Typing...",
+    dateOk: "OK",
+    placeholder: "Type your message...",
+    send: "Send",
+    error: "Could not reach the assistant. Please try again or use WhatsApp.",
+    doneNote: "Your answers are ready. Send them to us on WhatsApp.",
+    enquire: "Enquire on WhatsApp",
+    handoffIntro: "New website chat enquiry - 3Knotts",
+    handoffAnswers: "Service request",
+    handoffChat: "Questions asked",
+    youLabel: "Visitor",
+    botLabel: "Assistant"
+  },
+
 
   // WhatsApp enquiry message template (field labels + empty marker).
   waMsg: {

@@ -12,6 +12,7 @@ import ServicesManager from "./ServicesManager";
 import AboutManager from "./AboutManager";
 import EmailManager from "./EmailManager";
 import SettingsManager from "./SettingsManager";
+import ChatbotManager from "./ChatbotManager";
 import {
   BrandManager,
   FeaturedManager,
@@ -413,6 +414,8 @@ export default function DashboardPanel() {
           <EmailManager />
         ) : tab === "settings" ? (
           <SettingsManager />
+        ) : tab === "chatbot" ? (
+          <ChatbotManager />
         ) : tab === "home-hero" ? (
           <HeroManager />
         ) : tab === "home-brand" ? (

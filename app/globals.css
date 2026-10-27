@@ -551,6 +551,67 @@ body::after {
   }
 }
 
+/* Enquire-on-WhatsApp button pop inside the chat panel */
+@keyframes chat-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.chat-pop {
+  animation: chat-pop 0.35s ease;
+}
+
+/* Chat panel entrance + typing dots + pulsing halo on the toggle */
+@keyframes chat-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.chat-panel-in {
+  animation: chat-panel-in 0.4s ease;
+}
+
+@keyframes chat-dot {
+  0%,
+  60%,
+  100% {
+    transform: none;
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+.chat-dot {
+  animation: chat-dot 1.2s ease-in-out infinite;
+}
+
+.chat-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.chat-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.chat-halo {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
 /* Honeypot: off-screen, never display:none so bots still fill it */
 .honeypot {
   position: absolute !important;
@@ -592,6 +653,30 @@ button:disabled,
 
 .nice-scroll::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* Chat panel scrollbar — brighter thumb so it shows on the dark wine bg */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(246, 241, 231, 0.35) rgba(246, 241, 231, 0.06);
+}
+
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(246, 241, 231, 0.35);
+  border-radius: 999px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(246, 241, 231, 0.55);
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  background: rgba(246, 241, 231, 0.06);
+  border-radius: 999px;
 }
 
 /* ── Shimmer dots — tiny golden sparkles for CTA and accent areas ── */
