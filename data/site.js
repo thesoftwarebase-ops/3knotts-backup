@@ -58,7 +58,7 @@ export const services = [
 
 // ── PUBLIC CONFIG — edit values here ──────────────────────────────
 // WhatsApp number in international format (no +, no spaces).
-export const WA_NUMBER = "919342780445";
+export const WA_NUMBER = "919789083875";
 
 export function getWaNumber() {
   return site.whatsappNumber || WA_NUMBER;
@@ -85,7 +85,7 @@ export const site = {
   lang: "en",
 
   address: "No. 10/14, Near BCS Jain School, Washermanpet, Chennai - 600021, Tamil Nadu",
-  whatsappNumber: "9342780445",
+  whatsappNumber: "9789083875",
   addressParts: {
     street: "No. 10/14, Near BCS Jain School, Washermanpet",
     locality: "Chennai",
@@ -252,7 +252,7 @@ export const site = {
       title: "Site Settings",
       intro: "WhatsApp number, business address and hours shown across the public site. Leave a field empty to fall back to the default.",
       whatsappLabel: "WhatsApp number",
-      whatsappPlaceholder: "e.g. 9342780445",
+      whatsappPlaceholder: "e.g. 9789083875",
       whatsappNote: "International format, no + or spaces. Used for the WhatsApp chat link.",
       addressLabel: "Business address",
       addressPlaceholder: "Full address shown in the footer and enquiry page",
